@@ -22,17 +22,14 @@
     "email": "",
     "url": ""
   },
-  "contributors": [
-
-  ],
+  "contributors": [],
   "scripts": {
     "dev": "",
     "test": ""
   },
-  "dependencies": {
-
-  },
   "devDependencies": {
-
+    "html-validate": "^8.18.0",
+    "http-server": "^14.1.1",
+    "prettier": "^3.2.5"
   }
 }
