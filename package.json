@@ -25,7 +25,10 @@
   "contributors": [],
   "scripts": {
     "dev": "",
-    "test": ""
+    "test": "",
+    "milestone-01": "http-server src/docs/milestone-01 -p 3000 -c-1 -o -s",
+    "validate-html": "html-validate 'src/**/*.html'",
+    "prettier": "prettier src —write"
   },
   "devDependencies": {
     "html-validate": "^8.18.0",
