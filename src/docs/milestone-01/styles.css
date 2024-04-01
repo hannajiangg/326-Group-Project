@@ -17,6 +17,10 @@ header {
 nav {
     background-color: #333;
     padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    position: sticky;
+    top: 0px;
 }
 
 nav a {
@@ -42,7 +46,7 @@ p {
     margin-bottom: 20px;
 }
 
-.img-container {
+.memberImg{
     margin-bottom: 20px;
 }
 
@@ -53,34 +57,10 @@ footer {
     padding: 10px;
 }
 
-#vision h1 {
+#title{
     font-size: 24px;
 }
 
-#teamHeading {
-    color: #333;
-}
-
-#overviewHeading {
-    color: #333;
-}
-
-#appPartsHeading {
-    color: #333;
-}
-
-#dataReqsHeading {
-    color: #333;
-}
-
-#wireframesHeading {
-    color: #333;
-}
-
-#realWorldHeading {
-    color: #333;
-}
-
-#intExpHeading {
+h2 {
     color: #333;
 }
