@@ -18,11 +18,31 @@
   "bugs": "",
   "keywords": [],
   "author": {
-    "name": "",
-    "email": "",
-    "url": ""
+    "name": "The ZooBuy Team",
+    "url": "https://github.com/hannajiangg/326-Group-Project"
   },
-  "contributors": [],
+  "contributors": [
+    {
+      "name": "Sean McGonigle",
+      "email": "smcgonigle@umass.edu",
+      "url": "https://github.com/seanmcgon"
+    },
+    {
+      "name": "Sagarika Sonni",
+      "email": "ssonni@umass.edu",
+      "url": "https://github.com/sagarikasonni"
+    },
+    {
+      "name": "Hanna Jiang",
+      "email": "hannajiang@umass.edu",
+      "url": "https://github.com/hannajiangg"
+    },
+    {
+      "name": "Maxwell Tang",
+      "email": "maxwelltang@umass.edu",
+      "url": "https://github.com/maxwell3025"
+    }
+  ],
   "scripts": {
     "dev": "",
     "test": "",
