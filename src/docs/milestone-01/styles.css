@@ -137,9 +137,37 @@ section.collapsed h2::before {
     }
 }
 
-#wire-frames img {
-    text-align: center;
+#wire-frames {
+    margin-top: 20px;
 }
-#wire-frames p{
-    text-align: center;
+  
+.wireframe-container {
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
 }
+  
+.wireframe {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-width: 500px; 
+}
+  
+.wireframe-description {
+    padding: 15px;
+}
+
+.wireframe-title {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+  
+.wireframe-paragraph {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+}
+  
