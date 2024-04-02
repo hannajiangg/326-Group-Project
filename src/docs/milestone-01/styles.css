@@ -68,3 +68,7 @@ section.collapsed p {
     display: none;
 }
 
+#teamMembers{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
