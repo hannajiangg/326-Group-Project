@@ -78,6 +78,19 @@ section.collapsed p {
     display: none;
 }
 
+section.collapsed img {
+    display: none;
+}
+
+section.collapsed div {
+    display: none;
+}
+
+section.collapsed h2::before {
+    content: "+ ";
+}
+
+
 .center {
     display: block;
     margin-left: auto;
@@ -118,4 +131,11 @@ section.collapsed p {
     .member {
         width: calc(100% - 20px);
     }
+}
+
+#wire-frames img {
+    text-align: center;
+}
+#wire-frames p{
+    text-align: center;
 }
