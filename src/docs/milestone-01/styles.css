@@ -88,7 +88,7 @@ section.collapsed p {
   }
 
   .member {
-    width: calc(25% - 20px); /* 25% width with some space between */
+    width: calc(25% - 20px);
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
@@ -97,20 +97,19 @@ section.collapsed p {
   }
 
   .memberImg {
-    width: 100%; /* Ensure image fills its container */
+    width: 100%;
   }
 
-  /* Adjustments for small screens */
+
   @media (max-width: 768px) {
     .member {
-      width: calc(50% - 20px); /* 50% width for smaller screens */
+      width: calc(50% - 20px);
     }
   }
 
-  /* Adjustments for extra small screens */
   @media (max-width: 480px) {
     .member {
-      width: calc(100% - 20px); /* 100% width for extra small screens */
+      width: calc(100% - 20px);
     }
   }
   
