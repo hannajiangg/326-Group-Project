@@ -1,4 +1,10 @@
-body, h1, h2, h3, p, ul, li {
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+li {
     margin: 0;
     padding: 0;
 }
@@ -46,7 +52,7 @@ p {
     margin-bottom: 20px;
 }
 
-.memberImg{
+.memberImg {
     float: left;
     margin-bottom: 20px;
     width: 50%;
@@ -60,18 +66,19 @@ footer {
     padding: 10px;
 }
 
-#title{
+#title {
     font-size: 24px;
 }
 
 h2 {
     color: #333;
 }
+
 section.collapsed p {
     display: none;
 }
 
-#teamMembers{
+#teamMembers {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
@@ -81,39 +88,36 @@ section.collapsed p {
     margin-left: auto;
     margin-right: auto;
     width: 50%;
-  }
+}
 
-
-  .membersContainer {
+.membersContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-  }
+}
 
-  .member {
+.member {
     width: calc(25% - 20px);
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-  }
+}
 
-  .memberImg {
+.memberImg {
     width: 100%;
-  }
+}
 
 
-  @media (max-width: 768px) {
+@media (max-width: 768px) {
     .member {
-      width: calc(50% - 20px);
+        width: calc(50% - 20px);
     }
-  }
+}
 
-  @media (max-width: 480px) {
+@media (max-width: 480px) {
     .member {
-      width: calc(100% - 20px);
+        width: calc(100% - 20px);
     }
-  }
-  
-
+}
