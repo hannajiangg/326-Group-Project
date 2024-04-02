@@ -47,7 +47,10 @@ p {
 }
 
 .memberImg{
+    float: left;
     margin-bottom: 20px;
+    width: 50%;
+    margin: 0px 20px 20px 0px;
 }
 
 footer {
