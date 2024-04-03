@@ -136,7 +136,7 @@ section.collapsed h2::before {
         width: calc(100% - 20px);
     }
 }
-#wire-frames {
+#wireframe-grid{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
