@@ -7,7 +7,7 @@ function loadView(view) {
   fetch(`${view}.html`) // Assuming each view has a corresponding HTML file
     .then((response) => response.text())
     .then((html) => {
-      document.getElementById("view-container").innerHTML = html;
+      document.body.innerHTML = html;
       appState.currentView = view;
       window.history.pushState({ view: view }, `${view}`, `#${view}`);
     });
