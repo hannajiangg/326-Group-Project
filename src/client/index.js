@@ -23,5 +23,5 @@ window.addEventListener("popstate", (e) => {
 // Load the initial view based on the URL
 const initialView = window.location.hash
   ? window.location.hash.substring(1)
-  : "home";
+  : "login";
 loadView(initialView);
