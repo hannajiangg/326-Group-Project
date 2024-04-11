@@ -44,7 +44,7 @@
     }
   ],
   "scripts": {
-    "dev": "",
+    "dev": "npx http-server src/client -o",
     "test": "",
     "milestone-01": "http-server src/docs/milestone-01 -p 3000 -c-1 -o -s",
     "validate": "html-validate 'src/**/*.html'",
