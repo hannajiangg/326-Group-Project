@@ -1,0 +1,110 @@
+/* Login Page */
+.red-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #8C1515; /* Cardinal red color */
+  }
+  
+  .white-box {
+    width: 80%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center horizontally */
+    margin-bottom: 20px;
+  }
+  
+  .logo-container img {
+    width: 100px; /* Adjust the width of the logo */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 10px; /* Add space between the logo and text */
+  }
+  
+  .logo-container h1 {
+    font-size: 2.5rem; /* Adjust the font size of the "ZooBuy" text */
+    margin-bottom: 10px; /* Add space below the "ZooBuy" text */
+  }
+
+
+  .sign-in-text {
+    text-align: center; /* Center the "Sign in" text */
+    font-size: smaller; /* Set the font size to smaller */
+  }
+
+  
+  form {
+    width: 100%; /* Make form take full width */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input-group {
+    display: flex; /* Display input fields in a row */
+    align-items: center; /* Align input fields vertically */
+    margin-bottom: 20px;
+  }
+  
+  .input-group label {
+    display: block;
+    margin-right: 10px; /* Add some space between label and input */
+    color: #8C1515; /* Cardinal red color */
+  }
+  
+  .input-group input {
+    flex: 1; /* Let input fields take remaining space */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #8C1515; /* Cardinal red border */
+    box-sizing: border-box;
+  }
+  
+  .button-container {
+    margin-top: 20px; /* Add space between input fields and button */
+  }
+  
+  .button-container button {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #8C1515; /* Cardinal red border */
+    background-color: transparent;
+    color: black; /* Black text color */
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .create-account-button {
+    display: inline-block;
+    color: #8C1515; /* Cardinal red color */
+    text-decoration: none;
+    margin-top: 10px; /* Add space above the "Create an Account" button */
+  }
+  
+  .create-account-button:hover {
+    text-decoration: underline; /* Underline the button on hover */
+  }
+
+  /* Registration Page */
+
+  .input-group label {
+    display: inline-block;
+    width: 150px; /* Adjust the width as needed */
+    text-align: Right;
+    margin-right: 10px; /* Add some space between label and input */
+}
+
+  
