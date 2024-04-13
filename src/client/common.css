@@ -1,3 +1,4 @@
+/* Login Page */
 .red-background {
     position: fixed;
     top: 0;
@@ -21,12 +22,11 @@
     transform: translate(-50%, -50%);
   }
 
-
-  
   .logo-container {
     display: flex;
     align-items: center;
     justify-content: center; /* Center horizontally */
+    margin-bottom: 20px;
   }
   
   .logo-container img {
@@ -46,7 +46,6 @@
     font-size: smaller; /* Set the font size to smaller */
   }
 
-  
   
   form {
     width: 100%; /* Make form take full width */
@@ -98,4 +97,14 @@
   .create-account-button:hover {
     text-decoration: underline; /* Underline the button on hover */
   }
+
+  /* Registration Page */
+
+  .input-group label {
+    display: inline-block;
+    width: 150px; /* Adjust the width as needed */
+    text-align: Right;
+    margin-right: 10px; /* Add some space between label and input */
+}
+
   
