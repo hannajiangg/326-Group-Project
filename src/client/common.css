@@ -26,7 +26,7 @@ body{
     justify-content: space-around;
 }
 
-#main-page-nav>input[type="button"]{
+#main-page-nav>button{
     background-color: #800000;
     outline: none;
     border: none;
