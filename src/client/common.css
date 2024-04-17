@@ -1,0 +1,29 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.red-background {
+    background-color: #800000;
+}
+
+.flex{
+    display: flex;
+}
+
+.flex-grow{
+    flex-grow: 1;
+}
+
+#main-page-nav{
+    padding: 8px;
+    font-size: xx-large;
+    gap: 10px
+}
+
+#main-page-nav>input[type="button"]{
+    background-color: #800000;
+    outline: none;
+    border: none;
+    color: #fff;
+}
