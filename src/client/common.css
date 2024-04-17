@@ -1,5 +1,49 @@
 /* common.css */
 
+/* Nav Bar */
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.red-background {
+    background-color: #800000;
+}
+
+.flex{
+    display: flex;
+}
+
+.flex-grow{
+    flex-grow: 1;
+}
+
+#main-page-nav{
+    padding: 10px 20px 10px 20px;
+    font-size: xx-large;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#main-page-nav>input[type="button"]{
+    background-color: #800000;
+    outline: none;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    font-size: inherit;
+}
+
+#main-page-nav>input[type="text"]{
+    outline: none;
+    border: solid 2px black;
+    border-radius: 100px;
+    font-size: inherit;
+    padding: 10px;
+}
+
+/* Login and Registration */
 .red-background {
   position: fixed;
   top: 0;

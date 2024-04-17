@@ -10,7 +10,7 @@ const appState = {
   currentView: "",
 };
 
-async function loadView(view) {
+export async function loadView(view) {
   await fetch(`${view}.html`) // Assuming each view has a corresponding HTML file
     .then((response) => response.text())
     .then((html) => {
@@ -23,7 +23,7 @@ async function loadView(view) {
       // Example code. Feel free to delete.
       login.onNavigate();
     case "main":
-      // do stuff
+      main.onNavigate();
     case "product":
       // do stuff
     case "profile":
