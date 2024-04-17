@@ -16,9 +16,11 @@ body{
 }
 
 #main-page-nav{
-    padding: 8px;
+    padding: 10px 20px 10px 20px;
     font-size: xx-large;
-    gap: 10px
+    gap: 20px;
+    align-items: center;
+    justify-content: space-around;
 }
 
 #main-page-nav>input[type="button"]{
@@ -26,7 +28,18 @@ body{
     outline: none;
     border: none;
     color: #fff;
+    padding: 10px;
+    font-size: inherit;
 }
+
+#main-page-nav>input[type="text"]{
+    outline: none;
+    border: solid 2px black;
+    border-radius: 100px;
+    font-size: inherit;
+    padding: 10px;
+}
+
 /* Login and Registration */
 .red-background {
   position: fixed;
