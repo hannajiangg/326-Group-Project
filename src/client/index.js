@@ -20,7 +20,8 @@ async function loadView(view) {
     });
   switch(view){
     case "login":
-      // do stuff
+      // Example code. Feel free to delete.
+      login.onNavigate();
     case "main":
       // do stuff
     case "product":
