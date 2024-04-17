@@ -1,9 +1,14 @@
+import { generateFakeData, getListings, getListing } from "./api.js"
 import * as login from "./login.js"
 import * as main from "./main.js"
 import * as product from "./product.js"
 import * as profile from "./profile.js"
 import * as register from "./register.js"
 import * as seller from "./seller.js"
+
+await generateFakeData();
+console.log(await getListing("hi"));
+console.log(await getListings());
 
 // Does routing and stuff
 const appState = {
