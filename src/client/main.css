@@ -61,6 +61,7 @@ body{
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   padding: 0px;
   text-align: center;
+  overflow: hidden;
 }
 
 .image-container{
@@ -87,18 +88,24 @@ body{
 }
 
 .description-box {
-  padding-left: 10px;
-
+  padding: 5px;
+  height: 50px;
 }
 .product-box h3 {
+  width: 0;
+  text-wrap: nowrap;
   text-align: left;
-  font-size: 20;
+  font-size: 20px;
+  line-height: 1;
   margin: 0;
 }
 
 .product-box p {
+  width: 0;
+  text-wrap: nowrap;
   text-align: left;
-  font-size: 20;
+  font-size: 20px;
+  line-height: 1;
   margin: 0;
 }
 

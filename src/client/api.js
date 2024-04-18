@@ -96,15 +96,16 @@ export async function putShortListing(listing) {
 }
 
 export async function generateFakeData() {
+  const image = await fetch("./dasweatervest.jpeg").then(res => res.blob())
   await listingStore.destroy()
   listingStore = new PouchDB("listing_store")
   const fakeListings = [
     new Listing(
-      "hi",
-      new Blob(["asdfasdfasdfasd"], {type: "text/plain"}),
-      40.0,
-      "thing",
-      "stuff"
+      "000",
+      await image,
+      49.99,
+      "Men's Waterfowl Sweater, Size M",
+      "Clothing"
     )
   ]
   await putShortListing(fakeListings[0]);

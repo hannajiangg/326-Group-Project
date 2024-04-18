@@ -1,4 +1,4 @@
-import { getListings } from "./api.js";
+import { getListing, getListings, Listing } from "./api.js";
 import { loadView } from "./index.js";
 
 export function onNavigate() {
@@ -15,10 +15,51 @@ export function onNavigate() {
     populateListings();
 }
 
-async function populateListings() {
-    const mainPageDisplay = document.getElementById("main-page-display");
-    (await getListings()).forEach(_id => {
-        
+async function blobToURL(blob){
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    return await new Promise(resolve => reader.onloadend = () => {
+        resolve(reader.result);
+    });
+}
 
+/**
+ * @param {Listing} listing 
+ */
+async function addListing(listing) {
+    const mainPageDisplay = document.getElementById("main-page-display");
+    const productBox = document.createElement("div");
+    productBox.classList.add("product-box");
+    productBox.innerHTML = `
+        <div class="image-container">
+            <div class="price-tag"></div>
+        </div>
+        <div class="description-box">
+            <h3></h3>
+            <p></p>
+        </div>`;
+    const titleElement = productBox.querySelector("h3");
+    const categoryLabelElement = productBox.querySelector("p");
+    const priceTagElement = productBox.querySelector(".price-tag");
+    const imageDivElement = productBox.querySelector(".image-container");
+
+    titleElement.innerText = listing.description;
+
+    categoryLabelElement.innerText = listing.category;
+
+    priceTagElement.innerText = `$${listing.cost.toFixed(2)}`;
+    
+    const backgroundImageURL = await blobToURL(listing.thumbnail);
+    imageDivElement.style.backgroundImage = `url("${backgroundImageURL}")`
+
+    // TODO: make this go to a specific product
+    productBox.addEventListener("click", () => loadView("product"))
+
+    mainPageDisplay.appendChild(productBox);
+}
+
+async function populateListings() {
+    (await getListings()).forEach(async _id => {
+        addListing(await getListing(_id))
     });
 }
