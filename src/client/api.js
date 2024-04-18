@@ -110,3 +110,4 @@ export async function generateFakeData() {
   ]
   await putShortListing(fakeListings[0]);
 }
+
