@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page</title>
     <!-- link to CSS file -->
-    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="main.css">
 </head>
+
 <body>
     <nav class="flex" id="main-page-nav">
         <button id="home-button" type="button">HOME</button>
@@ -17,17 +19,20 @@
         <button id="sell-button" type="button">SELL</button>
         <i class="fa-solid fa-user" id="user-portal"></i>
     </nav>
-    <div class="white-box">
-        <div class="product-container">
-            <!-- Product boxes will be dynamically added here -->
-            <!-- Example product box -->
-            <div class="product-box">
-                <img src="dasweatervest.jpeg" alt="Product 1">
+    <div id="main-page-display">
+        <!-- Product boxes will be dynamically added here -->
+        <!-- Example product box -->
+        <div class="product-box">
+            <div class="image-container" style="background-image: url(./dasweatervest.jpeg);">
+                <div class="price-tag">$49</div>
+            </div>
+            <div class="description-box">
                 <h3>Product 1</h3>
                 <p>Description of Product 1</p>
-                <button type="button">Add to Cart</button>
             </div>
         </div>
     </div>
+    </div>
 </body>
+
 </html>
