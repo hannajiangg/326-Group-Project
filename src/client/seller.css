@@ -1,0 +1,34 @@
+body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+#carousel{
+    height: 500px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+#carousel-images{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    display: flex;
+    transition: left 0.5s ease;
+    left: 0
+}
+.carousel-image{
+}
+#carousel-controls{
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, rgba(0,0,0,1) 100%);
+}
+#description input[type="text"]{
+    outline: none;
+    border: none;
+}
+#title-input{
+    font-size: 40px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

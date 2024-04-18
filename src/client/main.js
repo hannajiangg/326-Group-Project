@@ -1,4 +1,4 @@
-import { getListing, getListings, Listing } from "./api.js";
+import { blobToURL, getListing, getListings, Listing } from "./api.js";
 import { loadView } from "./index.js";
 
 export function onNavigate() {
@@ -13,14 +13,6 @@ export function onNavigate() {
     sellButtonElement.addEventListener("click", () => loadView("seller"));
     userPortalElement.addEventListener("click", () => loadView("profile"));
     populateListings();
-}
-
-async function blobToURL(blob){
-    const reader = new FileReader();
-    reader.readAsDataURL(blob);
-    return await new Promise(resolve => reader.onloadend = () => {
-        resolve(reader.result);
-    });
 }
 
 /**
