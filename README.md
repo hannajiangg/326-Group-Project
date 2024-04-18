@@ -8,7 +8,20 @@ To run the project:
 4. Run `npm install` to install dependencies.
 5. After the installation is complete, run `npm run dev`.
 
-Hanna: Login and Create Account
-Max: Main Page and Product Page
-Sagi: Main Page and Seller PAge
-Sean: Profile
+### Project Responsibilities:
+
+- **Hanna:**
+  - Login functionality
+  - Account creation
+
+- **Max:**
+  - Main page design and development
+  - Product page implementation
+
+- **Sagi:**
+  - Main page design and development
+  - Seller page implementation
+
+- **Sean:**
+  - Profile management
+
