@@ -7,3 +7,8 @@ To run the project:
 3. Navigate to the project directory.
 4. Run `npm install` to install dependencies.
 5. After the installation is complete, run `npm run dev`.
+
+Hanna: Login and Create Account
+Max: Main Page and Product Page
+Sagi: Main Page and Seller PAge
+Sean: Profile
