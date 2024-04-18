@@ -17,7 +17,18 @@ body{
     transition: left 0.5s ease;
     left: 0
 }
-.carousel-image{
+#new-image-placeholder{
+    height: 500px;
+    width: 500px;
+    background-color: #800000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#new-image-placeholder svg{
+    fill: white;
+    width: 100px;
+    height: 100px;
 }
 #carousel-controls{
     position: absolute;
