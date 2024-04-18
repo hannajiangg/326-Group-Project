@@ -1,3 +1,4 @@
+import { generateFakeData, getListings, getListing } from "./api.js"
 import * as login from "./login.js"
 import * as main from "./main.js"
 import * as product from "./product.js"
@@ -5,12 +6,16 @@ import * as profile from "./profile.js"
 import * as register from "./register.js"
 import * as seller from "./seller.js"
 
+await generateFakeData();
+console.log(await getListing("hi"));
+console.log(await getListings());
+
 // Does routing and stuff
 const appState = {
   currentView: "",
 };
 
-async function loadView(view) {
+export async function loadView(view) {
   await fetch(`${view}.html`) // Assuming each view has a corresponding HTML file
     .then((response) => response.text())
     .then((html) => {
@@ -23,7 +28,7 @@ async function loadView(view) {
       // Example code. Feel free to delete.
       login.onNavigate();
     case "main":
-      // do stuff
+      main.onNavigate();
     case "product":
       // do stuff
     case "profile":
