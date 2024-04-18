@@ -1,0 +1,54 @@
+body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+#carousel{
+    height: 500px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+#carousel-images{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    display: flex;
+    transition: left 0.5s ease;
+    left: 0
+}
+#new-image-placeholder{
+    height: 500px;
+    width: 500px;
+    background-color: #800000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#new-image-placeholder svg{
+    fill: white;
+    width: 100px;
+    height: 100px;
+}
+#carousel-controls{
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, rgba(0,0,0,0.5) 100%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 100px 0 100px;
+    align-items: center;
+}
+#carousel-controls svg{
+    height: 100px;
+    fill: white;
+}
+
+#description input[type="text"]{
+    outline: none;
+    border: none;
+}
+#title-input{
+    font-size: 40px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
