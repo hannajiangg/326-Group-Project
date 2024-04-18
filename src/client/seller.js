@@ -6,6 +6,8 @@ export async function onNavigate(){
 
     const carouselImagesDiv = document.getElementById("carousel-images");
     const carouselDiv = document.getElementById("carousel");
+    const carouselLeftArrow = document.getElementById("carousel-left-arrow");
+    const carouselRightArrow = document.getElementById("carousel-right-arrow");
     const carouselImageList = [];
     for(const imageBlob of listing.carousel){
         /** @type { HTMLImageElement } */
@@ -24,8 +26,14 @@ export async function onNavigate(){
         offset += totalWidth * 0.5;
         carouselImagesDiv.style.left = `${offset}px`
     }
-    jumpToImage(0);
-    setInterval(() => {
-        jumpToImage(Math.floor(Math.random() * 4));
-    }, 1000);
+    let currentImage = 0;
+    jumpToImage(currentImage);
+    carouselLeftArrow.addEventListener("click", ()=>{
+        currentImage = Math.max(0, currentImage - 1);
+        jumpToImage(currentImage)
+    })
+    carouselRightArrow.addEventListener("click", ()=>{
+        currentImage = Math.min(carouselImageList.length, currentImage + 1);
+        jumpToImage(currentImage)
+    })
 }
