@@ -5,17 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login Page</title>
   <link rel="stylesheet" href="common.css"> <!-- Link to CSS file for this specific page -->
-  <script src="login.js"></script>
 </head>
 <body>
   <div class="red-background">
     <div class="white-box">
-        <div class="logo-container">
-            <img src="zoo_buy_logo.jpg" alt="ZooBuy Logo">
-            <h1>ZooBuy</h1>
-          </div>
+      <div class="logo-container">
+        <img src="zoo_buy_logo.jpg" alt="ZooBuy Logo">
+        <h1>ZooBuy</h1>
+      </div>
       <p class="sign-in-text">Sign in to Zoobuy to continue to ZooBuy.</p>
-      <form id="loginForm">
+      <form id="loginForm" action="/login" method="post">
         <div class="input-group">
           <label for="username">Username:</label>
           <input type="text" id="username" name="username" placeholder="Enter your username">
@@ -25,8 +24,8 @@
           <input type="password" id="password" name="password" placeholder="Enter your password">
         </div>
         <div class="button-container"> 
-            <button type="submit" id="loginBtn"><a href="mainPg.html">Login</a></button>
-            <a href="register.html" class="login-button">Create Account</a> <!-- Link to register.html page -->
+          <button type="submit">Login</button>
+          <a href="register.html" class="login-button">Create Account</a> <!-- Link to register.html page -->
         </div>
       </form>
     </div>
