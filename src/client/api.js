@@ -111,3 +111,10 @@ export async function generateFakeData() {
   await putShortListing(fakeListings[0]);
 }
 
+export async function blobToURL(blob){
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    return await new Promise(resolve => reader.onloadend = () => {
+        resolve(reader.result);
+    });
+}
