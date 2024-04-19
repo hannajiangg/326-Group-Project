@@ -7,7 +7,7 @@ import * as register from "./register.js"
 import * as seller from "./seller.js"
 
 await generateFakeData();
-console.log(await getListing("hi"));
+console.log(await getListing("000"));
 console.log(await getListings());
 
 // Does routing and stuff
