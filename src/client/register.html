@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Page</title>
     <link rel="stylesheet" href="common.css"> <!-- Link to CSS file for this specific page -->
-    <link rel="stylesheet" href="registration-page.css"> <!-- Link to CSS file for registration page -->
 </head>
 <body>
     <div class="red-background">
@@ -14,8 +13,9 @@
                 <img src="zoo_buy_logo.jpg" alt="ZooBuy Logo">
                 <h1>ZooBuy</h1>
             </div>
+            
             <p class="sign-in-text">Create an account to Zoobuy.</p>
-            <form>
+            <form id="registration-form">
                 <div class="input-group">
                     <label for="first-name">First Name:</label>
                     <input type="text" id="first-name" name="first-name" placeholder="Enter your first name" required>
@@ -43,5 +43,46 @@
             </form>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/pouchdb@7.2.2/dist/pouchdb.min.js"></script> <!-- Include PouchDB library -->
+    <script src="db.js" type="module"></script> <!-- Include the db.js file -->
+    
+    <script type="module">
+        import { createUser } from './db.js';
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            const registrationForm = document.getElementById("registration-form");
+
+            registrationForm.addEventListener("submit", async function (event) {
+                event.preventDefault();
+                
+                const firstName = document.getElementById("first-name").value;
+                const lastName = document.getElementById("last-name").value;
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+                const confirmPassword = document.getElementById("confirm-password").value;
+
+                try {
+                    // Check if password matches confirm password
+                    if (password === confirmPassword) {
+                        const userData = {
+                            firstName: firstName,
+                            lastName: lastName,
+                            email: email,
+                            password: password,
+                        };
+                        const response = await createUser(userData);
+                        alert('User registered successfully!');
+                        window.location.href = 'login.html';
+                    } else {
+                        throw new Error('Password and confirm password do not match');
+                    }
+                    } catch (error) {
+                        console.error('Error registering user:', error.message);
+                        alert('Failed to register user. Please try again.');
+                    }
+            });
+        });
+    </script>
 </body>
 </html>
