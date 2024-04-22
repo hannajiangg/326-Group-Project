@@ -155,3 +155,5 @@ export async function blobToURL(blob){
         resolve(reader.result);
     });
 }
+
+await generateFakeData();

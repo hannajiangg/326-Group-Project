@@ -6,5 +6,7 @@
 // loginBtn.addEventListener("click", () => {
 //     window.location.href = "http://127.0.0.1:8080/mainPg.html"
 // })
-let loginForm = document.getElementById('loginForm')
-let usernameInp = document.getElementById('password')
+export function onNavigate(){
+    let loginForm = document.getElementById('loginForm')
+    let usernameInp = document.getElementById('password')
+}
