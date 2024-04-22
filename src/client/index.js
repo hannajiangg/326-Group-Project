@@ -45,7 +45,7 @@ export async function loadView(view) {
     case "register":
       // do stuff
     case "seller":
-      //seller.onNavigate();
+      // do stuff
   }
 }
 
