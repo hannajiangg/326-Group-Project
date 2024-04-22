@@ -1,0 +1,137 @@
+body {
+    background-color: #8C1515;
+}
+
+#content {
+    margin-left: 7.5%;
+    margin-right: 15%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+h1 {
+    color: white;
+}
+
+#profile {
+    display: flex;
+    flex-direction: row;
+    gap: 3%;
+    width: 100%;
+}
+
+#info {
+    flex-grow: 1;
+    width: 100%;
+}
+
+#pfp {
+    width: 200px;
+    height: 200px;
+    border-radius: 5%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#name-block, #email-block {
+    background-color: aliceblue;
+    padding-left: 7px;
+    border-radius: 5px;
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#payments {
+    background-color: rgb(217, 217, 217);
+    width: 100%;
+    box-sizing: border-box;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-left: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#content input.one {
+    padding: 8px;
+    background-color: rgb(217, 217, 217);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: 7px;
+}
+
+#content label {
+    white-space: nowrap;
+}
+
+#items {
+    background-color: rgb(217, 217, 217);
+    border-radius: 5px;
+    width: 100%;
+    padding-top: 0.1%;
+    padding-bottom: 2%;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin-top: 20px;
+}
+
+#content input.two {
+    padding: 8px;
+    background-color: rgb(217, 217, 217);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    
+}
+
+#payments-block {
+    background-color: aliceblue;
+    padding-left: 7px;
+    border-radius: 5px;
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+    width: 100%;
+    display: flex;
+    align-items: top;
+}
+
+#payments-label {
+    margin-top: 9px;
+}
+
+#name-section, #email-section {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+}
+
+.edit {
+    padding: 6px;
+    margin-left: 5px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+}
+
+.item {
+    margin: 5px;
+}
+
+#items div div p {
+    display: inline;
+    padding-left: 15px;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
