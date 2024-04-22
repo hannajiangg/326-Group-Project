@@ -18,7 +18,7 @@ To run the project:
   - Main page design and development
   - Product page implementation
 
-- **Sagi:**
+- **Sagarika:**
   - Main page design and development
   - Seller page implementation
 
