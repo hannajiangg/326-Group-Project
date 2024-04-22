@@ -1,10 +1,10 @@
 import { generateFakeData, getListings, getListing } from "./api.js"
-import * as login from "./login.js"
-import * as main from "./main.js"
-import * as product from "./product.js"
-import * as profile from "./profile.js"
-import * as register from "./register.js"
-import * as seller from "./seller.js"
+import * as login from "./login/login.js"
+import * as main from "./main/main.js"
+import * as product from "./product/product.js"
+import * as profile from "./profile/profile.js"
+import * as register from "./register/register.js"
+import * as seller from "./seller/seller.js"
 
 await generateFakeData();
 console.log(await getListing("000"));
@@ -16,7 +16,7 @@ const appState = {
 };
 
 export async function loadView(view) {
-  await fetch(`${view}.html`) // Assuming each view has a corresponding HTML file
+  await fetch(`${view}/${view}.html`) // Assuming each view has a corresponding HTML file
     .then((response) => response.text())
     .then((html) => {
       document.body.innerHTML = html;
