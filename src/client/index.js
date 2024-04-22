@@ -1,13 +1,15 @@
 import { generateFakeData, getListings, getListing } from "./api.js"
-import * as login from "./login.js"
-import * as main from "./main.js"
-import * as product from "./product.js"
-import * as profile from "./profile.js"
-import * as register from "./register.js"
-import * as seller from "./seller.js"
+
+// Don't import these until the html is inserted! It causes issues with getElementById
+// import * as login from "./login.js"
+// import * as main from "./main.js"
+// import * as product from "./product.js"
+// import * as profile from "./profile.js"
+// import * as register from "./register.js"
+// import * as seller from "./seller.js"
 
 await generateFakeData();
-console.log(await getListing("hi"));
+console.log(await getListing("000"));
 console.log(await getListings());
 
 // Does routing and stuff
@@ -20,15 +22,22 @@ export async function loadView(view) {
     .then((response) => response.text())
     .then((html) => {
       document.body.innerHTML = html;
+
+      // This allows the associated script to actually run
+      const script = document.createElement("script");
+      script.type = "module";
+      script.src = `./${view}.js?${Date.now()}`; // Uses cache busting to ensure the script is executed again when using browser back/forward button
+      document.body.appendChild(script);
+
       appState.currentView = view;
       window.history.pushState({ view: view }, `${view}`, `#${view}`);
     });
   switch(view){
     case "login":
       // Example code. Feel free to delete.
-      login.onNavigate();
+      //login.onNavigate();
     case "main":
-      main.onNavigate();
+      //main.onNavigate();
     case "product":
       // do stuff
     case "profile":

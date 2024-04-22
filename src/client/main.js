@@ -1,27 +1,17 @@
-import { getListing, getListings, Listing } from "./api.js";
+import { blobToURL, getListing, getListings, Listing } from "./api.js";
 import { loadView } from "./index.js";
 
-export function onNavigate() {
-    /** @type {HTMLButtonElement} */
-    const homeButtonElement = document.getElementById("home-button");
-    /** @type {HTMLButtonElement} */
-    const sellButtonElement = document.getElementById("sell-button");
-    /** @type {HTMLElement} */
-    const userPortalElement = document.getElementById("user-portal");
+/** @type {HTMLButtonElement} */
+const homeButtonElement = document.getElementById("home-button");
+/** @type {HTMLButtonElement} */
+const sellButtonElement = document.getElementById("sell-button");
+/** @type {HTMLElement} */
+const userPortalElement = document.getElementById("user-portal");
 
-    userPortalElement.addEventListener("click", () => loadView("main"));
-    sellButtonElement.addEventListener("click", () => loadView("seller"));
-    userPortalElement.addEventListener("click", () => loadView("profile"));
-    populateListings();
-}
-
-async function blobToURL(blob){
-    const reader = new FileReader();
-    reader.readAsDataURL(blob);
-    return await new Promise(resolve => reader.onloadend = () => {
-        resolve(reader.result);
-    });
-}
+userPortalElement.addEventListener("click", () => loadView("main"));
+sellButtonElement.addEventListener("click", () => loadView("seller"));
+userPortalElement.addEventListener("click", () => loadView("profile"));
+populateListings();
 
 /**
  * @param {Listing} listing 
