@@ -18,7 +18,7 @@ export async function loadView(view) {
       // This allows the associated script to actually run
       const script = document.createElement("script");
       script.type = "module";
-      script.src = `./${view}.js?${Date.now()}`; // Uses cache busting to ensure the script is executed again when using browser back/forward button
+      script.src = `./${view}/${view}.js?${Date.now()}`; // Uses cache busting to ensure the script is executed again when using browser back/forward button
       document.body.appendChild(script);
 
       appState.currentView = view;

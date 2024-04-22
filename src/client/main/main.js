@@ -1,5 +1,5 @@
-import { blobToURL, getListing, getListings, Listing } from "../api.js";
-import { loadView } from "../index.js";
+import { blobToURL, getListing, getListings, Listing } from "/api.js";
+import { loadView } from "/index.js";
 
 /** @type {HTMLButtonElement} */
 const homeButtonElement = document.getElementById("home-button");
