@@ -1,4 +1,4 @@
-import { blobToURL, getListing } from "./api.js";
+import { blobToURL, getListing } from "../api.js";
 
 export async function onNavigate() {
     const searchParams = new URLSearchParams(window.location.search);

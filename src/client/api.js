@@ -126,12 +126,12 @@ export async function putListing(listing) {
 }
 
 export async function generateFakeData() {
-  const image = await fetch("./dasweatervest.jpeg").then(res => res.blob())
+  const image = await fetch("/assets/dasweatervest.jpeg").then(res => res.blob())
   const carousel = [
-    await fetch("./fakeImageStore/000.png").then(res => res.blob()),
-    await fetch("./fakeImageStore/001.png").then(res => res.blob()),
-    await fetch("./fakeImageStore/002.png").then(res => res.blob()),
-    await fetch("./fakeImageStore/003.png").then(res => res.blob()),
+    await fetch("/assets/000.png").then(res => res.blob()),
+    await fetch("/assets/001.png").then(res => res.blob()),
+    await fetch("/assets/002.png").then(res => res.blob()),
+    await fetch("/assets/003.png").then(res => res.blob()),
   ]
   await listingStore.destroy()
   listingStore = new PouchDB("listing_store")
@@ -155,3 +155,5 @@ export async function blobToURL(blob){
         resolve(reader.result);
     });
 }
+
+await generateFakeData();

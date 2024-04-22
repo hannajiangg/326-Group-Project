@@ -1,52 +1,55 @@
-import { generateFakeData, getListings, getListing } from "./api.js"
+import * as login from "./login/login.js";
+import * as main from "./main/main.js";
+import * as product from "./product/product.js";
+import * as seller from "./seller/seller.js";
+import * as profile from "./profile/profile.js";
 
-// Don't import these until the html is inserted! It causes issues with getElementById
-// import * as login from "./login.js"
-// import * as main from "./main.js"
-// import * as product from "./product.js"
-// import * as profile from "./profile.js"
-// import * as register from "./register.js"
-// import * as seller from "./seller.js"
+/*
+  USEFUL LINKS:
+  http://localhost:8080/#login
+  http://localhost:8080/#register
+  http://localhost:8080/#main
+  http://localhost:8080/?id=000#product
+  http://localhost:8080/?id=000#seller
+  http://localhost:8080/#profile
+*/
 
-await generateFakeData();
-console.log(await getListing("000"));
-console.log(await getListings());
-
-// Does routing and stuff
+/**
+ * The current page open on the app
+ */
 const appState = {
   currentView: "",
 };
 
+/**
+ * This is a dictionary containing callbacks that are supposed to be fired whenever a given page is loaded.
+ * For example, onNavigateListeners["main"] reads the list of listings from the database and renders them in HTML.
+ * 
+ * Make sure to add any new scripts to this object!
+ * @type {{[view: string]: () => Promise<void>}}
+ */
+const onNavigateListeners = {
+  "login": login.onNavigate,
+  "main": main.onNavigate,
+  "product": product.onNavigate,
+  "seller": seller.onNavigate,
+  "profile": profile.onNavigate,
+}
+
+/**
+ * Loads a specific view on the page
+ * @param {string} view 
+ */
 export async function loadView(view) {
-  await fetch(`${view}.html`) // Assuming each view has a corresponding HTML file
+  await fetch(`${view}/${view}.html`) // Assuming each view has a corresponding HTML file
     .then((response) => response.text())
     .then((html) => {
       document.body.innerHTML = html;
-
-      // This allows the associated script to actually run
-      const script = document.createElement("script");
-      script.type = "module";
-      script.src = `./${view}.js?${Date.now()}`; // Uses cache busting to ensure the script is executed again when using browser back/forward button
-      document.body.appendChild(script);
-
       appState.currentView = view;
       window.history.pushState({ view: view }, `${view}`, `#${view}`);
+      if(view in onNavigateListeners)
+        onNavigateListeners[view]();
     });
-  switch(view){
-    case "login":
-      // Example code. Feel free to delete.
-      //login.onNavigate();
-    case "main":
-      //main.onNavigate();
-    case "product":
-      // do stuff
-    case "profile":
-      // do stuff
-    case "register":
-      // do stuff
-    case "seller":
-      // do stuff
-  }
 }
 
 // Handle browser back and forward buttons
