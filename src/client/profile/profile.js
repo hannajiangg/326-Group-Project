@@ -19,11 +19,11 @@ export async function onNavigate() {
   let image = "assets/zoo_buy_logo.jpg"; // Make this uploadable???
   const payments = ["Example 1", "Example 2"]; // How do we get these in a secure way???
   const posted = [
-    { name: "Men's Waterfowl Sweater Vest", qt: 1 },
+    { _id: "000", name: "Men's Waterfowl Sweater Vest", qt: 1 },
     { name: "Men's Jeans", qt: 2 },
   ];
   const sold = [
-    { name: "Men's Waterfowl Sweater Vest", qt: 2 },
+    { _id: "000", name: "Men's Waterfowl Sweater Vest", qt: 2 },
     { name: "Men's Jeans", qt: 3 },
   ];
   const purchased = [
@@ -59,7 +59,7 @@ export async function onNavigate() {
     // TODO: Figure out a way to pass product ID to seller/product page when clicking these
     item.addEventListener("click", (e) => {
       e.preventDefault();
-      loadView("seller");
+      loadView("seller", {id: x._id});
     })
     const qt = document.createElement("p");
     qt.innerText = `Qt: ${x.qt}`;
@@ -77,7 +77,7 @@ export async function onNavigate() {
     // TODO: Figure out a way to pass product ID to seller/product page when clicking these
     item.addEventListener("click", (e) => {
       e.preventDefault();
-      loadView("seller");
+      loadView("seller", {id: x._id});
     })
     const qt = document.createElement("p");
     qt.innerText = `Qt: ${x.qt}`;
@@ -95,7 +95,7 @@ export async function onNavigate() {
     // TODO: Figure out a way to pass product ID to seller/product page when clicking these
     item.addEventListener("click", (e) => {
       e.preventDefault();
-      loadView("product");
+      loadView("product", {id: x._id});
     })
     const qt = document.createElement("p");
     qt.innerText = `Qt: ${x.qt}`;
