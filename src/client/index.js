@@ -39,14 +39,16 @@ const onNavigateListeners = {
 /**
  * Loads a specific view on the page
  * @param {string} view 
+ * @param {Record<string, string> | string | URLSearchParams}
  */
-export async function loadView(view) {
+export async function loadView(view, queryString) {
+  const URLparams = new URLSearchParams(queryString)
   await fetch(`${view}/${view}.html`) // Assuming each view has a corresponding HTML file
     .then((response) => response.text())
     .then((html) => {
       document.body.innerHTML = html;
       appState.currentView = view;
-      window.history.pushState({ view: view }, `${view}`, `#${view}`);
+      window.history.pushState({ view: view }, `${view}`, `?${URLparams.toString()}#${view}`);
       if(view in onNavigateListeners)
         onNavigateListeners[view]();
     });
@@ -64,4 +66,6 @@ const initialView = window.location.hash
   ? window.location.hash.substring(1)
   : "login";
 
-loadView(initialView);
+const initialSearch = window.location.search
+
+loadView(initialView, initialSearch);
