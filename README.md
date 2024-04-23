@@ -16,10 +16,12 @@ To run the project:
 
 - **Max:**
   - Main page design and development
+  - Authentication
   - Product page implementation
 
 - **Sagarika:**
   - Main page design and development
+  - Authentication
   - Seller page implementation
 
 - **Sean:**
