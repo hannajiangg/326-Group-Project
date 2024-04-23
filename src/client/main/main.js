@@ -1,4 +1,4 @@
-import { blobToURL, getListing, getListings, Listing } from "/api.js";
+import { blobToURL, getListing, getListings, Listing } from "../api.js";
 import { loadView } from "/index.js";
 
 export function onNavigate() {
@@ -44,7 +44,7 @@ export function onNavigate() {
         imageDivElement.style.backgroundImage = `url("${backgroundImageURL}")`
 
         // TODO: make this go to a specific product
-        productBox.addEventListener("click", () => loadView("product"))
+        productBox.addEventListener("click", () => loadView("product", {id: listing._id}))
 
         mainPageDisplay.appendChild(productBox);
     }
