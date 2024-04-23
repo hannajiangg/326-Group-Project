@@ -24,4 +24,7 @@ To run the project:
 
 - **Sean:**
   - Profile management
+ 
+Currently, our buttons are not functional. To access a page, navigate to the respective folder and run its HTML file. For example, to access the main page, run `/main/main.html`.
+
 
