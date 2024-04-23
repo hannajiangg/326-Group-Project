@@ -16,12 +16,17 @@ To run the project:
 
 - **Max:**
   - Main page design and development
+  - Authentication
   - Product page implementation
 
 - **Sagarika:**
   - Main page design and development
+  - Authentication
   - Seller page implementation
 
 - **Sean:**
   - Profile management
+ 
+Currently, our buttons are not functional. To access a page, navigate to localhost/index.html#view (where view will be the name of the page you would like to view). So, for example for main you would do localhost/index.html#main.
+
 
