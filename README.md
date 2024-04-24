@@ -26,11 +26,11 @@ To run the project:
 
 - **Sean:**
   - Profile management
+    
 
-## Currently, our buttons are not functional. To access a page, navigate to localhost/index.html#view (where view will be the name of the page you would like to view). So, for example for main you would do localhost/index.html#main.
+### View Pages: Currently, our buttons do not work. 
 
-### Example
-
+To access a page, navigate to localhost/index.html#view
 To access the main page, type `localhost/index.html#main` after the URL.
 
 
