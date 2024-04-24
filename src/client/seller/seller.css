@@ -1,14 +1,18 @@
 body{
+    background-color: #eee;
+    font-size: 40px;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
 }
+
 #carousel{
     height: 500px;
     width: 100%;
     overflow: hidden;
     position: relative;
 }
+
 #carousel-images{
     position: absolute;
     top: 0;
@@ -17,9 +21,11 @@ body{
     transition: left 0.5s ease;
     left: 0
 }
+
 .carousel-image{
     height: 500px;
 }
+
 #new-image-placeholder{
     height: 500px;
     width: 500px;
@@ -29,11 +35,13 @@ body{
     align-items: center;
     z-index: 1;
 }
+
 #new-image-placeholder svg{
     fill: white;
     width: 100px;
     height: 100px;
 }
+
 #carousel-controls{
     position: absolute;
     inset: 0;
@@ -43,6 +51,7 @@ body{
     padding: 0 100px 0 100px;
     align-items: center;
 }
+
 #carousel-controls svg{
     height: 100px;
     fill: white;
@@ -50,10 +59,61 @@ body{
 }
 
 #description input[type="text"]{
+    background: none;
+    font-size: inherit;
     outline: none;
     border: none;
+    padding: 0px;
 }
+
 #title-input{
-    font-size: 40px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#quantity-section{
+    display: flex;
+    align-items: center;
+}
+
+#quantity-control-widget{
+    display: flex;
+    height: 40px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 30px;
+}
+
+.quantity-control-btn{
+    display: block;
+    width: 40px;
+    height: 40px;
+    padding: 0px;
+    background-color: #800000;
+    color: #fff;
+    outline: none;
+    border: none;
+    border-radius: 100%;
+}
+
+.quantity-control-btn:hover{
+    background-color: #700000;
+}
+
+#quantity-label {
+    display: block;
+    text-align: center;
+    width: 80px;
+    color: black;
+    line-height: 1;
+}
+
+#description-textarea {
+    font-family: inherit;
+    font-size: 20px;
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    resize: none;
+    overflow: visible;
 }

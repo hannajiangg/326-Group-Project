@@ -33,6 +33,12 @@ export class Listing {
    * @type { string }
    */
   category;
+  /**
+   * The amount available for the listing.
+   * @type { number }
+   */
+  quantity
+
   constructor(
     _id,
     thumbnail,
@@ -40,6 +46,7 @@ export class Listing {
     cost,
     description,
     category,
+    quantity,
   ) {
     this._id = _id;
     this.thumbnail = thumbnail;
@@ -47,6 +54,7 @@ export class Listing {
     this.cost = cost;
     this.description = description;
     this.category = category;
+    this.quantity = quantity;
   }
 }
 
@@ -81,7 +89,8 @@ export async function getListing(_id) {
     carousel,
     listing.cost,
     listing.description,
-    listing.category
+    listing.category,
+    1,
   );
 }
 

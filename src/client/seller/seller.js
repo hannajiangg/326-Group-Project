@@ -1,9 +1,10 @@
-import { blobToURL, getListing, putListing } from "../api.js";
+import { blobToURL, getListing, Listing, putListing } from "../api.js";
 
-export async function onNavigate() {
-    const searchParams = new URLSearchParams(window.location.search);
-    const currentListing = await getListing(searchParams.get("id"));
-
+/**
+ * Renders the carousel at the top of the page.
+ * @param {Listing} listing 
+ */
+async function renderCarousel(listing) {
     const carouselImageContainer = document.getElementById("carousel-images");
     const carouselDiv = document.getElementById("carousel");
     const carouselLeftArrow = document.getElementById("carousel-left-arrow");
@@ -12,7 +13,7 @@ export async function onNavigate() {
     const carouselImageList = [];
 
     // Append all current images
-    for (const imageBlob of currentListing.carousel) {
+    for (const imageBlob of listing.carousel) {
         /** @type { HTMLImageElement } */
         const carouselImage = document.createElement("img");
         carouselImage.src = await blobToURL(imageBlob);
@@ -33,7 +34,7 @@ export async function onNavigate() {
     newImagePlaceholderElement.addEventListener("dragover", e => e.preventDefault());
     newImagePlaceholderElement.addEventListener("drop", async e => {
         const newImageList = [...e.dataTransfer.files].filter(file => file.type.split("/")[0] === "image");
-        currentListing.carousel.push(...newImageList);
+        listing.carousel.push(...newImageList);
         e.preventDefault();
         for (const imageBlob of newImageList) {
             /** @type { HTMLImageElement } */
@@ -43,8 +44,8 @@ export async function onNavigate() {
             carouselImageContainer.insertBefore(carouselImage, newImagePlaceholderElement);
             carouselImageList.splice(carouselImageList.length - 1, 0, carouselImage);
         }
-        await putListing(currentListing);
-        console.log(await getListing(currentListing._id))
+        await putListing(listing);
+        console.log(await getListing(listing._id))
     });
 
     /**
@@ -77,4 +78,47 @@ export async function onNavigate() {
         currentImage = Math.min(carouselImageList.length - 1, currentImage + 1);
         jumpToImage(currentImage)
     });
+}
+
+/**
+ * Renders the description of the seller interface.
+ * @param {Listing} listing 
+ */
+async function renderDescription(listing) {
+    const quantityAddButton = document.getElementById('quantity-add-button');
+    const quantitySubtractButton = document.getElementById('quantity-subtract-button');
+    const quantityLabel = document.getElementById('quantity-label');
+    const sellerLabel = document.getElementById('seller-label');
+    const sellerEmailLabel = document.getElementById('seller-email-label');
+    const descriptionTextarea = document.getElementById('description-textarea');
+
+    quantityLabel.textContent = listing.quantity;
+    quantityAddButton.addEventListener("click", async () => {
+        listing.quantity++;
+        await putListing(listing);
+        quantityLabel.textContent = listing.quantity;
+    });
+    quantitySubtractButton.addEventListener("click", async () => {
+        listing.quantity--;
+        await putListing(listing);
+        quantityLabel.textContent = listing.quantity;
+    });
+
+    sellerLabel.textContent = "TODO Fetch this from API";
+    sellerEmailLabel.textContent = "TODO Fetch this from API";
+
+    descriptionTextarea.addEventListener("input", async () => {
+        descriptionTextarea.style.height = "";
+        descriptionTextarea.style.height = descriptionTextarea.scrollHeight + "px";
+
+        listing.description = descriptionTextarea.textContent;
+        await putListing(listing);
+    })
+}
+
+export async function onNavigate() {
+    const searchParams = new URLSearchParams(window.location.search);
+    const currentListing = await getListing(searchParams.get("id"));
+    renderCarousel(currentListing);
+    renderDescription(currentListing);
 }
