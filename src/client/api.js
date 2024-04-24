@@ -166,3 +166,146 @@ export async function blobToURL(blob){
 }
 
 await generateFakeData();
+
+let profileStore = new PouchDB("profile_store");
+
+export class Profile {
+  /**
+   * ID for the profile.
+   * @type { string }
+   */
+  _id;
+  /**
+   * For user's profile picture.
+   * @type { Blob }
+   */
+  pfp;
+  /**
+   * @type { string }
+   */
+  name;
+  /**
+   * User's email address.
+   * @type { string }
+   */
+  email;
+  /**
+   * Saved payment methods.
+   * @type { string[] }
+   */
+  payments;
+  /**
+   * User's currently posted items.
+   * @type { {}[] }
+   */
+  posted;
+  /**
+   * User's sold items.
+   * @type { {}[] }
+   */
+  sold;
+  /**
+   * User's purchased items.
+   * @type { {}[] }
+   */
+  purchased;
+
+  constructor(
+    _id,
+    pfp,
+    name,
+    email,
+    payments,
+    posted,
+    sold,
+    purchased
+  ) {
+    this._id = _id;
+    this.pfp = pfp;
+    this.name = name;
+    this.email = email;
+    this.payments = payments;
+    this.posted = posted;
+    this.sold = sold;
+    this.purchased = purchased;
+  }
+}
+
+export async function hasProfile(_id) {
+  return await profileStore.get(_id).then(() => true, () => false)
+}
+
+/**
+ * Returns a profile if it exists
+ * @param {string} _id 
+ * @returns { Profile | null }
+ */
+export async function getProfile(_id) {
+  if(!await hasProfile(_id))
+    return null;
+  let profile = await profileStore.get(_id);
+  const pfp = await profileStore.getAttachment(_id, "pfp");
+  
+  return new Profile(
+    profile._id,
+    pfp,
+    profile.name,
+    profile.email,
+    profile.payments,
+    profile.posted,
+    profile.sold,
+    profile.purchased
+  );
+}
+
+/**
+ * 
+ * @param {Profile} profile 
+ */
+export async function putProfile(profile) {
+  let entry = { ...profile };
+  if (await hasProfile(profile._id)) {
+    entry._rev = (await profileStore.get(profile._id))._rev
+  }
+  entry = { _rev: entry._rev, ...profile };
+  delete entry.pfp;
+  await profileStore.put(entry)
+
+  entry = await profileStore.get(profile._id);
+  await profileStore.putAttachment(
+    profile._id,
+    "pfp",
+    entry._rev,
+    profile.pfp,
+    profile.pfp.type
+  );
+}
+
+export async function generateFakeProfile() {
+  const image = await fetch("/assets/zoo_buy_logo.jpg").then(res => res.blob())
+  // await profileStore.destroy()
+  // profileStore = new PouchDB("profile_store")
+  const fakeProfile =
+    new Profile(
+      "000",
+      image,
+      "Tim Richards",
+      "richards@cs.umass.edu",
+      ["Example 1", "Example 2"],
+      [
+        { _id: "000", name: "Men's Waterfowl Sweater Vest", qt: 1 },
+        { name: "Men's Jeans", qt: 2 },
+      ],
+      [
+        { _id: "000", name: "Men's Waterfowl Sweater Vest", qt: 2 },
+        { name: "Men's Jeans", qt: 3 },
+      ],
+      [
+        { name: "Used Bike", qt: 1 },
+        { name: "UMass T-Shirt", qt: 5 },
+      ]
+    )
+  await putProfile(fakeProfile);
+}
+
+await generateFakeProfile();
