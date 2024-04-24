@@ -26,7 +26,21 @@ To run the project:
 
 - **Sean:**
   - Profile management
- 
-Currently, our buttons are not functional. To access a page, navigate to localhost/index.html#view (where view will be the name of the page you would like to view). So, for example for main you would do localhost/index.html#main.
+
+## Currently, our buttons are not functional. To access a page, navigate to localhost/index.html#view (where view will be the name of the page you would like to view). So, for example for main you would do localhost/index.html#main.
+
+### Example
+
+To access the main page, type `localhost/index.html#main` after the URL.
+
+
+### Available Pages
+
+- `login`
+- `main`
+- `product`
+- `profile`
+- `register`
+- `seller`
 
 
