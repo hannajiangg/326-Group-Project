@@ -28,13 +28,14 @@ To run the project:
   - Profile management
     
 
+
 ### View Pages: Currently, our buttons do not work. 
 
 To access a page, navigate to localhost/index.html#view
 To access the main page, type `localhost/index.html#main` after the URL.
 
 
-### Available Pages
+#### Available Pages
 
 - `login`
 - `main`
