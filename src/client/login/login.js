@@ -1,5 +1,7 @@
+import { loadView } from "../index.js";
+
 async function googleSignIn(token) {
-    console.log(token);
+    /*
     const response = await fetch('./api/googleLogIn', {
         method: 'POST',
         credentials: 'include',
@@ -7,9 +9,11 @@ async function googleSignIn(token) {
     });
     if(response.status !== 200){
         console.log("Login Failed");
-    } else {
-        loadView('main');
+        return;
     }
+    */
+    console.log("Login backend not implemented yet. Navigating to main.")
+    loadView('main');
 }
 
 export function onNavigate() {
@@ -25,7 +29,4 @@ export function onNavigate() {
             width: '200',
         }
     );
-
-    let loginForm = document.getElementById('loginForm')
-    let usernameInp = document.getElementById('password')
 }
