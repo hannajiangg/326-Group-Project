@@ -159,7 +159,6 @@ export async function generateFakeData() {
     await fetch("/assets/002.png").then(res => res.blob()),
     await fetch("/assets/003.png").then(res => res.blob()),
   ]
-  await listingStore.destroy()
   listingStore = new PouchDB("listing_store")
   const fakeListings = [
     new Listing(

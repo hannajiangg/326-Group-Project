@@ -1,6 +1,26 @@
-import { blobToURL, getListing, getListings, Listing } from "../api.js";
+import { blobToURL, getListing, getListings, hasListing, Listing, putListing } from "../api.js";
 import { loadView } from "/index.js";
 
+async function sellItem() {
+    let newListingId = Math.random().toFixed(10).substring(2);
+    while (await hasListing(newListingId)) {
+        console.log(newListingId);
+        newListingId = Math.random().toFixed(10).substring(2);
+    }
+    await putListing(new Listing(
+        newListingId,
+        "",
+        new Blob(),
+        [],
+        0,
+        "",
+        "",
+        1,
+        "000"
+    ));
+    console.log(newListingId)
+    loadView("seller", {id: newListingId});
+}
 export function onNavigate() {
     /** @type {HTMLButtonElement} */
     const homeButtonElement = document.getElementById("home-button");
@@ -10,7 +30,7 @@ export function onNavigate() {
     const userPortalElement = document.getElementById("user-portal");
 
     userPortalElement.addEventListener("click", () => loadView("main"));
-    sellButtonElement.addEventListener("click", () => loadView("seller"));
+    sellButtonElement.addEventListener("click", sellItem);
     userPortalElement.addEventListener("click", () => loadView("profile"));
     populateListings();
 
@@ -43,8 +63,7 @@ export function onNavigate() {
         const backgroundImageURL = await blobToURL(listing.thumbnail);
         imageDivElement.style.backgroundImage = `url("${backgroundImageURL}")`
 
-        // TODO: make this go to a specific product
-        productBox.addEventListener("click", () => loadView("product", {id: listing._id}))
+        productBox.addEventListener("click", () => loadView("product", { id: listing._id }))
 
         mainPageDisplay.appendChild(productBox);
     }
