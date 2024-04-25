@@ -1,4 +1,5 @@
 let listingStore = new PouchDB("listing_store");
+
 /**
  * Short version of a listing.
  * Whatever is necessary for generating the front page listing.
@@ -9,6 +10,11 @@ export class Listing {
    * @type { string }
    */
   _id;
+  /**
+   * Title of the listing
+   * @type { string }
+   */
+  title;
   /**
    * An image that is meant to be the thumbnail of the picture.
    * @type { Blob }
@@ -37,24 +43,33 @@ export class Listing {
    * The amount available for the listing.
    * @type { number }
    */
-  quantity
+  quantity;
+  /**
+   * The id of the seller
+   * @type { string }
+   */
+  sellerId;
 
   constructor(
     _id,
+    title,
     thumbnail,
     carousel,
     cost,
     description,
     category,
     quantity,
+    sellerId,
   ) {
     this._id = _id;
+    this.title = title;
     this.thumbnail = thumbnail;
     this.carousel = carousel;
     this.cost = cost;
     this.description = description;
     this.category = category;
     this.quantity = quantity;
+    this.sellerId = sellerId;
   }
 }
 
@@ -85,12 +100,14 @@ export async function getListing(_id) {
   }
   return new Listing(
     listing._id,
+    listing.title,
     thumbnail,
     carousel,
     listing.cost,
     listing.description,
     listing.category,
     1,
+    listing.sellerId,
   );
 }
 
@@ -142,16 +159,18 @@ export async function generateFakeData() {
     await fetch("/assets/002.png").then(res => res.blob()),
     await fetch("/assets/003.png").then(res => res.blob()),
   ]
-  await listingStore.destroy()
   listingStore = new PouchDB("listing_store")
   const fakeListings = [
     new Listing(
       "000",
+      "Cool Sweater",
       image,
       carousel,
       49.99,
       "Men's Waterfowl Sweater, Size M",
-      "Clothing"
+      "Clothing",
+      1,
+      "000"
     )
   ]
   await putListing(fakeListings[0]);
