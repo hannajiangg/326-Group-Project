@@ -1,10 +1,11 @@
-import { blobToURL, getListing, Listing } from "../api.js";
+import { blobToURL, getListing, getProfile, Listing } from "../api.js";
 
 /**
  * Renders the description of the seller interface.
  * @param {Listing} listing 
  */
 async function renderDescription(listing) {
+    const seller = await getProfile(listing.sellerId);
     const titleSpan = document.getElementById('title');
     const quantityLabel = document.getElementById('quantity-label');
     const priceTag = document.getElementById('price-tag');
@@ -12,14 +13,14 @@ async function renderDescription(listing) {
     const sellerEmailLabel = document.getElementById('seller-email-label');
     const descriptionSection = document.getElementById('description-section');
 
-    titleSpan.textContent = "TODO titles need to be added to the data mock";
+    titleSpan.textContent = listing.title;
 
     quantityLabel.textContent = listing.quantity;
 
     priceTag.textContent = listing.cost.toFixed(2);
 
-    sellerLabel.textContent = "TODO Fetch this from API";
-    sellerEmailLabel.textContent = "TODO Fetch this from API";
+    sellerLabel.textContent = seller.name;
+    sellerEmailLabel.textContent = seller.email;
 
     descriptionSection.textContent = listing.description;
 }
