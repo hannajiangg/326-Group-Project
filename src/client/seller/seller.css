@@ -100,20 +100,22 @@ body{
 }
 
 #quantity-label {
-    display: block;
     text-align: center;
     width: 80px;
     color: black;
     line-height: 1;
 }
 
-#description-textarea {
+#description-textarea, #description-section{
     font-family: inherit;
     font-size: 20px;
     background: none;
+    width: 100%;
+}
+
+#description-textarea {
     border: none;
     outline: none;
-    width: 100%;
     resize: none;
     overflow: visible;
 }
