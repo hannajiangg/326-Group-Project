@@ -1,4 +1,29 @@
-import { blobToURL, getListing } from "./api.js";
+import { blobToURL, getListing, getProfile, Listing } from "../api.js";
+
+/**
+ * Renders the description of the seller interface.
+ * @param {Listing} listing 
+ */
+async function renderDescription(listing) {
+    const seller = await getProfile(listing.sellerId);
+    const titleSpan = document.getElementById('title');
+    const quantityLabel = document.getElementById('quantity-label');
+    const priceTag = document.getElementById('price-tag');
+    const sellerLabel = document.getElementById('seller-label');
+    const sellerEmailLabel = document.getElementById('seller-email-label');
+    const descriptionSection = document.getElementById('description-section');
+
+    titleSpan.textContent = listing.title;
+
+    quantityLabel.textContent = listing.quantity;
+
+    priceTag.textContent = listing.cost.toFixed(2);
+
+    sellerLabel.textContent = seller.name;
+    sellerEmailLabel.textContent = seller.email;
+
+    descriptionSection.textContent = listing.description;
+}
 
 export async function onNavigate() {
     const searchParams = new URLSearchParams(window.location.search);
@@ -25,11 +50,6 @@ export async function onNavigate() {
         carouselImage.classList.add("carousel-image");
         appendToCarousel(carouselImage);
     }
-    // Append placeholder for adding image
-    const newImagePlaceholderElement = document.createElement("div");
-    newImagePlaceholderElement.id = "new-image-placeholder";
-    newImagePlaceholderElement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>`
-    appendToCarousel(newImagePlaceholderElement);
 
     /**
      * Jumps to a specific image index
@@ -48,9 +68,8 @@ export async function onNavigate() {
     }
 
     let currentImage = carouselImageList.length - 1;
-    carouselImageList.forEach(element => element.addEventListener("load", () => {
-        jumpToImage(currentImage)
-    }))
+    setTimeout(() => jumpToImage(currentImage), 100);
+
     carouselLeftArrow.addEventListener("click", () => {
         currentImage = Math.max(0, currentImage - 1);
         jumpToImage(currentImage)
@@ -59,4 +78,5 @@ export async function onNavigate() {
         currentImage = Math.min(carouselImageList.length - 1, currentImage + 1);
         jumpToImage(currentImage)
     })
+    renderDescription(currentListing);
 }

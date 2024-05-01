@@ -16,12 +16,32 @@ To run the project:
 
 - **Max:**
   - Main page design and development
+  - Authentication
   - Product page implementation
 
-- **Sagi:**
+- **Sagarika:**
   - Main page design and development
+  - Authentication
   - Seller page implementation
 
 - **Sean:**
   - Profile management
+    
+
+
+### View Pages: Currently, our buttons do not work. 
+
+To access a page, navigate to localhost/index.html#view
+To access the main page, type `localhost/index.html#main` after the URL.
+
+
+#### Available Pages
+
+- `login`
+- `main`
+- `product`
+- `profile`
+- `register`
+- `seller`
+
 

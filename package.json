@@ -44,9 +44,11 @@
     }
   ],
   "scripts": {
-    "dev": "npx http-server src/client -o",
+    "start": "node src/server/server.js",
+    "dev": "http-server src/client -a localhost -p 8080 -o",
     "test": "",
     "milestone-01": "http-server src/docs/milestone-01 -p 3000 -c-1 -o -s",
+    "milestone-02": "http-server src/client -a localhost -p 8080 -c-1 -o -s",
     "validate": "html-validate 'src/**/*.html'",
     "prettier": "prettier src —write"
   },
@@ -56,6 +58,7 @@
     "prettier": "^3.2.5"
   },
   "dependencies": {
+    "express": "^4.19.2",
     "express-session": "^1.18.0",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
