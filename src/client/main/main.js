@@ -1,5 +1,5 @@
 import { blobToURL, getListing, getListings, hasListing, Listing, putListing } from "../api.js";
-import { loadView } from "/index.js";
+import { loadView } from "../index.js";
 
 async function sellItem() {
     let newListingId = Math.random().toFixed(10).substring(2);
