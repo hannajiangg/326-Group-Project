@@ -28,11 +28,13 @@ export function onNavigate() {
     const sellButtonElement = document.getElementById("sell-button");
     /** @type {HTMLElement} */
     const userPortalElement = document.getElementById("user-portal");
+    const searchBar = document.getElementById("search-bar");
 
     userPortalElement.addEventListener("click", () => loadView("main"));
     sellButtonElement.addEventListener("click", sellItem);
     userPortalElement.addEventListener("click", () => loadView("profile"));
     populateListings();
+    searchBar.addEventListener("input", search);
 
     /**
      * @param {Listing} listing 
@@ -73,4 +75,6 @@ export function onNavigate() {
             addListing(await getListing(_id))
         });
     }
+
+    function search() {}
 }
