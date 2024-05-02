@@ -1,5 +1,5 @@
 // let listingStore = new PouchDB("listing_store");
-import PouchDB from "pouchdb"
+// import PouchDB from "pouchdb" 
 let listingStore = new PouchDB("listing_store")
 
 /**
@@ -154,7 +154,7 @@ export async function putListing(listing) {
 }
 
 export async function generateFakeData() {
-  const image = await fetch("/assets/000.png").then(res => res.blob())
+  const image = await fetch("/assets/dasweatervest.jpeg").then(res => res.blob())
   const carousel = [
     await fetch("/assets/000.png").then(res => res.blob()),
     await fetch("/assets/001.png").then(res => res.blob()),

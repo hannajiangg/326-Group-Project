@@ -44,7 +44,7 @@
     }
   ],
   "scripts": {
-    "start": "node src/client",
+    "start": "node src/server/server.js",
     "dev": "http-server src/client -a localhost -p 8080 -o",
     "test": "",
     "milestone-01": "http-server src/docs/milestone-01 -p 3000 -c-1 -o -s",
