@@ -1,4 +1,4 @@
-import { loadView } from "/index.js"
+import { loadView } from "../index.js"
 import { getProfile, putProfile, Profile } from "../api.js";
 
 export async function onNavigate() {

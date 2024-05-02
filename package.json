@@ -44,7 +44,8 @@
     }
   ],
   "scripts": {
-    "dev": "http-server src/client -a localhost -p 8080 -o",
+    "start": "node src/server/server.js",
+    "dev": "open-cli http://localhost:8080 & npm run start",
     "test": "",
     "milestone-01": "http-server src/docs/milestone-01 -p 3000 -c-1 -o -s",
     "milestone-02": "http-server src/client -a localhost -p 8080 -c-1 -o -s",
@@ -54,12 +55,17 @@
   "devDependencies": {
     "html-validate": "^8.18.0",
     "http-server": "^14.1.1",
+    "open-cli": "^8.0.0",
     "prettier": "^3.2.5"
   },
   "dependencies": {
+    "express": "^4.19.2",
     "express-session": "^1.18.0",
+    "google": "^2.1.0",
+    "morgan": "^1.10.0",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^8.0.0"
+    "passport-local-mongoose": "^8.0.0",
+    "pouchdb": "^8.0.1"
   }
 }

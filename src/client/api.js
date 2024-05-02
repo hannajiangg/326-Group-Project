@@ -1,4 +1,6 @@
-let listingStore = new PouchDB("listing_store");
+// let listingStore = new PouchDB("listing_store");
+// import PouchDB from "pouchdb" 
+let listingStore = new PouchDB("listing_store")
 
 /**
  * Short version of a listing.
@@ -159,7 +161,7 @@ export async function generateFakeData() {
     await fetch("/assets/002.png").then(res => res.blob()),
     await fetch("/assets/003.png").then(res => res.blob()),
   ]
-  listingStore = new PouchDB("listing_store")
+  // listingStore = new PouchDB("listing_store")
   const fakeListings = [
     new Listing(
       "000",
