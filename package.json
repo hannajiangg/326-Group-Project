@@ -45,7 +45,7 @@
   ],
   "scripts": {
     "start": "node src/server/server.js",
-    "dev": "npm run start && open-cli http://localhost:3000",
+    "dev": "open-cli http://localhost:8080 & npm run start",
     "test": "",
     "milestone-01": "http-server src/docs/milestone-01 -p 3000 -c-1 -o -s",
     "milestone-02": "http-server src/client -a localhost -p 8080 -c-1 -o -s",
