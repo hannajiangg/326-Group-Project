@@ -487,25 +487,62 @@ export async function hasProfile(_id) {
  * 
  * @param {Profile} profile 
  */
-export async function putProfile(profile) {
-  let entry = { ...profile };
-  if (await hasProfile(profile._id)) {
-    entry._rev = (await profileStore.get(profile._id))._rev
-  }
-  entry = { _rev: entry._rev, ...profile };
-  delete entry.pfp;
-  await profileStore.put(entry)
+// export async function putProfile(profile) {
+//   let entry = { ...profile };
+//   if (await hasProfile(profile._id)) {
+//     entry._rev = (await profileStore.get(profile._id))._rev
+//   }
+//   entry = { _rev: entry._rev, ...profile };
+//   delete entry.pfp;
+//   await profileStore.put(entry)
 
-  entry = await profileStore.get(profile._id);
-  await profileStore.putAttachment(
-    profile._id,
-    "pfp",
-    entry._rev,
-    profile.pfp,
-    profile.pfp.type
-  );
+//   entry = await profileStore.get(profile._id);
+//   await profileStore.putAttachment(
+//     profile._id,
+//     "pfp",
+//     entry._rev,
+//     profile.pfp,
+//     profile.pfp.type
+//   );
+// }
+
+export async function putProfile(profile) {
+  try {
+    const hasProfResponse = await fetch(`./api/profiles/${profile._id}`)
+    // temp variable to store rev
+    let rev
+    if (hasProfResponse.ok) {
+      const prof = await hasProfResponse.json()
+      rev = prof._rev
+    }
+    let entry = { ...profile, _rev: rev }
+    const putProfRes = await fetch(`./api/profiles/${profile._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(entry)
+    })
+
+    if (!putProfRes.ok) {
+      throw new Error('Error fetching putting data')
+    }
+
+    const putAttachmentRes = await fetch(`./api/profiles/${profile._id}/pfp`, {
+      method: 'PUT',
+      body: profile.pfp
+    })
+
+    if (!putAttachmentRes.ok) {
+      throw new Error('Error fetching puttinh data attachment')
+    }
+  }
+  catch (error) {
+    console.log('Error putting profile', error)
+  }
 }
 
+// would prolly stay the same ??
 export async function generateFakeProfile() {
   const image = await fetch("/assets/zoo_buy_logo.jpg").then(res => res.blob())
   // await profileStore.destroy()
@@ -532,5 +569,6 @@ export async function generateFakeProfile() {
     )
   await putProfile(fakeProfile);
 }
+
 
 await generateFakeProfile();
