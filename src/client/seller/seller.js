@@ -1,4 +1,5 @@
 import { blobToURL, getListing, Listing, putListing } from "../api.js";
+import { sellItem, loadView } from "/index.js";
 
 /**
  * Renders the carousel at the top of the page.
@@ -117,6 +118,17 @@ async function renderDescription(listing) {
 }
 
 export async function onNavigate() {
+     /** @type {HTMLButtonElement} */
+   const homeButtonElement = document.getElementById("home-button");
+   /** @type {HTMLButtonElement} */
+   const sellButtonElement = document.getElementById("sell-button");
+   /** @type {HTMLElement} */
+   const userPortalElement = document.getElementById("user-portal");
+
+   homeButtonElement.addEventListener("click", () => loadView("main"));
+   sellButtonElement.addEventListener("click", sellItem);
+   userPortalElement.addEventListener("click", () => loadView("profile"));
+
     const searchParams = new URLSearchParams(window.location.search);
     const currentListing = await getListing(searchParams.get("id"));
     renderCarousel(currentListing);

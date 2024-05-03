@@ -119,3 +119,20 @@ body{
     resize: none;
     overflow: visible;
 }
+
+.post-button {
+    background-color: red;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+
+.post-button:hover {
+    background-color: darkred;
+}

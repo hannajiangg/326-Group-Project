@@ -2,8 +2,9 @@ import express from 'express';
 import logger from 'morgan';
 import { blobToURL, getListing, getListings, hasListing, Listing, putListing } from 'src/client/api.js'; 
 
-const app = express();
-const port = 3000;
+
+const app = express()
+const port = 8080
 
 // Middleware
 app.use(logger('dev'));
@@ -42,6 +43,10 @@ app.post('/api/listings', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
+});
+
+app.post("/api/login", (req, res) => {
+  console.log("login tested");
 });
 
 app.listen(port, () => {
