@@ -1,6 +1,6 @@
 import express from 'express';
 import logger from 'morgan';
-import { blobToURL, getListing, getListings, hasListing, Listing, putListing } from 'src/client/api.js'; 
+import { blobToURL, getListing, hasListing, Listing, putListing } from '../client/api.js'; 
 
 
 const app = express()

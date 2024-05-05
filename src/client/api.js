@@ -294,8 +294,8 @@ export async function generateFakeData() {
     .then(res => res.blob())
 
     const carouselBlobs = await Promise.all(carouselImgPaths.map(async (url) => {
-      const url = await fetch(url)
-      return url.blob()
+      const resurl = await fetch(url)
+      return resurl.blob()
     }))
 
     const fakeListings = [
@@ -450,7 +450,7 @@ export async function hasProfile(_id) {
   // );
 // }
 
-export async function hasProfile(_id) {
+export async function getProfile(_id) {
   try {
     const response = await fetch(`./api/profiles/${_id}`)
     if (response.ok) {
@@ -542,7 +542,7 @@ export async function putProfile(profile) {
   }
 }
 
-// would prolly stay the same ??
+// would prolly stay the same
 export async function generateFakeProfile() {
   const image = await fetch("/assets/zoo_buy_logo.jpg").then(res => res.blob())
   // await profileStore.destroy()
