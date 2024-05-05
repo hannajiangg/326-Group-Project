@@ -1,6 +1,7 @@
 import express from 'express';
 import logger from 'morgan';
 import { blobToURL, getListing, hasListing, Listing, putListing } from '../client/api.js'; 
+// import PouchDB from "pouchdb"
 
 
 const app = express()

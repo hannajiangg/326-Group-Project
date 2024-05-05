@@ -1,6 +1,5 @@
-// let listingStore = new PouchDB("listing_store");
-// import PouchDB from "pouchdb" 
-let listingStore = new PouchDB("listing_store")
+// import PouchDB from "pouchdb"
+// let listingStore = new PouchDB("listing_store")
 
 /**
  * Short version of a listing.
@@ -111,7 +110,7 @@ export async function getListing() {
 //     carousel.push(carouselImage);
 //   }
 //   return new Listing(
-//     listing._id,
+//     listing._id, 
 //     listing.title,
 //     thumbnail,
 //     carousel,
@@ -124,42 +123,54 @@ export async function getListing() {
 // }
 
 export async function get_listing(_id) {
-  const response = await fetch(`./api/listings/${_id}`)
-  if (response.ok) {
-    const data = response.json()
-    if (data) {
-      const listing = new Listing(
-        listing._id,
-        listing.title, 
-        thumbnail, 
-        carousel, 
-        listing.cost, 
-        listing.description, 
-        listing.category,
-        1,
-        listing.sellerId
-      )
-
-      const carousel = await Promise.all(
-        Array.from({ length: data.carouselLength }, async (_, i) => {
-          const carouselImageResponse = await fetch(`./api/listings/${_id}/carousel/${i}`);
-          if (carouselImageResponse.ok) {
-            const blob = await carouselImageResponse.blob();
-            return blob;
-          } else {
-            throw new Error(`Failed to fetch carousel image ${i}`);
-          }
-        })
-      );
-
-      listing.carousel = carousel
-      return listing
+  try {
+    // check if the listing exists 
+    const listingExists = await hasListing(_id)
+    // return null if it does not
+    if (!listingExists) return null
+    // get the server response 
+    const response = await fetch(`./api/listings/${_id}`)
+    if (!response.ok) {
+      throw new Error('Error fetching data')
     }
-    else return null
+
+    // get the listing data
+    const listingData = await response.json()
+
+    // get the thumbnail
+    const thumbnailResponse = await fetch(`./api/listings/${_id}/thumbnail`)
+    if (!thumbnailResponse.ok) {
+      throw new Error('Error fetching thumbnail response')
+    }
+
+    const thumbnailBlob = await thumbnailResponse.blob()
+    const thumbnailURL = blobToURL(thumbnailBlob)
+
+    const carousel = []
+    for (let i = 0; i < listingData.carouselLength; i++) {
+      let carouselImgResponse = await fetch(`./api/listings/${_id}/carousel/${i}`)
+      if (!carouselImgResponse.ok) {
+        throw new Error('Error fetching image')
+      }
+      let carouselImgBlob = carouselImgResponse.blob()
+      let carouselImgURL = await blobToURL(carouselImgBlob)
+      carousel.push(carouselImgURL)
+    }
+
+    return new Listing(
+      listingData._id,
+      listingData.title,
+      thumbnailURL,
+      carousel,
+      listingData.cost,
+      listingData.description,
+      listingData.category,
+      1,
+      listingData.sellerId
+    )
   }
-  else if(response.status === 404) return null
-  else {
-    throw new Error(`Failed to fetch listing ${_id}`)
+  catch (error) {
+    console.log('Error fetching data: ', error)
   }
 }
 
@@ -344,7 +355,7 @@ export async function blobToURL(blob) {
 
 await generateFakeData();
 
-let profileStore = new PouchDB("profile_store");
+// let profileStore = new PouchDB("profile_store");
 
 export class Profile {
   /**
@@ -463,16 +474,16 @@ export async function getProfile(_id) {
         throw new Error('Failed to fetch profile picture')
       }
       // convert this profile pic to a blob 
-      const pfpBlob = await pfpResponse.blob()
+      // const pfpBlob = await pfpResponse.blob()
       return new Profile(
-        profile._id,
+        profilData._id,
         pfp,
-        profile.name,
-        profile.email,
-        profile.payments,
-        profile.posted,
-        profile.sold,
-        profile.purchased
+        profilData.name,
+        profilData.email,
+        profilData.payments,
+        profilData.posted,
+        profilData.sold,
+        profilData.purchased
       )
     }
     else if (response.status === 404) return null
