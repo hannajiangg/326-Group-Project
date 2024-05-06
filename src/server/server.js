@@ -1,7 +1,10 @@
+// TODO Add endpoints for all database functionality
 import express from 'express';
 import logger from 'morgan';
-import { blobToURL, getListing, hasListing, Listing, putListing } from '../client/api.js'; 
-// import PouchDB from "pouchdb"
+// import { blobToURL, getListing, hasListing, Listing, putListing } from '../client/api.js'; 
+// Client and server code should be separate
+import { Listing, Profile } from "../common/schema";
+import { getListings, hasListing, hasProfile, putListing } from './db';
 
 
 const app = express()
@@ -25,12 +28,22 @@ app.get('/api/listings', async (req, res) => {
 app.get('/api/listings/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const listing = await getListing(id);
-    if (listing) {
+    if (await hasListing(id)) {
+      const listing = await getListing(id);
       res.json(listing);
     } else {
       res.status(404).json({ error: 'Listing not found' });
     }
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/api/listings/:id/exists', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const exists = hasListing(id);
+    res.status(200).json(exists);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }

@@ -1,97 +1,28 @@
+// TODO make all database related functions use fetch
 // import PouchDB from "pouchdb"
 // let listingStore = new PouchDB("listing_store")
 
-/**
- * Short version of a listing.
- * Whatever is necessary for generating the front page listing.
- */
-export class Listing {
-  /**
-   * ID for the listing.
-   * @type { string }
-   */
-  _id;
-  /**
-   * Title of the listing
-   * @type { string }
-   */
-  title;
-  /**
-   * An image that is meant to be the thumbnail of the picture.
-   * @type { Blob }
-   */
-  thumbnail;
-  /**
-   * @type { Blob[] }
-   */
-  carousel;
-  /**
-   * Cost of the item in dollars.
-   * @type { number }
-   */
-  cost;
-  /**
-   * Short description of the item.
-   * @type { string }
-   */
-  description;
-  /**
-   * The category of the listing.
-   * @type { string }
-   */
-  category;
-  /**
-   * The amount available for the listing.
-   * @type { number }
-   */
-  quantity;
-  /**
-   * The id of the seller
-   * @type { string }
-   */
-  sellerId;
-
-  constructor(
-    _id,
-    title,
-    thumbnail,
-    carousel,
-    cost,
-    description,
-    category,
-    quantity,
-    sellerId,
-  ) {
-    this._id = _id;
-    this.title = title;
-    this.thumbnail = thumbnail;
-    this.carousel = carousel;
-    this.cost = cost;
-    this.description = description;
-    this.category = category;
-    this.quantity = quantity;
-    this.sellerId = sellerId;
-  }
-}
+import { Listing, Profile } from "../common/schema";
 
 /**
  * Returns a list of all listings.
  * @returns { Promise<String[]> }
  */
-// export async function getListings() {
-//   const listings = await listingStore.allDocs();
-//   return listings.rows.map(x => x.id);
-// }
-
-export async function getListing() {
-  const response = await fetch(`./api/listings`)
-  if (response.ok) {
-    return response.json()
-  }
-  else {
-    throw new Error('Failed to fetch listings')
-  }
+export async function getListings() {
+  const response = await fetch('./api/listings');
+  return response.json();
 }
+
+// You must specify an id when fetching a listing
+// export async function getListing() {
+//   const response = await fetch(`./api/listings`)
+//   if (response.ok) {
+//     return response.json()
+//   }
+//   else {
+//     throw new Error('Failed to fetch listings')
+//   }
+// }
 
 /**
  * Returns a listing if it exists
@@ -122,76 +53,40 @@ export async function getListing() {
 //   );
 // }
 
-export async function get_listing(_id) {
-  try {
-    // check if the listing exists 
-    const listingExists = await hasListing(_id)
-    // return null if it does not
-    if (!listingExists) return null
-    // get the server response 
-    const response = await fetch(`./api/listings/${_id}`)
-    if (!response.ok) {
-      throw new Error('Error fetching data')
-    }
+/**
+ * Returns a listing if it exists
+ * @param {string} _id 
+ * @returns { Listing | null }
+ */
+export async function getListing(_id) {
+  const response = await fetch(`./api/listings/${_id}`)
+  return response.json();
+}
 
-    // get the listing data
-    const listingData = await response.json()
-
-    // get the thumbnail
-    const thumbnailResponse = await fetch(`./api/listings/${_id}/thumbnail`)
-    if (!thumbnailResponse.ok) {
-      throw new Error('Error fetching thumbnail response')
-    }
-
-    const thumbnailBlob = await thumbnailResponse.blob()
-    const thumbnailURL = blobToURL(thumbnailBlob)
-
-    const carousel = []
-    for (let i = 0; i < listingData.carouselLength; i++) {
-      let carouselImgResponse = await fetch(`./api/listings/${_id}/carousel/${i}`)
-      if (!carouselImgResponse.ok) {
-        throw new Error('Error fetching image')
-      }
-      let carouselImgBlob = carouselImgResponse.blob()
-      let carouselImgURL = await blobToURL(carouselImgBlob)
-      carousel.push(carouselImgURL)
-    }
-
-    return new Listing(
-      listingData._id,
-      listingData.title,
-      thumbnailURL,
-      carousel,
-      listingData.cost,
-      listingData.description,
-      listingData.category,
-      1,
-      listingData.sellerId
-    )
-  }
-  catch (error) {
-    console.log('Error fetching data: ', error)
-  }
+/**
+ * Returns true if a listing id exists
+ * @param {string} _id 
+ * @returns {boolean}
+ */
+export async function hasListing(_id) {
+  const response = await fetch(`./api/listings/${_id}/exists`)
+  return await response.body();
 }
 
 // export async function hasListing(_id) {
-//   return await listingStore.get(_id).then(() => true, () => false)
+//   try {
+//     const response = await fetch(`./api/listings/${_id}`)
+//     if (response.ok) {
+//       return true
+//     }
+//     else if (response.status === 404) return false 
+//     else throw new Error('Failed to fetch listing existence')
+//   }
+//   catch (error) {
+//     console.error('Error fetching listing: ', error)
+//     throw error
+//   }
 // }
-
-export async function hasListing(_id) {
-  try {
-    const response = await fetch(`./api/listings/${_id}`)
-    if (response.ok) {
-      return true
-    }
-    else if (response.status === 404) return false 
-    else throw new Error('Failed to fetch listing existence')
-  }
-  catch (error) {
-    console.error('Error fetching listing: ', error)
-    throw error
-  }
-}
 
 /**
  * 
@@ -357,68 +252,6 @@ await generateFakeData();
 
 // let profileStore = new PouchDB("profile_store");
 
-export class Profile {
-  /**
-   * ID for the profile.
-   * @type { string }
-   */
-  _id;
-  /**
-   * For user's profile picture.
-   * @type { Blob }
-   */
-  pfp;
-  /**
-   * @type { string }
-   */
-  name;
-  /**
-   * User's email address.
-   * @type { string }
-   */
-  email;
-  /**
-   * Saved payment methods.
-   * @type { string[] }
-   */
-  payments;
-  /**
-   * User's currently posted items.
-   * @type { {}[] }
-   */
-  posted;
-  /**
-   * User's sold items.
-   * @type { {}[] }
-   */
-  sold;
-  /**
-   * User's purchased items.
-   * @type { {}[] }
-   */
-  purchased;
-
-  constructor(
-    _id,
-    pfp,
-    name,
-    email,
-    payments,
-    posted,
-    sold,
-    purchased
-  ) {
-    this._id = _id;
-    this.pfp = pfp;
-    this.name = name;
-    this.email = email;
-    this.payments = payments;
-    this.posted = posted;
-    this.sold = sold;
-    this.purchased = purchased;
-  }
-}
-
 // export async function hasProfile(_id) {
 //   return await profileStore.get(_id).then(() => true, () => false)
 // }
@@ -554,46 +387,14 @@ export async function putProfile(profile) {
 }
 
 // would prolly stay the same
-// export async function generateFakeProfile() {
-//   const image = await fetch("/assets/zoo_buy_logo.jpg").then(res => res.blob())
-//   // await profileStore.destroy()
-//   // profileStore = new PouchDB("profile_store")
-//   const fakeProfile =
-//     new Profile(
-//       "000",
-//       image,
-//       "Tim Richards",
-//       "richards@cs.umass.edu",
-//       ["Example 1", "Example 2"],
-//       [
-//         { _id: "000", name: "Men's Waterfowl Sweater Vest", qt: 1 },
-//         { name: "Men's Jeans", qt: 2 },
-//       ],
-//       [
-//         { _id: "000", name: "Men's Waterfowl Sweater Vest", qt: 2 },
-//         { name: "Men's Jeans", qt: 3 },
-//       ],
-//       [
-//         { name: "Used Bike", qt: 1 },
-//         { name: "UMass T-Shirt", qt: 5 },
-//       ]
-//     )
-//   await putProfile(fakeProfile);
-// }
-
 export async function generateFakeProfile() {
-  try {
-    const imageResponse = await fetch("./api/assets/zoo_buy_logo.jpg");
-
-    if (!imageResponse.ok) {
-      throw new Error("Failed to fetch image");
-    }
-
-    const imageBlob = await imageResponse.blob();
-
-    const fakeProfile = new Profile(
+  const image = await fetch("/assets/zoo_buy_logo.jpg").then(res => res.blob())
+  // await profileStore.destroy()
+  // profileStore = new PouchDB("profile_store")
+  const fakeProfile =
+    new Profile(
       "000",
-      imageBlob,
+      image,
       "Tim Richards",
       "richards@cs.umass.edu",
       ["Example 1", "Example 2"],
@@ -609,13 +410,8 @@ export async function generateFakeProfile() {
         { name: "Used Bike", qt: 1 },
         { name: "UMass T-Shirt", qt: 5 },
       ]
-    );
-
-    await putProfile(fakeProfile);
-  } catch (error) {
-    console.error("Error generating fake profile:", error);
-  }
+    )
+  await putProfile(fakeProfile);
 }
-
 
 await generateFakeProfile();
