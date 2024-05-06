@@ -2,7 +2,8 @@
 // import PouchDB from "pouchdb"
 // let listingStore = new PouchDB("listing_store")
 
-import { Listing, Profile } from "../common/schema";
+import { Listing, Profile } from "./schema.js";
+export { Listing, Profile }
 
 /**
  * Returns a list of all listings.
@@ -60,7 +61,11 @@ export async function getListings() {
  */
 export async function getListing(_id) {
   const response = await fetch(`./api/listings/${_id}`)
-  return response.json();
+  if(response.ok){
+    return response.json();
+  } else {
+    return null;
+  }
 }
 
 /**
@@ -68,9 +73,10 @@ export async function getListing(_id) {
  * @param {string} _id 
  * @returns {boolean}
  */
+
 export async function hasListing(_id) {
-  const response = await fetch(`./api/listings/${_id}/exists`)
-  return await response.body();
+  const response = await fetch(`./api/listings/${_id}`);
+  return response.ok;
 }
 
 // export async function hasListing(_id) {
@@ -126,21 +132,13 @@ export async function hasListing(_id) {
 
 export async function putListing(listing) {
   try {
-    // check if the listing exists
-    const exists = await hasListing(listing._id)
-    let entry = { ...listing }
-    if (exists) {
-      entry._rev = (await listingStore.get(listing._id))._rev
-    }
-    entry.carouselLength = listing.carousel.length
-
-    await fetch(`./api/listings/${listing._id}`, {
-      method: exists ? 'PUT' : 'POST', 
+    await fetch(`./api/listings`, {
+      method: 'PUT', 
       headers: {
         'Content-type' : 'application/json'  
       },
-      body: JSON.stringify(entry)
-    })
+      body: JSON.stringify(listing)
+    });
 
     // thumbnail implementation
     if (listing.thumbnail) {
@@ -153,9 +151,9 @@ export async function putListing(listing) {
     // uploading images in carousel
     for (let i = 0; i < listing.carousel.length; i++) {
       // fetch the listings and put them in the carousel
-      await fetch(`./api/listings/${listing._id}`, {
+      await fetch(`./api/listings/${listing._id}/carousel/${i}`, {
         method: 'PUT', 
-        body: listing.carousel
+        body: listing.carousel[i]
       })
     }
     console.log('Listing created successfully')
@@ -208,8 +206,8 @@ export async function generateFakeData() {
       new Listing(
         "000",
         "Cool Sweater",
-        image,
-        carousel,
+        imgBlob,
+        carouselBlobs,
         49.99,
         "Men's Waterfowl Sweater, Size M",
         "Clothing",

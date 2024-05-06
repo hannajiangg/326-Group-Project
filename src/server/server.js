@@ -3,8 +3,8 @@ import express from 'express';
 import logger from 'morgan';
 // import { blobToURL, getListing, hasListing, Listing, putListing } from '../client/api.js'; 
 // Client and server code should be separate
-import { Listing, Profile } from "../common/schema";
-import { getListings, hasListing, hasProfile, putListing } from './db';
+import { Listing, Profile } from "../common/schema.js";
+import { getListing, getListings, hasListing, hasProfile, putListing } from './db.js';
 
 
 const app = express()
@@ -15,12 +15,14 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('src/client'));
+app.use(express.static('src/common')); // TODO make a better solution for hosting common files
 
 app.get('/api/listings', async (req, res) => {
   try {
     const listings = await getListings();
     res.json(listings);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
@@ -35,26 +37,18 @@ app.get('/api/listings/:id', async (req, res) => {
       res.status(404).json({ error: 'Listing not found' });
     }
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
-app.get('/api/listings/:id/exists', async (req, res) => {
-  const { id } = req.params;
-  try {
-    const exists = hasListing(id);
-    res.status(200).json(exists);
-  } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
-app.post('/api/listings', async (req, res) => {
+app.put('/api/listings', async (req, res) => {
   const listingData = req.body;
   try {
     await putListing(listingData);
     res.status(201).json({ message: 'Listing created/updated successfully' });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });

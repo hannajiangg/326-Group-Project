@@ -1,5 +1,5 @@
 import PouchDB from 'pouchdb';
-import { Listing } from '../common/schema';
+import { Listing } from '../common/schema.js';
 
 const listingTable = new PouchDB("listings");
 const profileTable = new PouchDB("profiles");
@@ -46,25 +46,26 @@ export async function putListing(listing) {
   entry.carouselLength = listing.carousel.length;
   await listingTable.put(entry)
 
-  entry = await listingTable.get(listing._id);
-  await listingTable.putAttachment(
-    listing._id,
-    "thumbnail",
-    entry._rev,
-    listing.thumbnail,
-    listing.thumbnail.type
-  );
+  // TODO Image Functionality Currently Broken
+  // entry = await listingTable.get(listing._id);
+  // await listingTable.putAttachment(
+  //   listing._id,
+  //   "thumbnail",
+  //   entry._rev,
+  //   listing.thumbnail,
+  //   listing.thumbnail.type
+  // );
 
-  for(let i = 0; i < listing.carousel.length; i++){
-    entry = await listingTable.get(listing._id);
-    await listingTable.putAttachment(
-      listing._id,
-      `carousel_${i}`,
-      entry._rev,
-      listing.carousel[i],
-      listing.carousel[i].type
-    );
-  }
+  // for(let i = 0; i < listing.carousel.length; i++){
+  //   entry = await listingTable.get(listing._id);
+  //   await listingTable.putAttachment(
+  //     listing._id,
+  //     `carousel_${i}`,
+  //     entry._rev,
+  //     listing.carousel[i],
+  //     listing.carousel[i].type
+  //   );
+  // }
 }
 
 /**

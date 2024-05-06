@@ -74,7 +74,7 @@ loadView(initialView, initialSearch);
 export async function sellItem() {
   let newListingId = Math.random().toFixed(10).substring(2);
   while (await hasListing(newListingId)) {
-      console.log(newListingId);
+      console.log(await hasListing(newListingId));
       newListingId = Math.random().toFixed(10).substring(2);
   }
   await putListing(new Listing(
