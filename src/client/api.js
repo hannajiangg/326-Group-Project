@@ -554,14 +554,46 @@ export async function putProfile(profile) {
 }
 
 // would prolly stay the same
+// export async function generateFakeProfile() {
+//   const image = await fetch("/assets/zoo_buy_logo.jpg").then(res => res.blob())
+//   // await profileStore.destroy()
+//   // profileStore = new PouchDB("profile_store")
+//   const fakeProfile =
+//     new Profile(
+//       "000",
+//       image,
+//       "Tim Richards",
+//       "richards@cs.umass.edu",
+//       ["Example 1", "Example 2"],
+//       [
+//         { _id: "000", name: "Men's Waterfowl Sweater Vest", qt: 1 },
+//         { name: "Men's Jeans", qt: 2 },
+//       ],
+//       [
+//         { _id: "000", name: "Men's Waterfowl Sweater Vest", qt: 2 },
+//         { name: "Men's Jeans", qt: 3 },
+//       ],
+//       [
+//         { name: "Used Bike", qt: 1 },
+//         { name: "UMass T-Shirt", qt: 5 },
+//       ]
+//     )
+//   await putProfile(fakeProfile);
+// }
+
 export async function generateFakeProfile() {
-  const image = await fetch("/assets/zoo_buy_logo.jpg").then(res => res.blob())
-  // await profileStore.destroy()
-  // profileStore = new PouchDB("profile_store")
-  const fakeProfile =
-    new Profile(
+  try {
+    const imageResponse = await fetch("./api/assets/zoo_buy_logo.jpg");
+
+    if (!imageResponse.ok) {
+      throw new Error("Failed to fetch image");
+    }
+
+    const imageBlob = await imageResponse.blob();
+
+    const fakeProfile = new Profile(
       "000",
-      image,
+      imageBlob,
       "Tim Richards",
       "richards@cs.umass.edu",
       ["Example 1", "Example 2"],
@@ -577,8 +609,12 @@ export async function generateFakeProfile() {
         { name: "Used Bike", qt: 1 },
         { name: "UMass T-Shirt", qt: 5 },
       ]
-    )
-  await putProfile(fakeProfile);
+    );
+
+    await putProfile(fakeProfile);
+  } catch (error) {
+    console.error("Error generating fake profile:", error);
+  }
 }
 
 
