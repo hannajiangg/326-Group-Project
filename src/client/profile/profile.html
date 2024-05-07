@@ -1,26 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Page</title>
-  <link rel="stylesheet" href="/common.css">
-  <!-- Link to CSS file for this specific page -->
-  <link rel="stylesheet" href="/profile/profile.css">
-</head>
-
-<body>
-  <div id="content">
-    <!-- replace photo with actual user photo -->
-    <h1 id="title">Profile</h1>
-    <div id="profile">
-      <img alt="Profile Picture" id="pfp" src="./assets/loading.png">
-      <div id="info">
-        <div id="name-section">
-          <div id="name-block">
-            <label for="name">Name</label>
-            <input class="one" id="name" type="text" disabled>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/common.css" />
+    <!-- Link to CSS file for this specific page -->
+    <link rel="stylesheet" href="/profile/profile.css" />
+    <link rel="stylesheet" href="/main/main.css">
+  <body>
+    <nav class="flex" id="main-page-nav">
+      <button id="home-button" type="button">HOME</button>
+      <label for="search-bar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </label>
+      <input type="text" id="search-bar" class="flex-grow font-x-large" value="Search" placeholder="Search...">
+      <button id="sell-button" type="button">SELL</button>
+      <i class="fa-solid fa-user" id="user-portal"></i>
+    </nav>
+    <div id="content">
+      <!-- replace photo with actual user photo -->
+      <h1 id="title">Profile</h1>
+      <div id="profile">
+        <img alt="Profile Picture" id="pfp" />
+        <div id="info">
+          <div id="name-section">
+            <div id="name-block">
+              <label for="name">Name</label>
+              <input class="one" id="name" disabled />
+            </div>
+            <button class="edit" id="edit-name">Edit</button>
+            <button class="edit" id="save-name" type="submit" hidden>
+              Save
+            </button>
           </div>
           <button class="edit" id="edit-name" type="button">Edit</button>
           <button class="edit" id="save-name" type="submit" hidden>

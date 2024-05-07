@@ -7,9 +7,20 @@
   <title>Edit Listing</title>
   <link rel="stylesheet" href="/common.css"> <!-- Link to CSS file for this specific page -->
   <link rel="stylesheet" href="/seller/seller.css"> <!-- Link to CSS file for this specific page -->
+  <link rel="stylesheet" href="/main/main.css">
+  <link rel="stylesheet" href="/seller/seller.css">
 </head>
 
 <body>
+  <nav class="flex" id="main-page-nav">
+    <button id="home-button" type="button">HOME</button>
+    <label for="search-bar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+    </label>
+    <input type="text" id="search-bar" class="flex-grow font-x-large" value="Search" placeholder="Search...">
+    <button id="sell-button" type="button">SELL</button>
+    <i class="fa-solid fa-user" id="user-portal"></i>
+</nav>
   <div id="carousel">
     <div id="carousel-images">
     </div>
@@ -49,5 +60,7 @@
     </div>
     <textarea id="description-textarea" placeholder="Enter Description Here(Optional)"></textarea>
   </div>
+  <div>
+    <button class="post-button">Post</button>
+  </div>
 </body>
-</html>
