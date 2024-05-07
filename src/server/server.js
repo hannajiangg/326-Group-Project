@@ -10,7 +10,7 @@ import path from "node:path"
 // import { blobToURL, getListing, hasListing, Listing, putListing } from '../client/api.js'; 
 // Client and server code should be separate
 import { Listing, Profile } from "../common/schema.js";
-import { getListing, getListings, hasListing, hasProfile, putListing } from './db.js';
+import { getListing, getListings, hasListing, hasProfile, putListing, putProfile } from './db.js';
 
 
 const app = express()
@@ -34,7 +34,44 @@ app.use(passport.session());
 app.use(express.static('src/client'));
 app.use(express.static('src/common')); // TODO make a better solution for hosting common files
 
+console.log(new URL('api/login/callback', process.env['HOST_URI']).href)
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env['GOOGLE_CLIENT_ID'],
+      clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
+      callbackURL: new URL('api/login/callback', process.env['HOST_URI']).href,
+    },
+    (accessToken, refreshToken, profile, done) => {
+      return done(null, profile);
+    }
+  )
+);
+
+passport.serializeUser(async (user, done) => {
+  User[user.id] = user;
+  if(!(await hasProfile(user.id))){
+    await putProfile(new Profile(
+      user.id,
+      new Blob(),
+      user.displayName,
+      user._json.email,
+      [],
+      [],
+      [],
+      []
+    ))
+  }
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  const user = User[id];
+  done(null, user);
+});
+
 app.get('/api/listings', async (req, res) => {
+  // console.log(req.user);
   try {
     const listings = await getListings();
     res.json(listings);
@@ -60,37 +97,20 @@ app.get('/api/listings/:id', async (req, res) => {
 });
 
 app.put('/api/listings', async (req, res) => {
+  /** @type {Listing} */
   const listingData = req.body;
   try {
+    if(!req.user){
+      res.status(401).json({ message: 'Listing created/updated successfully' });
+      return;
+    }
+    listingData.sellerId = req.user.id;
     await putListing(listingData);
     res.status(201).json({ message: 'Listing created/updated successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-});
-
-console.log(new URL('api/login/callback', process.env['HOST_URI']).href)
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env['GOOGLE_CLIENT_ID'],
-      clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
-      callbackURL: new URL('api/login/callback', process.env['HOST_URI']).href,
-    },
-    (accessToken, refreshToken, profile, done) => {
-      return done(null, profile);
-    }
-  )
-);
-passport.serializeUser((user, done) => {
-  User[user.id] = user;
-  console.log(JSON.stringify(User, undefined, "    "));
-  done(null, user.id);
-});
-passport.deserializeUser((id, done) => {
-  const user = User[id];
-  done(null, user);
 });
 
 app.get("/api/login/callback", passport.authenticate('google', {

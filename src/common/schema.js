@@ -81,7 +81,7 @@ export class Profile {
   _id;
   /**
    * For user's profile picture.
-   * @type { Blob }
+   * @type { string }
    */
   pfp;
   /**

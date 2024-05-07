@@ -386,13 +386,12 @@ export async function putProfile(profile) {
 
 // would prolly stay the same
 export async function generateFakeProfile() {
-  const image = await fetch("/assets/zoo_buy_logo.jpg").then(res => res.blob())
   // await profileStore.destroy()
   // profileStore = new PouchDB("profile_store")
   const fakeProfile =
     new Profile(
       "000",
-      image,
+      "./assets/zoo_buy_logo.jpg",
       "Tim Richards",
       "richards@cs.umass.edu",
       ["Example 1", "Example 2"],
