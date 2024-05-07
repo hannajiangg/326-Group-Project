@@ -53,7 +53,7 @@ passport.serializeUser(async (user, done) => {
   if(!(await hasProfile(user.id))){
     await putProfile(new Profile(
       user.id,
-      new Blob(),
+      user._json.picture,
       user.displayName,
       user._json.email,
       [],
@@ -84,7 +84,7 @@ app.get('/api/listings', async (req, res) => {
 app.get('/api/listings/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    if (hasListing(id)) {
+    if (await hasListing(id)) {
       const listing = await getListing(id);
       res.json(listing);
     } else {

@@ -16,7 +16,7 @@ export async function getListings() {
 /**
  * Retrieves a specific listing
  * @param {string} id 
- * @returns {Listing}
+ * @returns {Promise<Listing>}
  */
 export async function getListing(id) {
   return await listingTable.get(id);
@@ -81,7 +81,7 @@ export async function hasProfile(id) {
 /**
  * Returns a profile if it exists
  * @param {string} id 
- * @returns { Profile | null }
+ * @returns { Promise<Profile | null> }
  */
 export async function getProfile(id) {
   if(!hasProfile(id))
