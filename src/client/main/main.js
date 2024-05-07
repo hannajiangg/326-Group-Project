@@ -1,4 +1,4 @@
-import { blobToURL, getListing, getListings, Listing } from "../api.js";
+import { blobToURL, getListing, getListings, hasListing, Listing, putListing } from "../api.js";
 import { sellItem, loadView } from "/index.js";
 
 export function onNavigate() {
@@ -42,7 +42,7 @@ export function onNavigate() {
 
         priceTagElement.innerText = `$${listing.cost.toFixed(2)}`;
 
-        const backgroundImageURL = await blobToURL(listing.thumbnail);
+        const backgroundImageURL = `./api/listings/${listing._id}/thumbnail`;
         imageDivElement.style.backgroundImage = `url("${backgroundImageURL}")`
 
         productBox.addEventListener("click", () => loadView("product", { id: listing._id }))

@@ -1,4 +1,4 @@
-import { getProfile, putProfile } from "../api.js";
+import { getProfile, putProfile, Profile } from "../api.js";
 import { sellItem, loadView } from "/index.js";
 
 export async function onNavigate() {
