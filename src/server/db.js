@@ -1,5 +1,5 @@
 import PouchDB from 'pouchdb';
-import { Listing } from '../common/schema.js';
+import { Listing, Profile } from '../common/schema.js';
 
 const listingTable = new PouchDB("listings");
 const profileTable = new PouchDB("profiles");
@@ -35,9 +35,10 @@ export async function hasListing(id) {
  * Puts a listing into the database, overwriting an old version if it exists
  * @param {Listing} listing 
  */
+// TODO
 export async function putListing(listing) {
   let entry = { ...listing };
-  if (await hasListing(listing._id)) {
+  if (hasListing(listing._id)) {
     entry._rev = (await listingTable.get(listing._id))._rev
   }
   entry = { _rev: entry._rev, ...listing };
@@ -83,7 +84,7 @@ export async function hasProfile(id) {
  * @returns { Profile | null }
  */
 export async function getProfile(id) {
-  if(!await hasProfile(id))
+  if(!hasProfile(id))
     return null;
   let profile = await profileStore.get(id);
   const pfp = await profileStore.getAttachment(id, "pfp");
@@ -106,7 +107,7 @@ export async function getProfile(id) {
  */
 export async function putProfile(profile) {
   let entry = { ...profile };
-  if (await hasProfile(profile._id)) {
+  if (hasProfile(profile._id)) {
     entry._rev = (await profileStore.get(profile._id))._rev
   }
   entry = { _rev: entry._rev, ...profile };

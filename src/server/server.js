@@ -30,7 +30,7 @@ app.get('/api/listings', async (req, res) => {
 app.get('/api/listings/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    if (await hasListing(id)) {
+    if (hasListing(id)) {
       const listing = await getListing(id);
       res.json(listing);
     } else {
