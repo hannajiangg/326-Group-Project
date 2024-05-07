@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -34,30 +34,36 @@
               Save
             </button>
           </div>
-          <br />
-          <div id="email-section">
-            <div id="email-block">
-              <label for="email">Email</label>
-              <input class="one" id="email" disabled />
-            </div>
-            <button class="edit" id="edit-email">Edit</button>
-            <button class="edit" id="save-email" hidden>Save</button>
+          <button class="edit" id="edit-name" type="button">Edit</button>
+          <button class="edit" id="save-name" type="submit" hidden>
+            Save
+          </button>
+        </div>
+        <br>
+        <div id="email-section">
+          <div id="email-block">
+            <label for="email">Email</label>
+            <input class="one" id="email" type="email" disabled>
           </div>
-          <br />
-          <div id="payments-block">
-            <label id="payments-label" for="payments">Payment Options</label>
-            <div id="payments"></div>
-          </div>
+          <button class="edit" id="edit-email" type="button">Edit</button>
+          <button class="edit" id="save-email" type="button" hidden>Save</button>
+        </div>
+        <br>
+        <div id="payments-block">
+          <label id="payments-label" for="payments">Payment Options</label>
+          <div id="payments"></div>
         </div>
       </div>
-      <div id="items">
-        <h2>Posted Items</h2>
-        <div class="list" id="posted"></div>
-        <h2>Sold Items</h2>
-        <div class="list" id="sold"></div>
-        <h2>Purchased Items</h2>
-        <div class="list" id="purchased"></div>
-      </div>
     </div>
-  </body>
+    <div id="items">
+      <h2>Posted Items</h2>
+      <div class="list" id="posted"></div>
+      <h2>Sold Items</h2>
+      <div class="list" id="sold"></div>
+      <h2>Purchased Items</h2>
+      <div class="list" id="purchased"></div>
+    </div>
+  </div>
+</body>
+
 </html>
