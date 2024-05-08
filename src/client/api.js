@@ -143,41 +143,27 @@ export async function putListing(listing) {
       form.append('thumbail', listing.thumbail, 'thumbnail.jpg')
     }
 
-    if (listing.carousel) {
-      for (let i = 0; i < listing.carousel.length; i++) {
-        form.append('listing')
-      }
+    for (let i = 0; i < listing.carousel.length; i++) {
+      form.append(`carousel-${i}`, listing.carousel[i], `carousel-${i}.jpg`)
     }
+
+    const options = {
+      method: 'PUT',
+      body: form
+    }
+
+    const response = await fetch('./api/listings', options)
+    const data = await response.json()
+
+    listing.thumbnailUrl = data.thumbnailUrl
+    listing.carouselUrls = data.carouselUrls
+
+    console.log('attachment uploaded successfully')
   }
   catch (error) {
-
+    console.error('Error uploading')
   }
 }
-
-// export async function generateFakeData() {
-//   const image = await fetch("/assets/dasweatervest.jpeg").then(res => res.blob())
-//   const carousel = [
-//     await fetch("/assets/000.png").then(res => res.blob()),
-//     await fetch("/assets/001.png").then(res => res.blob()),
-//     await fetch("/assets/002.png").then(res => res.blob()),
-//     await fetch("/assets/003.png").then(res => res.blob()),
-//   ]
-//   // listingStore = new PouchDB("listing_store")
-  // const fakeListings = [
-  //   new Listing(
-  //     "000",
-  //     "Cool Sweater",
-  //     image,
-  //     carousel,
-  //     49.99,
-  //     "Men's Waterfowl Sweater, Size M",
-  //     "Clothing",
-  //     1,
-  //     "000"
-  //   )
-  // ]
-  // await putListing(fakeListings[0]);
-// }
 
 export async function generateFakeData() {
   try {
