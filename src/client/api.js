@@ -99,68 +99,58 @@ export async function hasListing(_id) {
  * @param {Listing} listing 
  */
 // export async function putListing(listing) {
-//   let entry = { ...listing };
-//   if (await hasListing(listing._id)) {
-//     entry._rev = (await listingStore.get(listing._id))._rev
+//   try {
+//     await fetch(`./api/listings`, {
+//       method: 'PUT', 
+//       headers: {
+//         'Content-type' : 'application/json'  
+//       },
+//       body: JSON.stringify(listing)
+//     });
+
+//     // thumbnail implementation
+//     if (listing.thumbnail) {
+//       await fetch(`./api/listings/${listing._id}/thumbnail`, {
+//         method: 'PUT',
+//         body: listing.thumbnail
+//       })
+//     }
+
+//     // uploading images in carousel
+//     for (let i = 0; i < listing.carousel.length; i++) {
+//       // fetch the listings and put them in the carousel
+//       await fetch(`./api/listings/${listing._id}/carousel/${i}`, {
+//         method: 'PUT', 
+//         body: listing.carousel[i]
+//       })
+//     }
+//     console.log('Listing created successfully')
 //   }
-//   entry = { _rev: entry._rev, ...listing };
-//   delete entry.thumbnail;
-//   delete entry.carousel;
-//   entry.carouselLength = listing.carousel.length;
-//   await listingStore.put(entry)
-
-//   entry = await listingStore.get(listing._id);
-//   await listingStore.putAttachment(
-//     listing._id,
-//     "thumbnail",
-//     entry._rev,
-//     listing.thumbnail,
-//     listing.thumbnail.type
-//   );
-
-//   for(let i = 0; i < listing.carousel.length; i++){
-//     entry = await listingStore.get(listing._id);
-//     await listingStore.putAttachment(
-//       listing._id,
-//       `carousel_${i}`,
-//       entry._rev,
-//       listing.carousel[i],
-//       listing.carousel[i].type
-//     );
+//   catch (error) {
+//     console.error('Error creating/updating data', error)
+//     throw error
 //   }
 // }
 
 export async function putListing(listing) {
   try {
-    await fetch(`./api/listings`, {
-      method: 'PUT', 
-      headers: {
-        'Content-type' : 'application/json'  
-      },
-      body: JSON.stringify(listing)
-    });
+    // use a form
+    const form = new FormData()
 
-    // thumbnail implementation
-    if (listing.thumbnail) {
-      await fetch(`./api/listings/${listing._id}/thumbnail`, {
-        method: 'PUT',
-        body: listing.thumbnail
-      })
+    form.append('listing', JSON.stringify(listing))
+
+    if (listing.thumbail) {
+      form.append('thumbail', listing.thumbail, 'thumbnail.jpg')
     }
 
-    // uploading images in carousel
-    for (let i = 0; i < listing.carousel.length; i++) {
-      // fetch the listings and put them in the carousel
-      await fetch(`./api/listings/${listing._id}/carousel/${i}`, {
-        method: 'PUT', 
-        body: listing.carousel[i]
-      })
+    if (listing.carousel) {
+      for (let i = 0; i < listing.carousel.length; i++) {
+        form.append('listing')
+      }
     }
-    console.log('Listing created successfully')
   }
   catch (error) {
-    console.error('Error creating/updating data', error)
-    throw error
+
   }
 }
 

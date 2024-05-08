@@ -47,25 +47,24 @@ export async function putListing(listing) {
   entry.carouselLength = listing.carousel.length;
   await listingTable.put(entry)
 
-  // TODO Image Functionality Currently Broken
-  // entry = await listingTable.get(listing._id);
+  entry = await listingTable.get(listing._id)
   // await listingTable.putAttachment(
   //   listing._id,
   //   "thumbnail",
   //   entry._rev,
   //   listing.thumbnail,
   //   listing.thumbnail.type
-  // );
+  // )
 
-  // for(let i = 0; i < listing.carousel.length; i++){
-  //   entry = await listingTable.get(listing._id);
+  // for (let i = 0; i < listing.carousel.length; i++) {
+  //   entry = await listingTable.get(listing._id)
   //   await listingTable.putAttachment(
   //     listing._id,
-  //     `carousel_${i}`,
+  //     `carousel${i}`,
   //     entry._rev,
   //     listing.carousel[i],
   //     listing.carousel[i].type
-  //   );
+  //   )
   // }
 }
 
