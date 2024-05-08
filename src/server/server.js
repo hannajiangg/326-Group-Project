@@ -10,7 +10,7 @@ import path from "node:path"
 // import { blobToURL, getListing, hasListing, Listing, putListing } from '../client/api.js'; 
 // Client and server code should be separate
 import { Listing, Profile } from "../common/schema.js";
-import { getListing, getListings, hasListing, hasProfile, putListing } from './db.js';
+import { getListing, getListings, hasListing, hasProfile, putListing, putProfile } from './db.js';
 
 
 const app = express()
@@ -34,42 +34,6 @@ app.use(passport.session());
 app.use(express.static('src/client'));
 app.use(express.static('src/common')); // TODO make a better solution for hosting common files
 
-app.get('/api/listings', async (req, res) => {
-  try {
-    const listings = await getListings();
-    res.json(listings);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
-app.get('/api/listings/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    if (hasListing(id)) {
-      const listing = await getListing(id);
-      res.json(listing);
-    } else {
-      res.status(404).json({ error: 'Listing not found' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
-app.put('/api/listings', async (req, res) => {
-  const listingData = req.body;
-  try {
-    await putListing(listingData);
-    res.status(201).json({ message: 'Listing created/updated successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
 console.log(new URL('api/login/callback', process.env['HOST_URI']).href)
 passport.use(
   new GoogleStrategy(
@@ -83,14 +47,70 @@ passport.use(
     }
   )
 );
-passport.serializeUser((user, done) => {
+
+passport.serializeUser(async (user, done) => {
   User[user.id] = user;
-  console.log(JSON.stringify(User, undefined, "    "));
+  if(!(await hasProfile(user.id))){
+    await putProfile(new Profile(
+      user.id,
+      user._json.picture,
+      user.displayName,
+      user._json.email,
+      [],
+      [],
+      [],
+      []
+    ))
+  }
   done(null, user.id);
 });
+
 passport.deserializeUser((id, done) => {
   const user = User[id];
   done(null, user);
+});
+
+app.get('/api/listings', async (req, res) => {
+  // console.log(req.user);
+  try {
+    const listings = await getListings();
+    res.json(listings);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/api/listings/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    if (await hasListing(id)) {
+      const listing = await getListing(id);
+      res.json(listing);
+    } else {
+      res.status(404).json({ error: 'Listing not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.put('/api/listings', async (req, res) => {
+  /** @type {Listing} */
+  const listingData = req.body;
+  try {
+    if(!req.user){
+      res.status(401).json({ message: 'Listing created/updated successfully' });
+      return;
+    }
+    listingData.sellerId = req.user.id;
+    await putListing(listingData);
+    res.status(201).json({ message: 'Listing created/updated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 app.get("/api/login/callback", passport.authenticate('google', {

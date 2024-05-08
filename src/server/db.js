@@ -16,7 +16,7 @@ export async function getListings() {
 /**
  * Retrieves a specific listing
  * @param {string} id 
- * @returns {Listing}
+ * @returns {Promise<Listing>}
  */
 export async function getListing(id) {
   return await listingTable.get(id);
@@ -25,7 +25,7 @@ export async function getListing(id) {
 /**
  * Tests is a given listing id exists in the db
  * @param {string} id 
- * @returns {boolean}
+ * @returns {Promise<boolean>}
  */
 export async function hasListing(id) {
   return await listingTable.get(id).then(() => true, () => false)
@@ -38,7 +38,7 @@ export async function hasListing(id) {
 // TODO
 export async function putListing(listing) {
   let entry = { ...listing };
-  if (hasListing(listing._id)) {
+  if (await hasListing(listing._id)) {
     entry._rev = (await listingTable.get(listing._id))._rev
   }
   entry = { _rev: entry._rev, ...listing };
@@ -72,7 +72,7 @@ export async function putListing(listing) {
 /**
  * Returns whether a given id exists in the database
  * @param {string} id 
- * @returns {boolean}
+ * @returns {Promise<boolean>}
  */
 export async function hasProfile(id) {
   return await profileTable.get(id).then(() => true, () => false)
@@ -81,17 +81,16 @@ export async function hasProfile(id) {
 /**
  * Returns a profile if it exists
  * @param {string} id 
- * @returns { Profile | null }
+ * @returns { Promise<Profile | null> }
  */
 export async function getProfile(id) {
   if(!hasProfile(id))
     return null;
   let profile = await profileStore.get(id);
-  const pfp = await profileStore.getAttachment(id, "pfp");
   
   return new Profile(
     profile._id,
-    pfp,
+    profile.pfp,
     profile.name,
     profile.email,
     profile.payments,
@@ -107,19 +106,9 @@ export async function getProfile(id) {
  */
 export async function putProfile(profile) {
   let entry = { ...profile };
-  if (hasProfile(profile._id)) {
-    entry._rev = (await profileStore.get(profile._id))._rev
+  if (await hasProfile(profile._id)) {
+    entry._rev = (await profileTable.get(profile._id))._rev
   }
   entry = { _rev: entry._rev, ...profile };
-  delete entry.pfp;
-  await profileStore.put(entry)
-
-  entry = await profileStore.get(profile._id);
-  await profileStore.putAttachment(
-    profile._id,
-    "pfp",
-    entry._rev,
-    profile.pfp,
-    profile.pfp.type
-  );
+  await profileTable.put(entry)
 }
