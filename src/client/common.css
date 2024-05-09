@@ -7,13 +7,16 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #8C1515;
+  background-image: url('../assets/zoo_buy_logo.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
 .white-box {
   width: 80%;
   max-width: 600px;
   background-color: white;
+  border: 2px solid grey;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -22,7 +25,14 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
+
+.white-box:hover {
+  border-color: #A52A2A;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
 
 .logo-container {
   display: flex;
@@ -44,8 +54,20 @@
 
 .sign-in-text {
   text-align: center;
-  font-size: smaller;
+  font-size: 14px; /* Adjust font size */
+  color: #555; /* Darker color for better readability */
+  margin-top: 20px; /* Add spacing above the text */
 }
+
+.sign-in-text a {
+  color: #4285F4; /* Google Blue for the link */
+  text-decoration: none; /* Remove underline from the link */
+}
+
+.sign-in-text a:hover {
+  text-decoration: underline; /* Underline the link on hover */
+}
+
 
 form {
   width: 100%;
