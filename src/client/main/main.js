@@ -1,4 +1,4 @@
-import { blobToURL, getListing, getListings, hasListing, Listing, putListing } from "../api.js";
+import { blobToURL, getListing, getListings, getSelfId, hasListing, Listing, putListing } from "../api.js";
 import { sellItem, loadView } from "/index.js";
 
 export function onNavigate() {
@@ -13,7 +13,11 @@ export function onNavigate() {
 
     homeButtonElement.addEventListener("click", () => loadView("main"));
     sellButtonElement.addEventListener("click", sellItem);
-    userPortalElement.addEventListener("click", () => loadView("profile"));
+    userPortalElement.addEventListener("click", async () => {
+        const selfId = await getSelfId();
+        console.log(selfId);
+        loadView("profile", {id: selfId});
+    });
     populateListings();
 
     /**

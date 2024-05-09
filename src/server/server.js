@@ -50,7 +50,7 @@ passport.use(
 
 passport.serializeUser(async (user, done) => {
   User[user.id] = user;
-  if(!(await hasProfile(user.id))){
+  if (!(await hasProfile(user.id))) {
     await putProfile(new Profile(
       user.id,
       user._json.picture,
@@ -100,7 +100,7 @@ app.put('/api/listings', async (req, res) => {
   /** @type {Listing} */
   const listingData = req.body;
   try {
-    if(!req.user){
+    if (!req.user) {
       res.status(401).json({ message: 'Listing created/updated successfully' });
       return;
     }
@@ -114,7 +114,7 @@ app.put('/api/listings', async (req, res) => {
 });
 
 // UNSAFE endpoints for profiles (TESTING)
-app.get('api/profiles', async(req, res) => {
+app.get('api/profiles', async (req, res) => {
   try {
     const profiles = await getProfile()
     res.join(profiles)
@@ -145,7 +145,7 @@ app.put('/api/profiles', async (req, res) => {
   try {
     if (!req.user) {
       res.status(401).json({ message: 'Profile created/updated successfully' })
-      return 
+      return
     }
     // profileData._id = req.user._id
 
@@ -157,6 +157,14 @@ app.put('/api/profiles', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' })
   }
 })
+
+app.get("/api/profiles/self", (req, res) => {
+  if (!req.user) {
+    res.status(401).send("No Active Session!");
+    return;
+  }
+  res.status(200).send(req.user.id);
+});
 
 app.get("/api/login/callback", passport.authenticate('google', {
   successRedirect: '/#main',

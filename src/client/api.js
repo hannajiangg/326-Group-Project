@@ -221,6 +221,15 @@ export async function generateFakeData() {
 //     });
 // }
 
+/**
+ * 
+ * @returns {string}
+ */
+export async function getSelfId(){
+  const response = fetch("./api/profiles/self");
+  return (await response).text();
+}
+
 export async function blobToURL(blob) {
   try {
     const dataURL = await new Promise((res, rej) => {
