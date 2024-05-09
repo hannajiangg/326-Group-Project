@@ -20,6 +20,7 @@ import { hasListing, Listing, putListing } from "../api.js";
  */
 const appState = {
   currentView: "",
+  currentQuery: ""
 };
 
 /**
@@ -42,23 +43,38 @@ const onNavigateListeners = {
  * @param {string} view 
  * @param {Record<string, string> | string | URLSearchParams}
  */
-export async function loadView(view, queryString) {
-  const URLparams = new URLSearchParams(queryString)
+export async function loadView(view, query = new URLSearchParams(), pushHistory = true) {
+  const URLparams = new URLSearchParams(query)
   await fetch(`${view}/${view}.html`) // Assuming each view has a corresponding HTML file
     .then((response) => response.text())
     .then((html) => {
       document.body.innerHTML = html;
       appState.currentView = view;
-      window.history.pushState({ view: view }, `${view}`, `?${URLparams.toString()}#${view}`);
-      if(view in onNavigateListeners)
+      appState.currentQuery = query;
+      if (pushHistory) {
+        window.history.pushState(
+          { view: view, query: URLparams.toString() },
+          "",
+          `?${URLparams.toString()}#${view}`
+        );
+      } else {
+        window.history.replaceState(
+          { view: view, query: URLparams.toString() },
+          "",
+          `?${URLparams.toString()}#${view}`
+        )
+      }
+      if (view in onNavigateListeners)
         onNavigateListeners[view]();
     });
 }
 
 // Handle browser back and forward buttons
 window.addEventListener("popstate", (e) => {
+  console.log("pop state activated!");
+  console.log(e.state);
   if (e.state && e.state.view) {
-    loadView(e.state.view);
+    loadView(e.state.view, e.state.query, false);
   }
 });
 
@@ -69,25 +85,25 @@ const initialView = window.location.hash
 
 const initialSearch = window.location.search
 
-loadView(initialView, initialSearch);
+await loadView(initialView, initialSearch, false);
 
 export async function sellItem() {
   let newListingId = Math.random().toFixed(10).substring(2);
   while (await hasListing(newListingId)) {
-      console.log(await hasListing(newListingId));
-      newListingId = Math.random().toFixed(10).substring(2);
+    console.log(await hasListing(newListingId));
+    newListingId = Math.random().toFixed(10).substring(2);
   }
   await putListing(new Listing(
-      newListingId,
-      "",
-      new Blob(),
-      [],
-      0,
-      "",
-      "",
-      1,
-      "000"
+    newListingId,
+    "",
+    new Blob(),
+    [],
+    0,
+    "",
+    "",
+    1,
+    "000"
   ));
   console.log(newListingId)
-  loadView("seller", {id: newListingId});
+  loadView("seller", { id: newListingId });
 }
