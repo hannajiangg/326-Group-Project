@@ -11,6 +11,7 @@ import path from "node:path"
 // Client and server code should be separate
 import { Listing, Profile } from "../common/schema.js";
 import { getListing, getListings, hasListing, hasProfile, putListing } from './db.js';
+import multer from 'multer';
 
 
 const app = express()
