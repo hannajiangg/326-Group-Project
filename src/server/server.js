@@ -10,13 +10,15 @@ import path from "node:path"
 // import { blobToURL, getListing, hasListing, Listing, putListing } from '../client/api.js'; 
 // Client and server code should be separate
 import { Listing, Profile } from "../common/schema.js";
-import { getListing, getListings, getProfile, hasListing, hasProfile, putListing, putProfile } from './db.js';
+import { getListing, getListings, hasListing, hasProfile, putListing } from './db.js';
 
 
 const app = express()
 const port = 8080
 
 const User = {};
+
+const upload = multer({});
 
 app.use(
   session({
@@ -97,14 +99,8 @@ app.get('/api/listings/:id', async (req, res) => {
 });
 
 app.put('/api/listings', async (req, res) => {
-  /** @type {Listing} */
   const listingData = req.body;
   try {
-    if(!req.user){
-      res.status(401).json({ message: 'Listing created/updated successfully' });
-      return;
-    }
-    listingData.sellerId = req.user.id;
     await putListing(listingData);
     res.status(201).json({ message: 'Listing created/updated successfully' });
   } catch (error) {
