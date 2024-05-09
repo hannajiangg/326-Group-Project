@@ -29,8 +29,10 @@ export async function onNavigate() {
   let profile = await getProfile("000");
 
   //Populate profile fields
-  nameField.value = profile.name;
-  emailField.value = profile.email;
+  if (profile.name !== null && profile.email !== null) {
+    nameField.value = profile.name;
+    emailField.value = profile.email;
+  }
   pfp.src = URL.createObjectURL(profile.pfp);
 
   if (profile.payments.length === 0) {
