@@ -139,8 +139,8 @@ export async function putListing(listing) {
 
     form.append('listing', JSON.stringify(listing))
 
-    if (listing.thumbail) {
-      form.append('thumbail', listing.thumbail, 'thumbnail.jpg')
+    if (listing.thumbnail) {
+      form.append('thumbnail', listing.thumbnail, 'thumbnail.jpg')
     }
 
     for (let i = 0; i < listing.carousel.length; i++) {
