@@ -85,7 +85,7 @@ export async function putListing(listing) {
     entry = await listingTable.get(listing._id)
     await listingTable.putAttachment(
       listing._id,
-      `carousel${i}`,
+      `carousel-${i}`,
       entry._rev,
       Buffer.from(await listing.carousel[i].arrayBuffer()),
       listing.carousel[i].type

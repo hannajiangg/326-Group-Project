@@ -22,6 +22,11 @@ export class Listing {
    */
   carousel;
   /**
+   * The length of the carousel
+   * @type { number }
+   */
+  carouselLength;
+  /**
    * Cost of the item in dollars.
    * @type { number }
    */
@@ -62,6 +67,7 @@ export class Listing {
     this.title = title;
     this.thumbnail = thumbnail;
     this.carousel = carousel;
+    this.carouselLength = carousel.length;
     this.cost = cost;
     this.description = description;
     this.category = category;

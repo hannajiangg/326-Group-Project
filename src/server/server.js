@@ -156,9 +156,11 @@ app.put('/api/listings', upload.any(), async (req, res) => {
 
     listingData.carousel = [];
     let carouselIndex = 0;
-    while (`carousel-${carouselIndex}` in listingData) {
+    while (`carousel-${carouselIndex}` in files) {
       listingData.carousel[carouselIndex] = files[`carousel-${carouselIndex}`];
+      carouselIndex++;
     }
+    listingData.carouselLength = listingData.carousel.length;
     return listingData;
   }
 
