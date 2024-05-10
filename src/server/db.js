@@ -31,11 +31,11 @@ export async function hasListing(id) {
   return await listingTable.get(id).then(() => true, () => false)
 }
 
+// TODO
 /**
  * Puts a listing into the database, overwriting an old version if it exists
  * @param {Listing} listing 
  */
-// TODO
 export async function putListing(listing) {
   let entry = { ...listing };
   if (await hasListing(listing._id)) {

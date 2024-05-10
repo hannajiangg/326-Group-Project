@@ -71,67 +71,17 @@ export async function getListing(_id) {
 /**
  * Returns true if a listing id exists
  * @param {string} _id 
- * @returns {boolean}
+ * @returns {Promise<boolean>}
  */
-
 export async function hasListing(_id) {
   const response = await fetch(`./api/listings/${_id}`);
   return response.ok;
 }
 
-// export async function hasListing(_id) {
-//   try {
-//     const response = await fetch(`./api/listings/${_id}`)
-//     if (response.ok) {
-//       return true
-//     }
-//     else if (response.status === 404) return false 
-//     else throw new Error('Failed to fetch listing existence')
-//   }
-//   catch (error) {
-//     console.error('Error fetching listing: ', error)
-//     throw error
-//   }
-// }
-
 /**
- * 
- * @param {Listing} listing 
+ * Adds a listing to the database
+ * @param {Promise<Listing>} listing 
  */
-// export async function putListing(listing) {
-//   try {
-//     await fetch(`./api/listings`, {
-//       method: 'PUT', 
-//       headers: {
-//         'Content-type' : 'application/json'  
-//       },
-//       body: JSON.stringify(listing)
-//     });
-
-//     // thumbnail implementation
-//     if (listing.thumbnail) {
-//       await fetch(`./api/listings/${listing._id}/thumbnail`, {
-//         method: 'PUT',
-//         body: listing.thumbnail
-//       })
-//     }
-
-//     // uploading images in carousel
-//     for (let i = 0; i < listing.carousel.length; i++) {
-//       // fetch the listings and put them in the carousel
-//       await fetch(`./api/listings/${listing._id}/carousel/${i}`, {
-//         method: 'PUT', 
-//         body: listing.carousel[i]
-//       })
-//     }
-//     console.log('Listing created successfully')
-//   }
-//   catch (error) {
-//     console.error('Error creating/updating data', error)
-//     throw error
-//   }
-// }
-
 export async function putListing(listing) {
   try {
     // use a form
@@ -198,14 +148,6 @@ export async function generateFakeData() {
     console.log('Error generating data: ', error)
   }
 }
-
-// export async function blobToURL(blob){
-//     const reader = new FileReader();
-//     reader.readAsDataURL(blob);
-//     return await new Promise(resolve => reader.onloadend = () => {
-//         resolve(reader.result);
-//     });
-// }
 
 export async function blobToURL(blob) {
   try {
