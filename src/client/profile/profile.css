@@ -1,5 +1,8 @@
 body {
-    background-color: white;
+    background-color: #f2f2f2; /* Light grey background */
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 #content {
@@ -15,14 +18,6 @@ body {
     height: 80vh;
 }
 
-#content:hover {
-    border-color: #800000;
-}
-
-
-h1 {
-    color: #800000;
-}
 
 #profile {
     display: flex;
@@ -30,28 +25,19 @@ h1 {
     gap: 3%;
     width: 100%;
     justify-content: center;
-    position: relative; /* Position relative for absolute positioning */
-}
-
-#profile:hover .edit-button {
-    opacity: 1; /* Make edit button visible on hover */
+    position: relative;
 }
 
 .edit-button {
-    position: absolute; /* Position the edit button relative to the profile area */
-    top: 50%; /* Position it vertically in the middle */
-    transform: translateY(-50%); /* Adjust for centering */
-    right: 0; /* Position it on the right side */
-    background-color: #800000; /* Maroon background color */
+    background-color: #800000;
     color: white;
     padding: 5px 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    opacity: 0; /* Initially hidden */
-    transition: opacity 0.3s ease; /* Smooth transition for visibility */
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
-
 
 
 #info {
@@ -68,19 +54,32 @@ h1 {
 
 #name-block,
 #email-block {
-    background-color: #ffffff; /* White background */
-    color: #800000;
-    padding: 7px;
-    width: 50%;
+    background-color: transparent;
+    color: #333;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
     display: flex;
     align-items: center;
+    transition: border-color 0.3s ease;
 }
 
-
-#name-block:hover,
-#email-block:hover {
-    border-color: #800000; /* Maroon red border color on hover */
+#name-block label,
+#email-block label {
+    margin-right: 10px;
+    font-weight: bold;
 }
+
+#name-block input,
+#email-block input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #333;
+}
+
 
 
 #payments {
@@ -149,29 +148,33 @@ h1 {
 #name-section, #email-section {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 50%;
     align-items: center;
 }
 
 .edit {
-    padding: 6px;
+    padding: 6px 12px;
     margin-left: 5px;
+    background-color: grey;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
 }
 
-.list {
-    display: flex;
-    flex-direction: column;
+.edit:hover {
+    background-color: #800000;
 }
 
-.item {
-    margin: 5px;
+#save-button {
+    display: none; 
 }
 
-#items div div p {
-    display: inline;
-    padding-left: 15px;
-}
 
-h2 {
-    margin-bottom: 10px;
-}
+
+
+
