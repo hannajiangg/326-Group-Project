@@ -17,12 +17,12 @@
   <nav class="flex" id="main-page-nav">
     <button id="home-button" type="button">HOME</button>
     <label for="search-bar">
-        <i class="fa-solid fa-magnifying-glass"></i>
+      <i class="fa-solid fa-magnifying-glass"></i>
     </label>
     <input type="text" id="search-bar" class="flex-grow font-x-large" value="Search" placeholder="Search...">
     <button id="sell-button" type="button">SELL</button>
     <i class="fa-solid fa-user" id="user-portal"></i>
-</nav>
+  </nav>
   <div id="carousel">
     <div id="carousel-images"></div>
     <div id="carousel-controls">
@@ -32,18 +32,28 @@
   </div>
   <div id="product-container">
     <div id="description">
-        <div>
-            <input type="text" id="title-input" placeholder="Title Description">
-        </div>
-        <div>
-            Price: $<input type="text" id="price-input" placeholder="Price">
-        </div>
-        <textarea id="description-textarea" placeholder="Enter Description Here(Optional)"></textarea>
-        <div>
-          <button class="post-button">Contact</button>
+      <span id="title"></span>
+      <div>
+        Qty: $<span id="quantity-label"></span>
       </div>
+      <div>
+        Price: $<span id="price-tag"></span>
       </div>
+      <div>
+        Description: <span id="price-tag"></span>
+      </div>
+      <div>
+        Seller: <span id="seller-label"></span>
+      </div>
+      <div>
+        Seller Email: <span id="seller-email-label"></span>
+      </div>
+      <div id="description-section"></div>
+      <div>
+        <button class="post-button">Contact</button>
+      </div>
+    </div>
 
-  <script src="product.js" type="module"></script> <!-- Link to JavaScript file -->
+    <script src="product.js" type="module"></script> <!-- Link to JavaScript file -->
 </body>
 </html>
