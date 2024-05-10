@@ -1,15 +1,27 @@
 body {
-    background-color: #8C1515;
+    background-color: white;
 }
 
 #content {
-    margin-left: 7.5%;
-    margin-right: 15%;
+    margin-left: 10%;
+    margin-right: 10%;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding: 20px;
+    background-color: white;
+    border: 2px solid #808080;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+    height: 80vh;
 }
 
+#content:hover {
+    border-color: #800000;
+}
+
+
 h1 {
-    color: white;
+    color: #800000;
 }
 
 #profile {
@@ -17,11 +29,13 @@ h1 {
     flex-direction: row;
     gap: 3%;
     width: 100%;
+    justify-content: center;
 }
+
 
 #info {
     flex-grow: 1;
-    width: 100%;
+    width: 50%;
 }
 
 #pfp {
@@ -31,17 +45,23 @@ h1 {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#name-block, #email-block {
-    background-color: aliceblue;
-    padding-left: 7px;
+#name-block,
+#email-block {
+    background-color: #ffffff; /* White background */
+    color: #800000;
+    padding: 7px;
     border-radius: 5px;
-    border-color: black;
-    border-width: 2px;
-    border-style: solid;
+    border: 2px solid #800000; /* Maroon border */
     width: 100%;
     display: flex;
     align-items: center;
 }
+
+#name-block:hover,
+#email-block:hover {
+    border-color: #800000; /* Maroon red border color on hover */
+}
+
 
 #payments {
     background-color: rgb(217, 217, 217);
