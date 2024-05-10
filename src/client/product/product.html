@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="/seller/seller.css"> <!-- Link to CSS file for this specific page -->
   <link rel="stylesheet" href="/main/main.css">
   <link rel="stylesheet" href="/product/product.css">
+  <link rel="stylesheet" href="/seller/seller.css">
 </head>
 
 
@@ -29,33 +30,19 @@
       <svg xmlns="http://www.w3.org/2000/svg" id="carousel-right-arrow" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg>
     </div>
   </div>
-  <div id="description">
-    <div class="description-item">
-        <span id="title"></span>
-    </div>
-    <!-- <div class="description-item">
-      Quantity: <span id="quantity-label"></span>
-    </div> -->
-    <div class="description-item">
-      Title: <span id="item-label"></span>
-    </div>
-    <div class="description-item">
-        Price: $<span id="price-tag"></span>
-    </div>
-    <div class="description-item">
-      Description: <span id="price-tag"></span>
-  </div>
-    <!-- <div class="description-item">
-        Seller: <span id="seller-label"></span>
-    </div>
-    <div class="description-item">
-        Seller Email: <span id="seller-email-label"></span>
-    </div> -->
-    <div id="description-section"></div>
-</div>
-<div id="contact-button-container">
-  <button id="contact-button">Contact Seller</button>
-</div>
+  <div id="product-container">
+    <div id="description">
+        <div>
+            <input type="text" id="title-input" placeholder="Title Description">
+        </div>
+        <div>
+            Price: $<input type="text" id="price-input" placeholder="Price">
+        </div>
+        <textarea id="description-textarea" placeholder="Enter Description Here(Optional)"></textarea>
+        <div>
+          <button class="post-button">Contact</button>
+      </div>
+      </div>
 
   <script src="product.js" type="module"></script> <!-- Link to JavaScript file -->
 </body>
