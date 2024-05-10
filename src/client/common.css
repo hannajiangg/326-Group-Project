@@ -33,7 +33,6 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-
 .logo-container {
   display: flex;
   align-items: center;
@@ -52,70 +51,3 @@
   margin-bottom: 10px;
 }
 
-.sign-in-text {
-  text-align: center;
-  font-size: 14px; /* Adjust font size */
-  color: #555; /* Darker color for better readability */
-  margin-top: 20px; /* Add spacing above the text */
-}
-
-.sign-in-text a {
-  color: #4285F4; /* Google Blue for the link */
-  text-decoration: none; /* Remove underline from the link */
-}
-
-.sign-in-text a:hover {
-  text-decoration: underline; /* Underline the link on hover */
-}
-
-
-form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.input-group {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.input-group label {
-  display: block;
-  margin-right: 10px;
-  color: #8C1515;
-}
-
-.input-group input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #8C1515;
-  box-sizing: border-box;
-}
-
-.button-container {
-  margin-top: 20px;
-}
-
-.button-container button {
-  width: 100%;
-  padding: 10px;
-  border: 2px solid #8C1515;
-  background-color: transparent;
-  color: black;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.create-account-button {
-  display: inline-block;
-  color: #8C1515;
-  text-decoration: none;
-  margin-top: 10px;
-}
-
-.create-account-button:hover {
-  text-decoration: underline;
-}

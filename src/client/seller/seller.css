@@ -131,7 +131,6 @@ body{
 }
 
 
-
 .post-button {
     margin-top: auto;
     background-color: grey;
@@ -144,6 +143,8 @@ body{
     font-weight: bold;
     text-transform: uppercase;
     transition: background-color 0.3s ease;
+    margin-left: 20px; /* Left margin */
+}
 
 .post-button:hover {
     background-color: #800000;
