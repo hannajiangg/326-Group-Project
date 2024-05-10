@@ -23,7 +23,7 @@ export async function getListing(id) {
 }
 
 /**
- * Retrieves a specific listing
+ * Retrieves a specific listing's thumbnail
  * @param {string} id 
  * @returns {Promise<{content_type: string, data: Buffer}>}
  */
@@ -31,6 +31,20 @@ export async function getListingThumbnail(id) {
   const content_type = (await listingTable.get(id))._attachments.thumbnail.content_type;
   const thumbnail = await listingTable.getAttachment(id, "thumbnail");
   return { content_type, data: thumbnail };
+}
+
+/**
+ * Retrieves a specific listing's carousel image
+ * @param {string} id 
+ * @returns {Promise<{content_type: string, data: Buffer} | null>}
+ */
+export async function getListingCarousel(id, index) {
+  const key = `carousel-${index}`;
+  const attachmentsMetadata = (await listingTable.get(id))._attachments;
+  if (!(key in attachmentsMetadata)) return null;
+  const content_type = attachmentsMetadata[key].content_type;
+  const image = await listingTable.getAttachment(id, key);
+  return { content_type, data: image };
 }
 
 /**
