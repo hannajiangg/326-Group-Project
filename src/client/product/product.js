@@ -56,10 +56,10 @@ export async function onNavigate() {
         carouselImageContainer.appendChild(element);
         carouselImageList.push(element);
     }
-    for (const imageBlob of currentListing.carousel) {
+    for (let i = 0; i < currentListing.carouselLength; i++) {
         /** @type { HTMLImageElement } */
         const carouselImage = document.createElement("img");
-        carouselImage.src = await blobToURL(imageBlob);
+        carouselImage.src = `./api/listings/${currentListing._id}/carousel/${i}`;
         carouselImage.classList.add("carousel-image");
         appendToCarousel(carouselImage);
     }

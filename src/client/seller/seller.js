@@ -1,4 +1,4 @@
-import { blobToURL, getListing, Listing, putListing } from "../api.js";
+import { blobToURL, getListing, getProfile, Listing, putListing } from "../api.js";
 import { sellItem, loadView } from "/index.js";
 
 /**
@@ -14,10 +14,10 @@ async function renderCarousel(listing) {
     const carouselImageList = [];
 
     // Append all current images
-    for (const imageBlob of listing.carousel) {
+    for (let i = 0; i < listing.carouselLength; i++) {
         /** @type { HTMLImageElement } */
         const carouselImage = document.createElement("img");
-        carouselImage.src = await blobToURL(imageBlob);
+        carouselImage.src = `./api/listings/${listing._id}/carousel/${i}`;
         carouselImage.classList.add("carousel-image");
         carouselImageContainer.appendChild(carouselImage);
         carouselImageList.push(carouselImage);
@@ -96,17 +96,16 @@ async function renderDescription(listing) {
     quantityLabel.textContent = listing.quantity;
     quantityAddButton.addEventListener("click", async () => {
         listing.quantity++;
-        await putListing(listing);
         quantityLabel.textContent = listing.quantity;
     });
     quantitySubtractButton.addEventListener("click", async () => {
         listing.quantity--;
-        await putListing(listing);
         quantityLabel.textContent = listing.quantity;
     });
 
-    sellerLabel.textContent = "TODO Fetch this from API";
-    sellerEmailLabel.textContent = "TODO Fetch this from API";
+    const sellerProfile = await getProfile(listing.sellerId);
+    sellerLabel.textContent = sellerProfile.name;
+    sellerEmailLabel.textContent = sellerProfile.email;
 
     descriptionTextarea.addEventListener("input", async () => {
         descriptionTextarea.style.height = "";
