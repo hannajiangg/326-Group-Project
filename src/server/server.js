@@ -99,9 +99,38 @@ app.get('/api/listings/:id', async (req, res) => {
   }
 });
 
-app.put('/api/listings', async (req, res) => {
-  const listingData = req.body;
+app.put('/api/listings', upload.any(), async (req, res) => {
+  /**
+   * Parses a listing out of a request.
+   * @param {Express.Request} req 
+   * @returns {Listing}
+   */
+  function parseListing(req) {
+    /** @type {Listing} */
+    const listingData = JSON.parse(req.body.listing);
+    const files = Object.fromEntries(req.files.map(fileResponse => {
+      const name = fileResponse.fieldname;
+      const mimeType = fileResponse.mimetype;
+      const buffer = fileResponse.buffer;
+      return [name, new Blob(buffer, { type: mimeType })];
+    }));
+
+    listingData.thumbnail = files.thumbnail;
+
+    listingData.carousel = [];
+    let carouselIndex = 0;
+    while (`carousel-${carouselIndex}` in listingData) {
+      listingData.carousel[carouselIndex] = files[`carousel-${carouselIndex}`];
+    }
+    return listingData;
+  }
+
+  const listingData = parseListing(req);
   try {
+    if (!listingData._id) {
+      res.status(400).send("Listing must contain id");
+      return;
+    }
     await putListing(listingData);
     res.status(201).json({ message: 'Listing created/updated successfully' });
   } catch (error) {
