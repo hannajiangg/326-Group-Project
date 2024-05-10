@@ -1,45 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login Page</title>
-  <link rel="stylesheet" href="/common.css" />
-  <!-- Link to CSS file for this specific page -->
-  <link rel="stylesheet" href="/profile/profile.css" />
-  <link rel="stylesheet" href="/main/main.css">
-
-<body>
-  <nav class="flex" id="main-page-nav">
-    <button id="home-button" type="button">HOME</button>
-    <label for="search-bar">
-      <i class="fa-solid fa-magnifying-glass"></i>
-    </label>
-    <input type="text" id="search-bar" class="flex-grow font-x-large" value="Search" placeholder="Search...">
-    <button id="sell-button" type="button">SELL</button>
-    <i class="fa-solid fa-user" id="user-portal"></i>
-  </nav>
-  <div id="content">
-    <!-- replace photo with actual user photo -->
-    <h1 id="title">Profile</h1>
-    <div id="profile">
-      <img alt="Profile Picture" id="pfp" />
-      <div id="info">
-        <div id="name-section">
-          <div id="name-block">
-            <label for="name">Name</label>
-            <input class="one" id="name" disabled />
-          </div>
-          <!-- <button class="edit" id="edit-name">Edit</button>
-            <button class="edit" id="save-name" type="submit" hidden>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/common.css" />
+    <!-- Link to CSS file for this specific page -->
+    <link rel="stylesheet" href="/profile/profile.css" />
+    <link rel="stylesheet" href="/main/main.css">
+  <body>
+    <nav class="flex" id="main-page-nav">
+      <button id="home-button" type="button">HOME</button>
+      <label for="search-bar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </label>
+      <input type="text" id="search-bar" class="flex-grow font-x-large" value="Search" placeholder="Search...">
+      <button id="sell-button" type="button">SELL</button>
+      <i class="fa-solid fa-user" id="user-portal"></i>
+    </nav>
+    <div id="content">
+      <!-- replace photo with actual user photo -->
+      <h1 id="title">About Me</h1>
+      <div id="profile">
+        <img alt="Profile Picture" id="pfp" />
+        <div id="info">
+          <div id="name-section">
+            <div id="name-block">
+              <label for="name">Name</label>
+              <input class="one" id="name" disabled />
+            </div>
+            <button class="edit" id="edit-button">Edit</button>
+            <button class="edit" id="save-button" type="submit" hidden>
               Save
-            </button> -->
-        </div>
-        <div id="email-section">
-          <div id="email-block">
-            <label for="email">Email</label>
-            <input class="one" id="email" type="email" disabled>
+            </button>
+          </div>
+          <div id="email-section">
+            <div id="email-block">
+              <label for="email">Email</label>
+              <input class="one" id="email" type="email" disabled>
+            </div>
+            <button class="edit" id="edit-button" type="button">Edit</button>
+            <button class="edit" id="save-button" type="button" hidden>Save</button>
           </div>
           <!-- <button class="edit" id="edit-name" type="button">Edit</button>
           <button class="edit" id="save-name" type="submit" hidden> -->
@@ -56,21 +57,21 @@
           <button class="edit" id="edit-email" type="button">Edit</button>
           <button class="edit" id="save-email" type="button" hidden>Save</button>
         </div> -->
-      <br>
-      <div id="payments-block">
-        <label id="payments-label" for="payments">Payment Options</label>
-        <div id="payments"></div>
+        <br>
       </div>
     </div>
-  </div>
-  <div id="items">
-    <h2>Posted Items</h2>
-    <div class="list" id="posted"></div>
-    <h2>Sold Items</h2>
-    <div class="list" id="sold"></div>
-    <h2>Purchased Items</h2>
-    <div class="list" id="purchased"></div>
-  </div>
+    <!-- <div id="payments-block">
+          <label id="payments-label" for="payments">Payment Options</label>
+          <div id="payments"></div>
+        </div> -->
+    <!-- <div id="items">
+      <h2>Posted Items</h2>
+      <div class="list" id="posted"></div>
+      <h2>Sold Items</h2>
+      <div class="list" id="sold"></div>
+      <h2>Purchased Items</h2>
+      <div class="list" id="purchased"></div>
+    </div> -->
   </div>
 </body>
 
