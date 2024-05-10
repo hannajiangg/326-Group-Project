@@ -30,7 +30,28 @@ h1 {
     gap: 3%;
     width: 100%;
     justify-content: center;
+    position: relative; /* Position relative for absolute positioning */
 }
+
+#profile:hover .edit-button {
+    opacity: 1; /* Make edit button visible on hover */
+}
+
+.edit-button {
+    position: absolute; /* Position the edit button relative to the profile area */
+    top: 50%; /* Position it vertically in the middle */
+    transform: translateY(-50%); /* Adjust for centering */
+    right: 0; /* Position it on the right side */
+    background-color: #800000; /* Maroon background color */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth transition for visibility */
+}
+
 
 
 #info {
@@ -50,12 +71,11 @@ h1 {
     background-color: #ffffff; /* White background */
     color: #800000;
     padding: 7px;
-    border-radius: 5px;
-    border: 2px solid #800000; /* Maroon border */
-    width: 100%;
+    width: 50%;
     display: flex;
     align-items: center;
 }
+
 
 #name-block:hover,
 #email-block:hover {

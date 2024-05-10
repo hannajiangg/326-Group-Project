@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/common.css"> <!-- Link to CSS file for this specific page -->
   <link rel="stylesheet" href="/seller/seller.css"> <!-- Link to CSS file for this specific page -->
   <link rel="stylesheet" href="/main/main.css">
+  <link rel="stylesheet" href="/product/product.css">
 </head>
 
 
@@ -29,23 +30,33 @@
     </div>
   </div>
   <div id="description">
-    <div>
-      <span id="title"></span>
+    <div class="description-item">
+        <span id="title"></span>
     </div>
-    <div>
+    <!-- <div class="description-item">
       Quantity: <span id="quantity-label"></span>
+    </div> -->
+    <div class="description-item">
+      Title: <span id="item-label"></span>
     </div>
-    <div>
-      Price: $<span id="price-tag"></span>
+    <div class="description-item">
+        Price: $<span id="price-tag"></span>
     </div>
-    <div>
-      Seller: <span id="seller-label"></span>
-    </div>
-    <div>
-      Seller Email: <span id="seller-email-label"></span>
-    </div>
-    <div id="description-section"></div>
+    <div class="description-item">
+      Description: <span id="price-tag"></span>
   </div>
+    <!-- <div class="description-item">
+        Seller: <span id="seller-label"></span>
+    </div>
+    <div class="description-item">
+        Seller Email: <span id="seller-email-label"></span>
+    </div> -->
+    <div id="description-section"></div>
+</div>
+<div id="contact-button-container">
+  <button id="contact-button">Contact Seller</button>
+</div>
+
   <script src="product.js" type="module"></script> <!-- Link to JavaScript file -->
 </body>
 </html>
