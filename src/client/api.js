@@ -57,7 +57,7 @@ export async function getListings() {
 /**
  * Returns a listing if it exists
  * @param {string} _id 
- * @returns { Listing | null }
+ * @returns { Promise<Partial<Listing> | null>}
  */
 export async function getListing(_id) {
   const response = await fetch(`./api/listings/${_id}`)

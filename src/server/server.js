@@ -10,7 +10,7 @@ import path from "node:path"
 // import { blobToURL, getListing, hasListing, Listing, putListing } from '../client/api.js'; 
 // Client and server code should be separate
 import { Listing, Profile } from "../common/schema.js";
-import { getListing, getListings, hasListing, hasProfile, putListing } from './db.js';
+import { getListing, getListings, getListingThumbnail, hasListing, hasProfile, putListing, putProfile } from './db.js';
 import multer from 'multer';
 
 
@@ -99,6 +99,21 @@ app.get('/api/listings/:id', async (req, res) => {
   }
 });
 
+app.get('/api/listings/:id/thumbnail', async (req, res) => {
+  const { id } = req.params;
+  try {
+    if (await hasListing(id)) {
+      const {data: thumbnail, content_type} = await getListingThumbnail(id);
+      res.setHeader("Content-Type", content_type).send(thumbnail);
+    } else {
+      res.status(404).json({ error: 'Listing not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 app.put('/api/listings', upload.any(), async (req, res) => {
   /**
    * Parses a listing out of a request.
@@ -111,8 +126,10 @@ app.put('/api/listings', upload.any(), async (req, res) => {
     const files = Object.fromEntries(req.files.map(fileResponse => {
       const name = fileResponse.fieldname;
       const mimeType = fileResponse.mimetype;
+      /** @type {Buffer} */
       const buffer = fileResponse.buffer;
-      return [name, new Blob(buffer, { type: mimeType })];
+      const fileBlob = new Blob([buffer], { type: mimeType });
+      return [name, fileBlob];
     }));
 
     listingData.thumbnail = files.thumbnail;

@@ -16,10 +16,21 @@ export async function getListings() {
 /**
  * Retrieves a specific listing
  * @param {string} id 
- * @returns {Promise<Listing>}
+ * @returns {Promise<Partial<Listing>>}
  */
 export async function getListing(id) {
   return await listingTable.get(id);
+}
+
+/**
+ * Retrieves a specific listing
+ * @param {string} id 
+ * @returns {Promise<{content_type: string, data: Buffer}>}
+ */
+export async function getListingThumbnail(id) {
+  const content_type = (await listingTable.get(id))._attachments.thumbnail.content_type;
+  const thumbnail = await listingTable.getAttachment(id, "thumbnail");
+  return { content_type, data: thumbnail };
 }
 
 /**
@@ -48,24 +59,24 @@ export async function putListing(listing) {
   await listingTable.put(entry)
 
   entry = await listingTable.get(listing._id)
-  // await listingTable.putAttachment(
-  //   listing._id,
-  //   "thumbnail",
-  //   entry._rev,
-  //   listing.thumbnail,
-  //   listing.thumbnail.type
-  // )
+  await listingTable.putAttachment(
+    listing._id,
+    "thumbnail",
+    entry._rev,
+    Buffer.from(await listing.thumbnail.arrayBuffer()),
+    listing.thumbnail.type
+  )
 
-  // for (let i = 0; i < listing.carousel.length; i++) {
-  //   entry = await listingTable.get(listing._id)
-  //   await listingTable.putAttachment(
-  //     listing._id,
-  //     `carousel${i}`,
-  //     entry._rev,
-  //     listing.carousel[i],
-  //     listing.carousel[i].type
-  //   )
-  // }
+  for (let i = 0; i < listing.carousel.length; i++) {
+    entry = await listingTable.get(listing._id)
+    await listingTable.putAttachment(
+      listing._id,
+      `carousel${i}`,
+      entry._rev,
+      Buffer.from(await listing.carousel[i].arrayBuffer()),
+      listing.carousel[i].type
+    )
+  }
 }
 
 /**
@@ -83,10 +94,10 @@ export async function hasProfile(id) {
  * @returns { Promise<Profile | null> }
  */
 export async function getProfile(id) {
-  if(!hasProfile(id))
+  if (!hasProfile(id))
     return null;
   let profile = await profileStore.get(id);
-  
+
   return new Profile(
     profile._id,
     profile.pfp,
