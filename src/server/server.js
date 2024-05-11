@@ -10,7 +10,7 @@ import path from "node:path"
 // import { blobToURL, getListing, hasListing, Listing, putListing } from '../client/api.js'; 
 // Client and server code should be separate
 import { Listing, Profile } from "../common/schema.js";
-import { getListing, getListings, hasListing, hasProfile, putListing } from './db.js';
+import { getListing, getListingCarousel, getListings, getListingThumbnail, hasListing, hasProfile, putListing, putProfile } from './db.js';
 import multer from 'multer';
 
 
@@ -53,7 +53,7 @@ passport.use(
 
 passport.serializeUser(async (user, done) => {
   User[user.id] = user;
-  if(!(await hasProfile(user.id))){
+  if (!(await hasProfile(user.id))) {
     await putProfile(new Profile(
       user.id,
       user._json.picture,
@@ -99,6 +99,41 @@ app.get('/api/listings/:id', async (req, res) => {
   }
 });
 
+app.get('/api/listings/:id/thumbnail', async (req, res) => {
+  const { id } = req.params;
+  try {
+    if (await hasListing(id)) {
+      const { data: thumbnail, content_type } = await getListingThumbnail(id);
+      res.setHeader("Content-Type", content_type).send(thumbnail);
+    } else {
+      res.status(404).json({ error: 'Listing not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/api/listings/:id/carousel/:index', async (req, res) => {
+  const { id, index } = req.params;
+  try {
+    if (!await hasListing(id)) {
+      res.status(404).json({ error: 'Listing not found' });
+      return;
+    }
+    const carouselResult = await getListingCarousel(id, index);
+    if(!carouselResult){
+      res.status(404).json({ error: 'Carousel index does not exist' });
+      return;
+    }
+    const { data: image, content_type } = carouselResult;
+    res.setHeader("Content-Type", content_type).send(image);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 app.put('/api/listings', upload.any(), async (req, res) => {
   /**
    * Parses a listing out of a request.
@@ -111,17 +146,21 @@ app.put('/api/listings', upload.any(), async (req, res) => {
     const files = Object.fromEntries(req.files.map(fileResponse => {
       const name = fileResponse.fieldname;
       const mimeType = fileResponse.mimetype;
+      /** @type {Buffer} */
       const buffer = fileResponse.buffer;
-      return [name, new Blob(buffer, { type: mimeType })];
+      const fileBlob = new Blob([buffer], { type: mimeType });
+      return [name, fileBlob];
     }));
 
     listingData.thumbnail = files.thumbnail;
 
     listingData.carousel = [];
     let carouselIndex = 0;
-    while (`carousel-${carouselIndex}` in listingData) {
+    while (`carousel-${carouselIndex}` in files) {
       listingData.carousel[carouselIndex] = files[`carousel-${carouselIndex}`];
+      carouselIndex++;
     }
+    listingData.carouselLength = listingData.carousel.length;
     return listingData;
   }
 
@@ -140,7 +179,7 @@ app.put('/api/listings', upload.any(), async (req, res) => {
 });
 
 // UNSAFE endpoints for profiles (TESTING)
-app.get('api/profiles', async(req, res) => {
+app.get('api/profiles', async (req, res) => {
   try {
     const profiles = await getProfile()
     res.join(profiles)
@@ -171,7 +210,7 @@ app.put('/api/profiles', async (req, res) => {
   try {
     if (!req.user) {
       res.status(401).json({ message: 'Profile created/updated successfully' })
-      return 
+      return
     }
     // profileData._id = req.user._id
 
