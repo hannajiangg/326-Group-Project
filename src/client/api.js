@@ -142,7 +142,6 @@ export async function generateFakeData() {
       )
     ]
     await putListing(fakeListings[0]);
-    console.log('fake data generated successfully')
   }
   catch (error) {
     console.log('Error generating data: ', error)
@@ -172,6 +171,11 @@ await generateFakeData();
 //   return await profileStore.get(_id).then(() => true, () => false)
 // }
 
+/**
+ * Returns true if the given id has a corresponding profile in the database
+ * @param {string} _id 
+ * @returns {Promise<boolean>}
+ */
 export async function hasProfile(_id) {
   try {
     const response = await fetch(`./api/profiles/${_id}`)
@@ -210,6 +214,11 @@ export async function hasProfile(_id) {
   // );
 // }
 
+/**
+ * Fetches a profile with the given id
+ * @param {string} _id 
+ * @returns {Promise<Profile>}
+ */
 export async function getProfile(_id) {
   try {
     const response = await fetch(`./api/profiles/${_id}`)
@@ -266,6 +275,10 @@ export async function getProfile(_id) {
 //   );
 // }
 
+/**
+ * Uploads a new profile to the database
+ * @param {Promise<void>} profile 
+ */
 export async function putProfile(profile) {
   try {
     const hasProfResponse = await fetch(`./api/profiles/${profile._id}`)
@@ -285,7 +298,7 @@ export async function putProfile(profile) {
     })
 
     if (!putProfRes.ok) {
-      throw new Error('Error fetching putting data')
+      throw new Error(`Request to put profile failed with error ${putProfRes.status}`)
     }
 
     const putAttachmentRes = await fetch(`./api/profiles/${profile._id}/pfp`, {
@@ -294,7 +307,7 @@ export async function putProfile(profile) {
     })
 
     if (!putAttachmentRes.ok) {
-      throw new Error('Error fetching puttinh data attachment')
+      throw new Error('Error fetching putting data attachment')
     }
   }
   catch (error) {
