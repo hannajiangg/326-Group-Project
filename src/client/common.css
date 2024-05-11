@@ -7,13 +7,16 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #8C1515;
+  background-image: url('../assets/zoo_buy_logo.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
 .white-box {
   width: 80%;
   max-width: 600px;
   background-color: white;
+  border: 2px solid grey;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -22,6 +25,12 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.white-box:hover {
+  border-color: #A52A2A;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .logo-container {
@@ -42,58 +51,3 @@
   margin-bottom: 10px;
 }
 
-.sign-in-text {
-  text-align: center;
-  font-size: smaller;
-}
-
-form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.input-group {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.input-group label {
-  display: block;
-  margin-right: 10px;
-  color: #8C1515;
-}
-
-.input-group input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #8C1515;
-  box-sizing: border-box;
-}
-
-.button-container {
-  margin-top: 20px;
-}
-
-.button-container button {
-  width: 100%;
-  padding: 10px;
-  border: 2px solid #8C1515;
-  background-color: transparent;
-  color: black;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.create-account-button {
-  display: inline-block;
-  color: #8C1515;
-  text-decoration: none;
-  margin-top: 10px;
-}
-
-.create-account-button:hover {
-  text-decoration: underline;
-}

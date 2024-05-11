@@ -2,3 +2,19 @@
     display: flex;
     justify-content: center;
 }
+
+#google-sign-in button {
+    padding: 10px 30px; /* Adjust padding to create a longer button */
+    background-color: #4285F4; /* Google Blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+#google-sign-in button:hover {
+    background-color: #3367D6; /* Darker Google Blue on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Slightly darker box shadow on hover */
+}

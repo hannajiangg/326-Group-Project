@@ -57,7 +57,7 @@ export async function getListings() {
 /**
  * Returns a listing if it exists
  * @param {string} _id 
- * @returns { Listing | null }
+ * @returns { Promise<Partial<Listing> | null>}
  */
 export async function getListing(_id) {
   const response = await fetch(`./api/listings/${_id}`)
@@ -71,67 +71,17 @@ export async function getListing(_id) {
 /**
  * Returns true if a listing id exists
  * @param {string} _id 
- * @returns {boolean}
+ * @returns {Promise<boolean>}
  */
-
 export async function hasListing(_id) {
   const response = await fetch(`./api/listings/${_id}`);
   return response.ok;
 }
 
-// export async function hasListing(_id) {
-//   try {
-//     const response = await fetch(`./api/listings/${_id}`)
-//     if (response.ok) {
-//       return true
-//     }
-//     else if (response.status === 404) return false 
-//     else throw new Error('Failed to fetch listing existence')
-//   }
-//   catch (error) {
-//     console.error('Error fetching listing: ', error)
-//     throw error
-//   }
-// }
-
 /**
- * 
- * @param {Listing} listing 
+ * Adds a listing to the database
+ * @param {Promise<Listing>} listing 
  */
-// export async function putListing(listing) {
-//   try {
-//     await fetch(`./api/listings`, {
-//       method: 'PUT', 
-//       headers: {
-//         'Content-type' : 'application/json'  
-//       },
-//       body: JSON.stringify(listing)
-//     });
-
-//     // thumbnail implementation
-//     if (listing.thumbnail) {
-//       await fetch(`./api/listings/${listing._id}/thumbnail`, {
-//         method: 'PUT',
-//         body: listing.thumbnail
-//       })
-//     }
-
-//     // uploading images in carousel
-//     for (let i = 0; i < listing.carousel.length; i++) {
-//       // fetch the listings and put them in the carousel
-//       await fetch(`./api/listings/${listing._id}/carousel/${i}`, {
-//         method: 'PUT', 
-//         body: listing.carousel[i]
-//       })
-//     }
-//     console.log('Listing created successfully')
-//   }
-//   catch (error) {
-//     console.error('Error creating/updating data', error)
-//     throw error
-//   }
-// }
-
 export async function putListing(listing) {
   try {
     // use a form
@@ -139,45 +89,31 @@ export async function putListing(listing) {
 
     form.append('listing', JSON.stringify(listing))
 
-    if (listing.thumbail) {
-      form.append('thumbail', listing.thumbail, 'thumbnail.jpg')
+    if (listing.thumbnail) {
+      form.append('thumbnail', listing.thumbnail, 'thumbnail.jpg')
     }
 
-    if (listing.carousel) {
-      for (let i = 0; i < listing.carousel.length; i++) {
-        form.append('listing')
-      }
+    for (let i = 0; i < listing.carousel.length; i++) {
+      form.append(`carousel-${i}`, listing.carousel[i], `carousel-${i}.jpg`)
     }
+
+    const options = {
+      method: 'PUT',
+      body: form
+    }
+
+    const response = await fetch('./api/listings', options)
+    const data = await response.json()
+
+    listing.thumbnailUrl = data.thumbnailUrl
+    listing.carouselUrls = data.carouselUrls
+
+    console.log('attachment uploaded successfully')
   }
   catch (error) {
-
+    console.error('Error uploading')
   }
 }
-
-// export async function generateFakeData() {
-//   const image = await fetch("/assets/dasweatervest.jpeg").then(res => res.blob())
-//   const carousel = [
-//     await fetch("/assets/000.png").then(res => res.blob()),
-//     await fetch("/assets/001.png").then(res => res.blob()),
-//     await fetch("/assets/002.png").then(res => res.blob()),
-//     await fetch("/assets/003.png").then(res => res.blob()),
-//   ]
-//   // listingStore = new PouchDB("listing_store")
-  // const fakeListings = [
-  //   new Listing(
-  //     "000",
-  //     "Cool Sweater",
-  //     image,
-  //     carousel,
-  //     49.99,
-  //     "Men's Waterfowl Sweater, Size M",
-  //     "Clothing",
-  //     1,
-  //     "000"
-  //   )
-  // ]
-  // await putListing(fakeListings[0]);
-// }
 
 export async function generateFakeData() {
   try {
@@ -206,7 +142,6 @@ export async function generateFakeData() {
       )
     ]
     await putListing(fakeListings[0]);
-    console.log('fake data generated successfully')
   }
   catch (error) {
     console.log('Error generating data: ', error)
@@ -253,6 +188,11 @@ await generateFakeData();
 //   return await profileStore.get(_id).then(() => true, () => false)
 // }
 
+/**
+ * Returns true if the given id has a corresponding profile in the database
+ * @param {string} _id 
+ * @returns {Promise<boolean>}
+ */
 export async function hasProfile(_id) {
   try {
     const response = await fetch(`./api/profiles/${_id}`)
@@ -291,6 +231,11 @@ export async function hasProfile(_id) {
   // );
 // }
 
+/**
+ * Fetches a profile with the given id
+ * @param {string} _id 
+ * @returns {Promise<Profile>}
+ */
 export async function getProfile(_id) {
   try {
     const response = await fetch(`./api/profiles/${_id}`)
@@ -347,6 +292,10 @@ export async function getProfile(_id) {
 //   );
 // }
 
+/**
+ * Uploads a new profile to the database
+ * @param {Promise<void>} profile 
+ */
 export async function putProfile(profile) {
   try {
     const hasProfResponse = await fetch(`./api/profiles/${profile._id}`)
@@ -366,7 +315,7 @@ export async function putProfile(profile) {
     })
 
     if (!putProfRes.ok) {
-      throw new Error('Error fetching putting data')
+      throw new Error(`Request to put profile failed with error ${putProfRes.status}`)
     }
 
     const putAttachmentRes = await fetch(`./api/profiles/${profile._id}/pfp`, {
@@ -375,7 +324,7 @@ export async function putProfile(profile) {
     })
 
     if (!putAttachmentRes.ok) {
-      throw new Error('Error fetching puttinh data attachment')
+      throw new Error('Error fetching putting data attachment')
     }
   }
   catch (error) {

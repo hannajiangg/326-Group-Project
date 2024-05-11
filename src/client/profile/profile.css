@@ -1,27 +1,48 @@
 body {
-    background-color: #8C1515;
+    background-color: #f2f2f2; /* Light grey background */
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 #content {
-    margin-left: 7.5%;
-    margin-right: 15%;
+    margin-left: 10%;
+    margin-right: 10%;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding: 20px;
+    background-color: white;
+    border: 2px solid #808080;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+    height: 80vh;
 }
 
-h1 {
-    color: white;
-}
 
 #profile {
     display: flex;
     flex-direction: row;
     gap: 3%;
     width: 100%;
+    justify-content: center;
+    position: relative;
 }
+
+.edit-button {
+    background-color: #800000;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
 
 #info {
     flex-grow: 1;
-    width: 100%;
+    width: 50%;
 }
 
 #pfp {
@@ -31,17 +52,35 @@ h1 {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#name-block, #email-block {
-    background-color: aliceblue;
-    padding-left: 7px;
+#name-block,
+#email-block {
+    background-color: transparent;
+    color: #333;
+    padding: 8px;
+    border: none;
     border-radius: 5px;
-    border-color: black;
-    border-width: 2px;
-    border-style: solid;
     width: 100%;
     display: flex;
     align-items: center;
+    transition: border-color 0.3s ease;
 }
+
+#name-block label,
+#email-block label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+#name-block input,
+#email-block input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #333;
+}
+
+
 
 #payments {
     background-color: rgb(217, 217, 217);
@@ -109,29 +148,33 @@ h1 {
 #name-section, #email-section {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 50%;
     align-items: center;
 }
 
 .edit {
-    padding: 6px;
+    padding: 6px 12px;
     margin-left: 5px;
+    background-color: grey;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
 }
 
-.list {
-    display: flex;
-    flex-direction: column;
+.edit:hover {
+    background-color: #800000;
 }
 
-.item {
-    margin: 5px;
+#save-button {
+    display: none; 
 }
 
-#items div div p {
-    display: inline;
-    padding-left: 15px;
-}
 
-h2 {
-    margin-bottom: 10px;
-}
+
+
+

@@ -11,8 +11,8 @@ To run the project:
 ### Project Responsibilities:
 
 - **Hanna:**
-  - Login functionality
-  - Account creation
+  - Main page, seller, product page design and development
+  - Profile managemnet and creation
 
 - **Max:**
   - Main page design and development
