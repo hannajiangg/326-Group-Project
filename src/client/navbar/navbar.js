@@ -1,6 +1,15 @@
-import { loadView } from "/index.js";
+import { getSelfProf } from "../api.js";
+import { loadView, sellItem } from "/index.js";
 
-export function onNavigate() {
+/**
+ * This function appends the navbar to the start of body.
+ */
+export async function loadNavbar() {
+    const navbarElement = document.createElement("html");
+    const navbarResponse = await fetch("./navbar/navbar.html");
+    navbarElement.innerHTML = await navbarResponse.text();
+    document.body.prepend(navbarElement);
+
     /** @type {HTMLButtonElement} */
     const homeButtonElement = document.getElementById("home-button");
     /** @type {HTMLButtonElement} */
@@ -8,7 +17,16 @@ export function onNavigate() {
     /** @type {HTMLElement} */
     const userPortalElement = document.getElementById("user-portal");
 
-    userPortalElement.addEventListener("click", () => loadView("main"));
+    homeButtonElement.addEventListener("click", () => loadView("main"));
     sellButtonElement.addEventListener("click", sellItem);
-    userPortalElement.addEventListener("click", () => loadView("profile"));
+    userPortalElement.addEventListener("click", async () => {
+        try {
+            const selfId = await getSelfProf();
+            loadView("profile", { id: selfId });
+        } catch (e) {
+            console.log(e);
+            loadView("login");
+        }
+    });
+
 }
