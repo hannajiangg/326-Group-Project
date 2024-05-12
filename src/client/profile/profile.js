@@ -1,4 +1,4 @@
-import { getProfile, putProfile, Profile } from "../api.js";
+import { getProfile, putProfile, Profile, getSelfProf } from "../api.js";
 import { sellItem, loadView } from "/index.js";
 
 export async function onNavigate() {
@@ -26,79 +26,84 @@ export async function onNavigate() {
   const pfp = document.getElementById("pfp");
 
   // Change this to actual _id of current user
-  let profile = await getProfile("000");
+  const searchParams = new URLSearchParams(window.location.search);
+  let profile;
+  if (searchParams.get("id") === "self") {
+    profile = (await getSelfProf())._json;
+  }
 
   //Populate profile fields
   if (profile.name !== null && profile.email !== null) {
     nameField.value = profile.name;
     emailField.value = profile.email;
   }
-  pfp.src = URL.createObjectURL(profile.pfp);
+  pfp.src = profile.picture;
+  console.log(profile.picture);
 
-  if (profile.payments.length === 0) {
-    const message = document.createElement("p");
-    message.innerText = "No stored payment methods";
-    paymentsField.appendChild(message);
-  } else {
-    for (let x of profile.payments) {
-      const payment = document.createElement("input");
-      payment.classList.add("two");
-      payment.value = x;
-      payment.disabled = true;
-      paymentsField.appendChild(payment);
-    }
-  }
+  // if (profile.payments.length === 0) {
+  //   const message = document.createElement("p");
+  //   message.innerText = "No stored payment methods";
+  //   paymentsField.appendChild(message);
+  // } else {
+  //   for (let x of profile.payments) {
+  //     const payment = document.createElement("input");
+  //     payment.classList.add("two");
+  //     payment.value = x;
+  //     payment.disabled = true;
+  //     paymentsField.appendChild(payment);
+  //   }
+  // }
 
-  for (let x of profile.posted) {
-    const div = document.createElement("div");
-    div.classList.add("item");
-    const item = document.createElement("a");
-    item.href = "";
-    item.innerText = x.name;
-    item.addEventListener("click", (e) => {
-      e.preventDefault();
-      loadView("seller", {id: x._id});
-    })
-    const qt = document.createElement("p");
-    qt.innerText = `Qt: ${x.qt}`;
-    div.appendChild(item);
-    div.appendChild(qt);
-    postedBlock.appendChild(div);
-  }
+  // for (let x of profile.posted) {
+  //   const div = document.createElement("div");
+  //   div.classList.add("item");
+  //   const item = document.createElement("a");
+  //   item.href = "";
+  //   item.innerText = x.name;
+  //   item.addEventListener("click", (e) => {
+  //     e.preventDefault();
+  //     loadView("seller", {id: x._id});
+  //   })
+  //   const qt = document.createElement("p");
+  //   qt.innerText = `Qt: ${x.qt}`;
+  //   div.appendChild(item);
+  //   div.appendChild(qt);
+  //   postedBlock.appendChild(div);
+  // }
 
-  for (let x of profile.sold) {
-    const div = document.createElement("div");
-    div.classList.add("item");
-    const item = document.createElement("a");
-    item.href = "";
-    item.innerText = x.name;
-    item.addEventListener("click", (e) => {
-      e.preventDefault();
-      loadView("seller", {id: x._id});
-    })
-    const qt = document.createElement("p");
-    qt.innerText = `Qt: ${x.qt}`;
-    div.appendChild(item);
-    div.appendChild(qt);
-    soldBlock.appendChild(div);
-  }
+  // for (let x of profile.sold) {
+  //   const div = document.createElement("div");
+  //   div.classList.add("item");
+  //   const item = document.createElement("a");
+  //   item.href = "";
+  //   item.innerText = x.name;
+  //   item.addEventListener("click", (e) => {
+  //     e.preventDefault();
+  //     loadView("seller", {id: x._id});
+  //   })
+  //   const qt = document.createElement("p");
+  //   qt.innerText = `Qt: ${x.qt}`;
+  //   div.appendChild(item);
+  //   div.appendChild(qt);
+  //   soldBlock.appendChild(div);
+  // }
 
-  for (let x of profile.purchased) {
-    const div = document.createElement("div");
-    div.classList.add("item");
-    const item = document.createElement("a");
-    item.href = "";
-    item.innerText = x.name;
-    item.addEventListener("click", (e) => {
-      e.preventDefault();
-      loadView("product", {id: x._id});
-    })
-    const qt = document.createElement("p");
-    qt.innerText = `Qt: ${x.qt}`;
-    div.appendChild(item);
-    div.appendChild(qt);
-    purchasedBlock.appendChild(div);
-  }
+  // for (let x of profile.purchased) {
+  //   const div = document.createElement("div");
+  //   div.classList.add("item");
+  //   const item = document.createElement("a");
+  //   item.href = "";
+  //   item.innerText = x.name;
+  //   item.addEventListener("click", (e) => {
+  //     e.preventDefault();
+  //     loadView("product", {id: x._id});
+  //   })
+  //   const qt = document.createElement("p");
+  //   qt.innerText = `Qt: ${x.qt}`;
+  //   div.appendChild(item);
+  //   div.appendChild(qt);
+  //   purchasedBlock.appendChild(div);
+  // }
 
   //Event handlers for changing profile info
   editName.addEventListener("click", () => {

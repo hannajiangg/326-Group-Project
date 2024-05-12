@@ -160,10 +160,15 @@ export async function generateFakeData() {
  * 
  * @returns {string}
  */
-export async function getSelfId(){
+export async function getSelfProf(){
   const response = fetch("./api/profiles/self");
-  return (await response).text();
+  return ((await response).json());
 }
+
+// export async function getSelfId(){
+//   const response = fetch("./api/profiles/self");
+//   return (await response).text();
+// }
 
 export async function blobToURL(blob) {
   try {
@@ -194,18 +199,8 @@ await generateFakeData();
  * @returns {Promise<boolean>}
  */
 export async function hasProfile(_id) {
-  try {
-    const response = await fetch(`./api/profiles/${_id}`)
-    if (response.ok) {
-      return true
-    }
-    else if (response.status === 404) return false
-    else throw new Error('Failed to fetch profile existence')
-  }
-  catch (error) {
-    console.error('Error fetching profile: ', error)
-    throw error
-  }
+  const response = await fetch(`./api/profiles/${_id}`);
+  return response.ok;
 }
 
 /**
@@ -237,36 +232,12 @@ export async function hasProfile(_id) {
  * @returns {Promise<Profile>}
  */
 export async function getProfile(_id) {
-  try {
-    const response = await fetch(`./api/profiles/${_id}`)
-    if (response.ok) {
-      // get the profile data
-      const profilData = await response.json()
-      // get the pfp
-      const pfpResponse = await fetch(`./api/profiles/${_id}/pfp`)
-      // check to see if this data is ok
-      if (!pfpResponse.ok) {
-        throw new Error('Failed to fetch profile picture')
-      }
-      // convert this profile pic to a blob 
-      // const pfpBlob = await pfpResponse.blob()
-      return new Profile(
-        profilData._id,
-        pfp,
-        profilData.name,
-        profilData.email,
-        profilData.payments,
-        profilData.posted,
-        profilData.sold,
-        profilData.purchased
-      )
-    }
-    else if (response.status === 404) return null
-    else throw new Error('Error fetching profile')
+  const response = await fetch(`./api/profiles/${_id}`)
+  if(response.ok){
+    return response.json();
+  } else {
+    return null;
   }
-  catch (error) {
-    console.log('Error putting data: ', error)
-  }  
 }
 
 /**
@@ -317,15 +288,6 @@ export async function putProfile(profile) {
     if (!putProfRes.ok) {
       throw new Error(`Request to put profile failed with error ${putProfRes.status}`)
     }
-
-    const putAttachmentRes = await fetch(`./api/profiles/${profile._id}/pfp`, {
-      method: 'PUT',
-      body: profile.pfp
-    })
-
-    if (!putAttachmentRes.ok) {
-      throw new Error('Error fetching putting data attachment')
-    }
   }
   catch (error) {
     console.log('Error putting profile', error)
@@ -359,4 +321,4 @@ export async function generateFakeProfile() {
   await putProfile(fakeProfile);
 }
 
-await generateFakeProfile();
+//await generateFakeProfile();

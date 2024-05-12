@@ -228,7 +228,7 @@ app.get("/api/profiles/self", (req, res) => {
     res.status(401).send("No Active Session!");
     return;
   }
-  res.status(200).send(req.user.id);
+  res.status(200).send(req.user);
 });
 
 app.get("/api/login/callback", passport.authenticate('google', {
