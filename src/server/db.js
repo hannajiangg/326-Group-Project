@@ -99,7 +99,7 @@ export async function putListing(listing) {
  * @returns {Promise<boolean>}
  */
 export async function hasProfile(id) {
-  return await profileTable.get(id).then(() => true, () => false)
+  return profileTable.get(id).then(() => true, () => false)
 }
 
 /**
@@ -110,7 +110,7 @@ export async function hasProfile(id) {
 export async function getProfile(id) {
   if (!hasProfile(id))
     return null;
-  let profile = await profileStore.get(id);
+  let profile = await profileTable.get(id);
 
   return new Profile(
     profile._id,
