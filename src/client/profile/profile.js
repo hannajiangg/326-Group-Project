@@ -1,17 +1,9 @@
 import { getProfile, putProfile, Profile, getSelfProf } from "../api.js";
+import { loadNavbar } from "../navbar/navbar.js";
 import { sellItem, loadView } from "/index.js";
 
 export async function onNavigate() {
-  /** @type {HTMLButtonElement} */
-  const homeButtonElement = document.getElementById("home-button");
-  /** @type {HTMLButtonElement} */
-  const sellButtonElement = document.getElementById("sell-button");
-  /** @type {HTMLElement} */
-  const userPortalElement = document.getElementById("user-portal");
-
-  homeButtonElement.addEventListener("click", () => loadView("main"));
-  sellButtonElement.addEventListener("click", sellItem);
-  userPortalElement.addEventListener("click", () => loadView("profile"));
+  await loadNavbar();
 
   const editName = document.getElementById("edit-name");
   const editEmail = document.getElementById("edit-email");

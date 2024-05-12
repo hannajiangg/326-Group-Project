@@ -1,0 +1,49 @@
+.flex {
+    display: flex;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+#navigation-bar {
+  background-color: white;
+  padding: 10px 20px;
+  font-size: 2rem; /* xx-large is deprecated, using rem units for better scalability */
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#navigation-bar > button {
+  background-color: #fff;
+  color: #800000;
+  border: 2px solid #800000;
+  padding: 10px 20px;
+  font-size: inherit;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+#navigation-bar > button:hover {
+  background-color: #800000;
+  color: #fff;
+}
+
+#navigation-bar > button:focus {
+  outline: none;
+  border-color: #fff;
+}
+
+#navigation-bar > input[type="text"] {
+  outline: none;
+  border: 2px solid black;
+  border-radius: 100px;
+  font-size: inherit;
+  padding: 10px 10px 10px 25px;
+}
+
+#navigation-bar > input[type="text"]:focus {
+  border-color: #800000;
+}

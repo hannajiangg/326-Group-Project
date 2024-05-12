@@ -1,4 +1,5 @@
 import { blobToURL, getListing, getProfile, getSelfProf, hasListing, Listing, putListing } from "../api.js";
+import { loadNavbar } from "../navbar/navbar.js";
 import { sellItem, loadView } from "/index.js";
 
 /**
@@ -170,6 +171,7 @@ async function renderDescription(listing) {
 }
 
 export async function onNavigate() {
+    await loadNavbar();
     /** @type {HTMLButtonElement} */
     const homeButtonElement = document.getElementById("home-button");
     /** @type {HTMLButtonElement} */

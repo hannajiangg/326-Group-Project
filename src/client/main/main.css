@@ -16,48 +16,6 @@ body{
     flex-grow: 1;
 }
 
-#main-page-nav {
-  background-color: white;
-  padding: 10px 20px;
-  font-size: 2rem; /* xx-large is deprecated, using rem units for better scalability */
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  justify-content: space-around;
-}
-
-#main-page-nav > button {
-  background-color: #fff;
-  color: #800000;
-  border: 2px solid #800000;
-  padding: 10px 20px;
-  font-size: inherit;
-  border-radius: 25px;
-  cursor: pointer;
-}
-
-#main-page-nav > button:hover {
-  background-color: #800000;
-  color: #fff;
-}
-
-#main-page-nav > button:focus {
-  outline: none;
-  border-color: #fff;
-}
-
-#main-page-nav > input[type="text"] {
-  outline: none;
-  border: 2px solid black;
-  border-radius: 100px;
-  font-size: inherit;
-  padding: 10px;
-}
-
-#main-page-nav > input[type="text"]:focus {
-  border-color: #800000;
-}
-
 #main-page-display{
   /* background-color: #800000; */
   background-color: white;
