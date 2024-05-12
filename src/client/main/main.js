@@ -1,27 +1,13 @@
 import { blobToURL, getListing, getListings, getSelfProf, hasListing, Listing, putListing } from "../api.js";
+import { loadNavbar } from "../navbar/navbar.js";
 import { sellItem, loadView } from "/index.js";
 
-export function onNavigate() {
-    /** @type {HTMLButtonElement} */
-    const homeButtonElement = document.getElementById("home-button");
-    /** @type {HTMLButtonElement} */
-    const sellButtonElement = document.getElementById("sell-button");
-    /** @type {HTMLElement} */
-    const userPortalElement = document.getElementById("user-portal");
+export async function onNavigate() {
+    await loadNavbar();
+    populateListings();
+
     const searchBar = document.getElementById("search-bar");
     const listings = [];
-
-    homeButtonElement.addEventListener("click", () => loadView("main"));
-    sellButtonElement.addEventListener("click", sellItem);
-    userPortalElement.addEventListener("click", async () => {
-        try {
-            const selfId = await getSelfProf();
-            loadView("profile", { id: selfId });
-        } catch (e) {
-            loadView("login");
-        }
-    });
-    populateListings();
 
     /**
      * @param {Listing} listing 
