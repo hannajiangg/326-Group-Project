@@ -2,16 +2,16 @@ import { getProfile, putProfile, Profile, getSelfProf } from "../api.js";
 import { sellItem, loadView } from "/index.js";
 
 export async function onNavigate() {
-   /** @type {HTMLButtonElement} */
-   const homeButtonElement = document.getElementById("home-button");
-   /** @type {HTMLButtonElement} */
-   const sellButtonElement = document.getElementById("sell-button");
-   /** @type {HTMLElement} */
-   const userPortalElement = document.getElementById("user-portal");
+  /** @type {HTMLButtonElement} */
+  const homeButtonElement = document.getElementById("home-button");
+  /** @type {HTMLButtonElement} */
+  const sellButtonElement = document.getElementById("sell-button");
+  /** @type {HTMLElement} */
+  const userPortalElement = document.getElementById("user-portal");
 
-   homeButtonElement.addEventListener("click", () => loadView("main"));
-   sellButtonElement.addEventListener("click", sellItem);
-   userPortalElement.addEventListener("click", () => loadView("profile"));
+  homeButtonElement.addEventListener("click", () => loadView("main"));
+  sellButtonElement.addEventListener("click", sellItem);
+  userPortalElement.addEventListener("click", () => loadView("profile"));
 
   const editName = document.getElementById("edit-name");
   const editEmail = document.getElementById("edit-email");
@@ -27,18 +27,15 @@ export async function onNavigate() {
 
   // Change this to actual _id of current user
   const searchParams = new URLSearchParams(window.location.search);
-  let profile;
-  if (searchParams.get("id") === "self") {
-    profile = (await getSelfProf())._json;
-  }
+  const profileId = searchParams.get("id");
+  const profile = await getProfile(profileId);
 
   //Populate profile fields
   if (profile.name !== null && profile.email !== null) {
     nameField.value = profile.name;
     emailField.value = profile.email;
   }
-  pfp.src = profile.picture;
-  console.log(profile.picture);
+  pfp.src = profile.pfp;
 
   // if (profile.payments.length === 0) {
   //   const message = document.createElement("p");

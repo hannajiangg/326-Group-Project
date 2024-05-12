@@ -10,7 +10,7 @@ import path from "node:path"
 // import { blobToURL, getListing, hasListing, Listing, putListing } from '../client/api.js'; 
 // Client and server code should be separate
 import { Listing, Profile } from "../common/schema.js";
-import { getListing, getListingCarousel, getListings, getListingThumbnail, hasListing, hasProfile, putListing, putProfile } from './db.js';
+import { getListing, getListingCarousel, getListings, getListingThumbnail, getProfile, hasListing, hasProfile, putListing, putProfile } from './db.js';
 import multer from 'multer';
 
 
@@ -122,7 +122,7 @@ app.get('/api/listings/:id/carousel/:index', async (req, res) => {
       return;
     }
     const carouselResult = await getListingCarousel(id, index);
-    if(!carouselResult){
+    if (!carouselResult) {
       res.status(404).json({ error: 'Carousel index does not exist' });
       return;
     }
@@ -179,7 +179,7 @@ app.put('/api/listings', upload.any(), async (req, res) => {
 });
 
 // UNSAFE endpoints for profiles (TESTING)
-app.get('api/profiles', async (req, res) => {
+app.get('/api/profiles', async (req, res) => {
   try {
     const profiles = await getProfile()
     res.join(profiles)
@@ -190,7 +190,7 @@ app.get('api/profiles', async (req, res) => {
   }
 })
 
-app.get('api/profiles/:id', async (req, res) => {
+app.get('/api/profiles/:id', async (req, res) => {
   const { id } = req.params
   try {
     if (await hasProfile(id)) {
@@ -223,12 +223,14 @@ app.put('/api/profiles', async (req, res) => {
   }
 })
 
-app.get("/api/profiles/self", (req, res) => {
+// Odd ordering in order to prevent collision with /api/profiles/:id
+// Feel free to fix
+app.get("/api/self/profile", (req, res) => {
   if (!req.user) {
     res.status(401).send("No Active Session!");
     return;
   }
-  res.status(200).send(req.user);
+  res.status(200).send(req.user.id);
 });
 
 app.get("/api/login/callback", passport.authenticate('google', {

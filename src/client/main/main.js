@@ -1,4 +1,4 @@
-import { blobToURL, getListing, getListings, hasListing, Listing, putListing } from "../api.js";
+import { blobToURL, getListing, getListings, getSelfProf, hasListing, Listing, putListing } from "../api.js";
 import { sellItem, loadView } from "/index.js";
 
 export function onNavigate() {
@@ -14,7 +14,12 @@ export function onNavigate() {
     homeButtonElement.addEventListener("click", () => loadView("main"));
     sellButtonElement.addEventListener("click", sellItem);
     userPortalElement.addEventListener("click", async () => {
-        loadView("profile", {id: "self"});
+        try {
+            const selfId = await getSelfProf();
+            loadView("profile", { id: selfId });
+        } catch (e) {
+            loadView("login");
+        }
     });
     populateListings();
 
@@ -77,31 +82,31 @@ export function onNavigate() {
     }
 
 
-// Extra dummy items for testing search bar
-//
-// const items = [["Men's jeans", "Clothing"], ["Women's jeans, used", "Clothing"], ["Men's shirt", "Clothing"], ["Women's shirt", "Clothing"],
-//                 ["New bike", "Item"], ["Used pot", "Item"], ["New basketball", "Item, Sports"], ["Soccer cleats", "Clothing, Sports"],
-//                 ["Baseball bat", "Sports"]];
-// items.forEach(item => {
-//     const mainPageDisplay = document.getElementById("main-page-display");
-//     const productBox = document.createElement("div");
-//     productBox.classList.add("product-box");
-//     productBox.innerHTML = `
-//     <div class="image-container">
-//         <div class="price-tag"></div>
-//     </div>
-//     <div class="description-box">
-//         <h3></h3>
-//         <p></p>
-//     </div>`;
-//     const titleElement = productBox.querySelector("h3");
-//     const categoryLabelElement = productBox.querySelector("p");
-//     titleElement.innerText = item[0];
-//     categoryLabelElement.innerText = item[1];
+    // Extra dummy items for testing search bar
+    //
+    // const items = [["Men's jeans", "Clothing"], ["Women's jeans, used", "Clothing"], ["Men's shirt", "Clothing"], ["Women's shirt", "Clothing"],
+    //                 ["New bike", "Item"], ["Used pot", "Item"], ["New basketball", "Item, Sports"], ["Soccer cleats", "Clothing, Sports"],
+    //                 ["Baseball bat", "Sports"]];
+    // items.forEach(item => {
+    //     const mainPageDisplay = document.getElementById("main-page-display");
+    //     const productBox = document.createElement("div");
+    //     productBox.classList.add("product-box");
+    //     productBox.innerHTML = `
+    //     <div class="image-container">
+    //         <div class="price-tag"></div>
+    //     </div>
+    //     <div class="description-box">
+    //         <h3></h3>
+    //         <p></p>
+    //     </div>`;
+    //     const titleElement = productBox.querySelector("h3");
+    //     const categoryLabelElement = productBox.querySelector("p");
+    //     titleElement.innerText = item[0];
+    //     categoryLabelElement.innerText = item[1];
 
-//     mainPageDisplay.appendChild(productBox);
-//     listings.push(productBox);
-// });
+    //     mainPageDisplay.appendChild(productBox);
+    //     listings.push(productBox);
+    // });
 
 
 }
