@@ -66,6 +66,21 @@ body{
     padding: 0px;
 }
 
+.one-line-large {
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+#title-section {
+    justify-content: space-between;
+}
+
+#thumbnail-selector {
+    height: 100%;
+    object-fit: contain;
+}
+
 #title-input {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding: 10px;
@@ -156,7 +171,6 @@ body{
     border-radius: 5px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     transition: border-color 0.3s ease;
-    margin-bottom: 30px;
 }
 
 #price-input:focus {
@@ -174,8 +188,6 @@ body{
     margin-bottom: 20px;
 }
 
-#title-input,
-#price-input,
 #description-textarea {
     width: 100%;
     padding: 10px;

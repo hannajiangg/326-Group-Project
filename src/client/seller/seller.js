@@ -1,4 +1,4 @@
-import { blobToURL, getListing, getProfile, Listing, putListing } from "../api.js";
+import { blobToURL, getListing, getProfile, getSelfProf, hasListing, Listing, putListing } from "../api.js";
 import { sellItem, loadView } from "/index.js";
 
 /**
@@ -55,7 +55,6 @@ async function renderCarousel(listing) {
      */
     function jumpToImage(index) {
         const imageWidthList = carouselImageList.map(image => image.getBoundingClientRect().width);
-        console.log(imageWidthList);
         const prevWidths = imageWidthList.slice(0, index);
         const pageWidth = carouselDiv.getBoundingClientRect().width;
 
@@ -92,6 +91,26 @@ async function renderDescription(listing) {
     const sellerLabel = document.getElementById('seller-label');
     const sellerEmailLabel = document.getElementById('seller-email-label');
     const descriptionTextarea = document.getElementById('description-textarea');
+    const postButton = document.getElementById('post-button');
+    const thumbnailSelector = document.getElementById('thumbnail-selector');
+
+    thumbnailSelector.addEventListener("click", () => {
+        const fakeInput = document.createElement('input');
+        fakeInput.type = 'file';
+        fakeInput.addEventListener("change", e => {
+            const [newThumbnail] = e.target.files;
+            console.log(newThumbnail.type);
+            if(newThumbnail.type.split("/")[0] !== "image"){
+                alert("Thumbnail must be an image!");
+                return;
+            }
+            listing.thumbnail = newThumbnail;
+            blobToURL(newThumbnail).then(url =>
+                thumbnailSelector.src = url
+            );
+        });
+        fakeInput.click();
+    });
 
     quantityLabel.textContent = listing.quantity;
     quantityAddButton.addEventListener("click", async () => {
@@ -112,24 +131,54 @@ async function renderDescription(listing) {
         descriptionTextarea.style.height = descriptionTextarea.scrollHeight + "px";
 
         listing.description = descriptionTextarea.textContent;
-        await putListing(listing);
+    });
+
+    postButton.addEventListener("click", async () => {
+        try {
+            await putListing(listing);
+        } catch {
+            alert("Cannot upload listing!");
+        }
     })
 }
 
 export async function onNavigate() {
-     /** @type {HTMLButtonElement} */
-   const homeButtonElement = document.getElementById("home-button");
-   /** @type {HTMLButtonElement} */
-   const sellButtonElement = document.getElementById("sell-button");
-   /** @type {HTMLElement} */
-   const userPortalElement = document.getElementById("user-portal");
+    /** @type {HTMLButtonElement} */
+    const homeButtonElement = document.getElementById("home-button");
+    /** @type {HTMLButtonElement} */
+    const sellButtonElement = document.getElementById("sell-button");
+    /** @type {HTMLElement} */
+    const userPortalElement = document.getElementById("user-portal");
 
-   homeButtonElement.addEventListener("click", () => loadView("main"));
-   sellButtonElement.addEventListener("click", sellItem);
-   userPortalElement.addEventListener("click", () => loadView("profile"));
+    homeButtonElement.addEventListener("click", () => loadView("main"));
+    sellButtonElement.addEventListener("click", sellItem);
+    userPortalElement.addEventListener("click", () => loadView("profile"));
 
     const searchParams = new URLSearchParams(window.location.search);
-    const currentListing = await getListing(searchParams.get("id"));
-    renderCarousel(currentListing);
-    renderDescription(currentListing);
+
+    // Get or create the listing for this page
+    const listingId = searchParams.get("id");
+    let listing = await getListing();
+    if (listing === null) {
+        try {
+            const selfId = await getSelfProf();
+            listing = new Listing(
+                listingId,
+                "",
+                null,
+                [],
+                0.00,
+                "",
+                "",
+                "",
+                selfId
+            );
+        } catch (e) {
+            loadView("login");
+            return;
+        }
+    }
+
+    renderCarousel(listing);
+    renderDescription(listing);
 }
