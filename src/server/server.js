@@ -152,6 +152,7 @@ app.put('/api/listings', upload.any(), async (req, res) => {
       return [name, fileBlob];
     }));
 
+    if (!files.thumbnail) throw new Error("Listing must contain thumbnail!");
     listingData.thumbnail = files.thumbnail;
 
     listingData.carousel = [];
@@ -164,7 +165,14 @@ app.put('/api/listings', upload.any(), async (req, res) => {
     return listingData;
   }
 
-  const listingData = parseListing(req);
+  let listingData;
+  try {
+    listingData = parseListing(req);
+  } catch (e) {
+    res.status(400).send("Failed to parse listing");
+    return;
+  }
+
   try {
     if (!listingData._id) {
       res.status(400).send("Listing must contain id");

@@ -28,10 +28,11 @@
   </div>
   <div id="product-container">
     <div id="description">
-      <div>
+      <div id="title-section" class="one-line-large">
         <input type="text" id="title-input" placeholder="Title Description">
+        <img id="thumbnail-selector" src="https://placehold.co/512x512/png">
       </div>
-      <div id="quantity-section">
+      <div id="quantity-section" class="one-line-large">
         Quantity:
         <div id="quantity-control-widget">
           <button class="quantity-control-btn" id="quantity-subtract-button" type="button">-</button>
@@ -39,19 +40,19 @@
           <button class="quantity-control-btn" id="quantity-add-button" type="button">+</button>
         </div>
       </div>
-      <div>
+      <div class="one-line-large">
         Price: $<input type="text" id="price-input" placeholder="Price">
       </div>
-      <div>
+      <div class="one-line-large">
         Seller: <span id="seller-label"></span>
       </div>
-      <div>
+      <div class="one-line-large">
         Seller Email: <span id="seller-email-label"></span>
       </div>
       <textarea id="description-textarea" placeholder="Enter Description Here(Optional)"></textarea>
     </div>
     <div>
-      <button class="post-button">Post</button>
+      <button class="post-button" id="post-button">Post</button>
     </div>
   </div>
 </body>

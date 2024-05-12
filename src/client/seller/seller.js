@@ -1,4 +1,4 @@
-import { blobToURL, getListing, getProfile, Listing, putListing } from "../api.js";
+import { blobToURL, getListing, getProfile, getSelfProf, hasListing, Listing, putListing } from "../api.js";
 import { loadNavbar } from "../navbar/navbar.js";
 import { sellItem, loadView } from "/index.js";
 
@@ -31,23 +31,25 @@ async function renderCarousel(listing) {
     carouselImageContainer.appendChild(newImagePlaceholderElement);
     carouselImageList.push(newImagePlaceholderElement);
 
-    // Add listener for file drops
-    newImagePlaceholderElement.addEventListener("dragenter", e => e.preventDefault());
-    newImagePlaceholderElement.addEventListener("dragover", e => e.preventDefault());
-    newImagePlaceholderElement.addEventListener("drop", async e => {
-        const newImageList = [...e.dataTransfer.files].filter(file => file.type.split("/")[0] === "image");
-        listing.carousel.push(...newImageList);
-        e.preventDefault();
-        for (const imageBlob of newImageList) {
-            /** @type { HTMLImageElement } */
-            const carouselImage = document.createElement("img");
-            carouselImage.src = await blobToURL(imageBlob);
-            carouselImage.classList.add("carousel-image");
-            carouselImageContainer.insertBefore(carouselImage, newImagePlaceholderElement);
-            carouselImageList.splice(carouselImageList.length - 1, 0, carouselImage);
-        }
-        await putListing(listing);
-        console.log(await getListing(listing._id))
+    newImagePlaceholderElement.addEventListener("click", () => {
+        const fakeInput = document.createElement('input');
+        fakeInput.type = 'file';
+        fakeInput.setAttribute("multiple", "true");
+        fakeInput.addEventListener("change", async e => {
+            const newImageList = [...e.target.files].filter(file => file.type.split("/")[0] === "image");
+            listing.carousel.push(...newImageList);
+            e.preventDefault();
+            for (const imageBlob of newImageList) {
+                /** @type { HTMLImageElement } */
+                const carouselImage = document.createElement("img");
+                carouselImage.src = await blobToURL(imageBlob);
+                carouselImage.classList.add("carousel-image");
+                carouselImageContainer.insertBefore(carouselImage, newImagePlaceholderElement);
+                carouselImageList.splice(carouselImageList.length - 1, 0, carouselImage);
+            }
+            console.log(await getListing(listing._id))
+        });
+        fakeInput.click();
     });
 
     /**
@@ -56,7 +58,6 @@ async function renderCarousel(listing) {
      */
     function jumpToImage(index) {
         const imageWidthList = carouselImageList.map(image => image.getBoundingClientRect().width);
-        console.log(imageWidthList);
         const prevWidths = imageWidthList.slice(0, index);
         const pageWidth = carouselDiv.getBoundingClientRect().width;
 
@@ -87,12 +88,46 @@ async function renderCarousel(listing) {
  * @param {Listing} listing 
  */
 async function renderDescription(listing) {
+    /** @type { HTMLInputElement } */
+    const titleField = document.getElementById('title-input');
+    /** @type { HTMLImageElement } */
+    const thumbnailSelector = document.getElementById('thumbnail-selector');
+    /** @type { HTMLButtonElement } */
     const quantityAddButton = document.getElementById('quantity-add-button');
+    /** @type { HTMLButtonElement } */
     const quantitySubtractButton = document.getElementById('quantity-subtract-button');
+    /** @type { HTMLDivElement } */
     const quantityLabel = document.getElementById('quantity-label');
+    /** @type { HTMLInputElement } */
+    const priceInput = document.getElementById('price-input');
+    /** @type { HTMLSpanElement } */
     const sellerLabel = document.getElementById('seller-label');
+    /** @type { HTMLSpanElement } */
     const sellerEmailLabel = document.getElementById('seller-email-label');
+    /** @type { HTMLTextAreaElement } */
     const descriptionTextarea = document.getElementById('description-textarea');
+    /** @type { HTMLButtonElement } */
+    const postButton = document.getElementById('post-button');
+
+    titleField.addEventListener("change", () => listing.title = titleField.value);
+
+    thumbnailSelector.addEventListener("click", () => {
+        const fakeInput = document.createElement('input');
+        fakeInput.type = 'file';
+        fakeInput.addEventListener("change", e => {
+            const [newThumbnail] = e.target.files;
+            console.log(newThumbnail.type);
+            if (newThumbnail.type.split("/")[0] !== "image") {
+                alert("Thumbnail must be an image!");
+                return;
+            }
+            listing.thumbnail = newThumbnail;
+            blobToURL(newThumbnail).then(url =>
+                thumbnailSelector.src = url
+            );
+        });
+        fakeInput.click();
+    });
 
     quantityLabel.textContent = listing.quantity;
     quantityAddButton.addEventListener("click", async () => {
@@ -104,6 +139,16 @@ async function renderDescription(listing) {
         quantityLabel.textContent = listing.quantity;
     });
 
+    priceInput.addEventListener("change", () => {
+        const newCost = Number(priceInput.value); // Number constructor used since it is strict
+        if (isFinite(newCost)) {
+            priceInput.classList.remove("invalid-input");
+            listing.cost = newCost
+        } else {
+            priceInput.classList.add("invalid-input");
+        }
+    })
+
     const sellerProfile = await getProfile(listing.sellerId);
     sellerLabel.textContent = sellerProfile.name;
     sellerEmailLabel.textContent = sellerProfile.email;
@@ -113,15 +158,56 @@ async function renderDescription(listing) {
         descriptionTextarea.style.height = descriptionTextarea.scrollHeight + "px";
 
         listing.description = descriptionTextarea.textContent;
-        await putListing(listing);
+    });
+
+    postButton.addEventListener("click", async () => {
+        try {
+            await putListing(listing);
+            loadView("main");
+        } catch {
+            alert("Cannot upload listing!");
+        }
     })
 }
 
 export async function onNavigate() {
     await loadNavbar();
+    /** @type {HTMLButtonElement} */
+    const homeButtonElement = document.getElementById("home-button");
+    /** @type {HTMLButtonElement} */
+    const sellButtonElement = document.getElementById("sell-button");
+    /** @type {HTMLElement} */
+    const userPortalElement = document.getElementById("user-portal");
+
+    homeButtonElement.addEventListener("click", () => loadView("main"));
+    sellButtonElement.addEventListener("click", sellItem);
+    userPortalElement.addEventListener("click", () => loadView("profile"));
 
     const searchParams = new URLSearchParams(window.location.search);
-    const currentListing = await getListing(searchParams.get("id"));
-    renderCarousel(currentListing);
-    renderDescription(currentListing);
+
+    // Get or create the listing for this page
+    const listingId = searchParams.get("id");
+    let listing = await getListing();
+    if (listing === null) {
+        try {
+            const selfId = await getSelfProf();
+            listing = new Listing(
+                listingId,
+                "",
+                null,
+                [],
+                0.00,
+                "",
+                "",
+                "",
+                selfId
+            );
+        } catch (e) {
+            loadView("login");
+            return;
+        }
+    }
+
+    renderCarousel(listing);
+    renderDescription(listing);
 }

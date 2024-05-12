@@ -83,36 +83,26 @@ export async function hasListing(_id) {
  * @param {Promise<Listing>} listing 
  */
 export async function putListing(listing) {
-  try {
-    // use a form
-    const form = new FormData()
+  // use a form
+  const form = new FormData()
 
-    form.append('listing', JSON.stringify(listing))
+  form.append('listing', JSON.stringify(listing))
 
-    if (listing.thumbnail) {
-      form.append('thumbnail', listing.thumbnail, 'thumbnail.jpg')
-    }
-
-    for (let i = 0; i < listing.carousel.length; i++) {
-      form.append(`carousel-${i}`, listing.carousel[i], `carousel-${i}.jpg`)
-    }
-
-    const options = {
-      method: 'PUT',
-      body: form
-    }
-
-    const response = await fetch('./api/listings', options)
-    const data = await response.json()
-
-    listing.thumbnailUrl = data.thumbnailUrl
-    listing.carouselUrls = data.carouselUrls
-
-    console.log('attachment uploaded successfully')
+  if (listing.thumbnail) {
+    form.append('thumbnail', listing.thumbnail, 'thumbnail.jpg')
   }
-  catch (error) {
-    console.error('Error uploading')
+
+  for (let i = 0; i < listing.carousel.length; i++) {
+    form.append(`carousel-${i}`, listing.carousel[i], `carousel-${i}.jpg`)
   }
+
+  const options = {
+    method: 'PUT',
+    body: form
+  }
+
+  const response = await fetch('./api/listings', options);
+  if(!response.ok) throw new Error(`PUT ./api/listings failed with error ${response.status}`);
 }
 
 export async function generateFakeData() {
