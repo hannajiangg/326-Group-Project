@@ -1,6 +1,9 @@
 import { getSelfProf } from "../api.js";
 import { loadView, sellItem } from "/index.js";
 
+/**
+ * This function appends the navbar to the start of body.
+ */
 export async function loadNavbar() {
     const navbarElement = document.createElement("html");
     const navbarResponse = await fetch("./navbar/navbar.html");
