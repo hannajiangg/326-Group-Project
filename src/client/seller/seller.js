@@ -30,23 +30,25 @@ async function renderCarousel(listing) {
     carouselImageContainer.appendChild(newImagePlaceholderElement);
     carouselImageList.push(newImagePlaceholderElement);
 
-    // Add listener for file drops
-    newImagePlaceholderElement.addEventListener("dragenter", e => e.preventDefault());
-    newImagePlaceholderElement.addEventListener("dragover", e => e.preventDefault());
-    newImagePlaceholderElement.addEventListener("drop", async e => {
-        const newImageList = [...e.dataTransfer.files].filter(file => file.type.split("/")[0] === "image");
-        listing.carousel.push(...newImageList);
-        e.preventDefault();
-        for (const imageBlob of newImageList) {
-            /** @type { HTMLImageElement } */
-            const carouselImage = document.createElement("img");
-            carouselImage.src = await blobToURL(imageBlob);
-            carouselImage.classList.add("carousel-image");
-            carouselImageContainer.insertBefore(carouselImage, newImagePlaceholderElement);
-            carouselImageList.splice(carouselImageList.length - 1, 0, carouselImage);
-        }
-        await putListing(listing);
-        console.log(await getListing(listing._id))
+    newImagePlaceholderElement.addEventListener("click", () => {
+        const fakeInput = document.createElement('input');
+        fakeInput.type = 'file';
+        fakeInput.setAttribute("multiple", "true");
+        fakeInput.addEventListener("change", async e => {
+            const newImageList = [...e.target.files].filter(file => file.type.split("/")[0] === "image");
+            listing.carousel.push(...newImageList);
+            e.preventDefault();
+            for (const imageBlob of newImageList) {
+                /** @type { HTMLImageElement } */
+                const carouselImage = document.createElement("img");
+                carouselImage.src = await blobToURL(imageBlob);
+                carouselImage.classList.add("carousel-image");
+                carouselImageContainer.insertBefore(carouselImage, newImagePlaceholderElement);
+                carouselImageList.splice(carouselImageList.length - 1, 0, carouselImage);
+            }
+            console.log(await getListing(listing._id))
+        });
+        fakeInput.click();
     });
 
     /**
