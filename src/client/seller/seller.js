@@ -87,14 +87,28 @@ async function renderCarousel(listing) {
  * @param {Listing} listing 
  */
 async function renderDescription(listing) {
-    const quantityAddButton = document.getElementById('quantity-add-button');
-    const quantitySubtractButton = document.getElementById('quantity-subtract-button');
-    const quantityLabel = document.getElementById('quantity-label');
-    const sellerLabel = document.getElementById('seller-label');
-    const sellerEmailLabel = document.getElementById('seller-email-label');
-    const descriptionTextarea = document.getElementById('description-textarea');
-    const postButton = document.getElementById('post-button');
+    /** @type { HTMLInputElement } */
+    const titleField = document.getElementById('title-input');
+    /** @type { HTMLImageElement } */
     const thumbnailSelector = document.getElementById('thumbnail-selector');
+    /** @type { HTMLButtonElement } */
+    const quantityAddButton = document.getElementById('quantity-add-button');
+    /** @type { HTMLButtonElement } */
+    const quantitySubtractButton = document.getElementById('quantity-subtract-button');
+    /** @type { HTMLDivElement } */
+    const quantityLabel = document.getElementById('quantity-label');
+    /** @type { HTMLInputElement } */
+    const priceInput = document.getElementById('price-input');
+    /** @type { HTMLSpanElement } */
+    const sellerLabel = document.getElementById('seller-label');
+    /** @type { HTMLSpanElement } */
+    const sellerEmailLabel = document.getElementById('seller-email-label');
+    /** @type { HTMLTextAreaElement } */
+    const descriptionTextarea = document.getElementById('description-textarea');
+    /** @type { HTMLButtonElement } */
+    const postButton = document.getElementById('post-button');
+
+    titleField.addEventListener("change", () => listing.title = titleField.value);
 
     thumbnailSelector.addEventListener("click", () => {
         const fakeInput = document.createElement('input');
@@ -102,7 +116,7 @@ async function renderDescription(listing) {
         fakeInput.addEventListener("change", e => {
             const [newThumbnail] = e.target.files;
             console.log(newThumbnail.type);
-            if(newThumbnail.type.split("/")[0] !== "image"){
+            if (newThumbnail.type.split("/")[0] !== "image") {
                 alert("Thumbnail must be an image!");
                 return;
             }
@@ -124,6 +138,16 @@ async function renderDescription(listing) {
         quantityLabel.textContent = listing.quantity;
     });
 
+    priceInput.addEventListener("change", () => {
+        const newCost = Number(priceInput.value); // Number constructor used since it is strict
+        if (isFinite(newCost)) {
+            priceInput.classList.remove("invalid-input");
+            listing.cost = newCost
+        } else {
+            priceInput.classList.add("invalid-input");
+        }
+    })
+
     const sellerProfile = await getProfile(listing.sellerId);
     sellerLabel.textContent = sellerProfile.name;
     sellerEmailLabel.textContent = sellerProfile.email;
@@ -138,6 +162,7 @@ async function renderDescription(listing) {
     postButton.addEventListener("click", async () => {
         try {
             await putListing(listing);
+            loadView("main");
         } catch {
             alert("Cannot upload listing!");
         }

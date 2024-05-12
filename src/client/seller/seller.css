@@ -72,6 +72,10 @@ body{
     align-items: center;
 }
 
+.invalid-input {
+    background-color: pink !important;
+}
+
 #title-section {
     justify-content: space-between;
 }
