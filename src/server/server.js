@@ -209,7 +209,7 @@ app.get('/api/profiles', async (req, res) => {
   }
   catch (error) {
     console.error(error)
-    res.status.json({ error: 'Internal Server Error' })
+    res.status(500).json({ error: 'Internal Server Error' })
   }
 })
 
