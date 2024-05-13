@@ -1,0 +1,86 @@
+.product-box {
+  height: 500px;
+  background-color: white;
+  padding: 20px;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ccc;
+}
+
+.product-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-color: #800000; 
+}
+
+.product-box img {
+  max-width: 100%;
+}
+
+
+.image-container{
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  height: 450px;
+}
+
+.price-tag {
+  font-size: 30px;
+  color: white;
+  padding: 10px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-top-right-radius: 10px;
+}
+
+
+.product-box img {
+  min-width: 100%;
+  height: auto;
+  width: 100px;
+}
+
+.description-box {
+  padding: 10px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.product-box h3 {
+  width: 0;
+  text-wrap: nowrap;
+  text-align: left;
+  font-size: 20px;
+  line-height: 1;
+  margin: 0;
+}
+
+.product-box p {
+  width: 0;
+  text-wrap: nowrap;
+  text-align: left;
+  font-size: 20px;
+  line-height: 1;
+  margin: 0;
+}
+
+.product-box button {
+  padding: 10px 20px;
+  background-color: #8C1515;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition effect */
+}
+
+.product-box button:hover {
+  background-color: #A52A2A; /* Darker background color on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Box shadow on hover */
+}

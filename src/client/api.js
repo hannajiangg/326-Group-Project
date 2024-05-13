@@ -243,6 +243,11 @@ export async function getProfile(_id) {
   }
 }
 
+/**
+ * Gets the listings being sold by a given profile.
+ * @param {string} id 
+ * @returns {Promise<string[]>}
+ */
 export async function getProfileListings(id) {
   const response = await fetch(`./api/profiles/${id}/postedListings`);
   if (response.ok) {

@@ -1,4 +1,4 @@
-import { getProfile, putProfile, Profile, getSelfProf, getProfileListings } from "../api.js";
+import { getProfile, putProfile, Profile, getSelfProf, getProfileListings, getListing } from "../api.js";
 import { loadNavbar } from "../navbar/navbar.js";
 import { sellItem, loadView } from "/index.js";
 
@@ -22,7 +22,11 @@ export async function onNavigate() {
   const profileId = searchParams.get("id");
   const profile = await getProfile(profileId);
 
-  console.log(await getProfileListings(profileId));
+  const listings = await getProfileListings(profileId);
+  listings.forEach(async listingId => {
+    const listing = await getListing(listingId);
+    addListing(listing);
+  });
 
   //Populate profile fields
   if (profile.name !== null && profile.email !== null) {
@@ -146,4 +150,36 @@ export async function onNavigate() {
       saveEmail.hidden = true;
     }
   });
+}
+
+/**
+ * @param {Listing} listing 
+ */
+async function addListing(listing) {
+  const currentUser = await getSelfProf().catch(() => "");
+  const itemDisplay = document.getElementById("items");
+  const productBox = document.createElement("div");
+  productBox.classList.add("product-box");
+  productBox.innerHTML = `
+        <div class="image-container">
+            <div class="price-tag"></div>
+        </div>
+        <div class="description-box">
+            <h3></h3>
+        </div>`;
+  const titleElement = productBox.querySelector("h3");
+  const priceTagElement = productBox.querySelector(".price-tag");
+  const imageDivElement = productBox.querySelector(".image-container");
+
+  titleElement.innerText = listing.title;
+
+  priceTagElement.innerText = `$${listing.cost.toFixed(2)}`;
+
+  const backgroundImageURL = `./api/listings/${listing._id}/thumbnail`;
+  imageDivElement.style.backgroundImage = `url("${backgroundImageURL}")`
+
+  const isOwned = listing.sellerId === currentUser;
+  productBox.addEventListener("click", () => loadView(isOwned ? "seller" : "product", { id: listing._id }))
+
+  itemDisplay.appendChild(productBox);
 }
