@@ -199,7 +199,7 @@ export async function onNavigate() {
 
     // Get or create the listing for this page
     const listingId = searchParams.get("id");
-    let listing = await getListing();
+    let listing = await getListing(listingId);
     if (listing === null) {
         try {
             const selfId = await getSelfProf();
@@ -209,7 +209,6 @@ export async function onNavigate() {
                 null,
                 [],
                 0.00,
-                "",
                 "",
                 "",
                 selfId

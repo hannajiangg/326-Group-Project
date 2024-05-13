@@ -9,7 +9,7 @@ import path from "node:path"
 // TODO Add endpoints for all database functionality
 // import { blobToURL, getListing, hasListing, Listing, putListing } from '../client/api.js'; 
 // Client and server code should be separate
-import { Listing, Profile } from "../common/schema.js";
+import { Listing, Profile } from "../client/schema.js";
 import { getListing, getListingCarousel, getListings, getListingThumbnail, getProfile, hasListing, hasProfile, putListing, putProfile } from './db.js';
 import multer from 'multer';
 
@@ -35,7 +35,6 @@ app.use(express.urlencoded({ extended: false }))
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static('src/client'));
-app.use(express.static('src/common')); // TODO make a better solution for hosting common files
 
 console.log(new URL('api/login/callback', process.env['HOST_URI']).href)
 passport.use(
@@ -210,7 +209,7 @@ app.get('/api/profiles', async (req, res) => {
   }
   catch (error) {
     console.error(error)
-    res.status.json({ error: 'Internal Server Error' })
+    res.status(500).json({ error: 'Internal Server Error' })
   }
 })
 

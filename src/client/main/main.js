@@ -22,16 +22,12 @@ export async function onNavigate() {
         </div>
         <div class="description-box">
             <h3></h3>
-            <p></p>
         </div>`;
         const titleElement = productBox.querySelector("h3");
-        const categoryLabelElement = productBox.querySelector("p");
         const priceTagElement = productBox.querySelector(".price-tag");
         const imageDivElement = productBox.querySelector(".image-container");
 
         titleElement.innerText = listing.title;
-
-        categoryLabelElement.innerText = listing.category;
 
         priceTagElement.innerText = `$${listing.cost.toFixed(2)}`;
 

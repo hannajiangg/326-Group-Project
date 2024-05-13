@@ -37,11 +37,6 @@ export class Listing {
    */
   description;
   /**
-   * The category of the listing.
-   * @type { string }
-   */
-  category;
-  /**
    * The amount available for the listing.
    * @type { number }
    */
@@ -59,7 +54,6 @@ export class Listing {
     carousel,
     cost,
     description,
-    category,
     quantity,
     sellerId,
   ) {
@@ -70,7 +64,6 @@ export class Listing {
     this.carouselLength = carousel.length;
     this.cost = cost;
     this.description = description;
-    this.category = category;
     this.quantity = quantity;
     this.sellerId = sellerId;
   }
@@ -105,18 +98,13 @@ export class Profile {
    */
   payments;
   /**
-   * User's currently posted items.
-   * @type { {}[] }
-   */
-  posted;
-  /**
-   * User's sold items.
-   * @type { {}[] }
+   * User's sold items as listing IDs. Stored here since it is a many-to-many connection.
+   * @type { string[] }
    */
   sold;
   /**
-   * User's purchased items.
-   * @type { {}[] }
+   * User's purchased items as listing IDs. Stored here since it is a many-to-many connection.
+   * @type { string[] }
    */
   purchased;
 
@@ -126,7 +114,6 @@ export class Profile {
     name,
     email,
     payments,
-    posted,
     sold,
     purchased
   ) {
@@ -135,7 +122,6 @@ export class Profile {
     this.name = name;
     this.email = email;
     this.payments = payments;
-    this.posted = posted;
     this.sold = sold;
     this.purchased = purchased;
   }
