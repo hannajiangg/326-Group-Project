@@ -135,13 +135,16 @@ async function renderDescription(listing) {
         quantityLabel.textContent = listing.quantity;
     });
     quantitySubtractButton.addEventListener("click", async () => {
-        listing.quantity--;
+        if (listing.quantity > 1) {
+            listing.quantity--;
+        }
         quantityLabel.textContent = listing.quantity;
     });
 
+    const currencyPattern = /^\d+(\.\d{1,2})?$/;
     priceInput.addEventListener("change", () => {
         const newCost = Number(priceInput.value); // Number constructor used since it is strict
-        if (isFinite(newCost)) {
+        if (isFinite(newCost) && currencyPattern.test(newCost)) {
             priceInput.classList.remove("invalid-input");
             listing.cost = newCost
         } else {
@@ -162,10 +165,21 @@ async function renderDescription(listing) {
 
     postButton.addEventListener("click", async () => {
         try {
+            if (!currencyPattern.test(priceInput.value)) throw new Error("price");
+            if (!listing.quantity) throw new Error("quantity");
             await putListing(listing);
             loadView("main");
-        } catch {
-            alert("Cannot upload listing!");
+        } catch (e) {
+            switch (e.message) {
+                case "price":
+                    alert("Please enter a valid price");
+                    break;
+                case "quantity":
+                    alert("Please enter a valid quantity");
+                    break;
+                default:
+                    alert("Cannot upload listing!");
+            }
         }
     })
 }
