@@ -172,16 +172,6 @@ async function renderDescription(listing) {
 
 export async function onNavigate() {
     await loadNavbar();
-    /** @type {HTMLButtonElement} */
-    const homeButtonElement = document.getElementById("home-button");
-    /** @type {HTMLButtonElement} */
-    const sellButtonElement = document.getElementById("sell-button");
-    /** @type {HTMLElement} */
-    const userPortalElement = document.getElementById("user-portal");
-
-    homeButtonElement.addEventListener("click", () => loadView("main"));
-    sellButtonElement.addEventListener("click", sellItem);
-    userPortalElement.addEventListener("click", () => loadView("profile"));
 
     const searchParams = new URLSearchParams(window.location.search);
 
