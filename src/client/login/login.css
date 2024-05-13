@@ -18,3 +18,15 @@
     background-color: #3367D6; /* Darker Google Blue on hover */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Slightly darker box shadow on hover */
 }
+
+#login-link {
+    font-size: 48px;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+#login-link:hover {
+    color: green;
+}
