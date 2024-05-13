@@ -217,6 +217,16 @@ export async function onNavigate() {
             loadView("login");
             return;
         }
+    } else {
+        // Load files from listing
+        const thumbnailResponse = await fetch(`./api/listings/${listing._id}/thumbnail`);
+        listing.thumbnail = await thumbnailResponse.blob();
+
+        listing.carousel = [];
+        for (let i = 0; i < listing.carouselLength; i++) {
+            const carouselResponse = await fetch(`./api/listings/${listing._id}/carousel/${i}`);
+            listing.carousel.push(await carouselResponse.blob());
+        }
     }
 
     renderCarousel(listing);
