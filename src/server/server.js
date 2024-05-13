@@ -205,11 +205,12 @@ app.delete('/api/listings/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const listing = await getListing(id);
-    if (listing.sellerId !== req.user.id) {
-      res.status(403).text(`requester id ${req.user.id} does not match seller id ${listing.sellerId}`);
+    if (!req.user || listing.sellerId !== req.user.id) {
+      res.status(401).send(`requester id ${req.user?.id} does not match seller id ${listing.sellerId}`);
       return;
     }
     await deleteListing(id);
+    res.status(200).end();
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: 'Internal Server Error' })

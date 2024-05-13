@@ -1,4 +1,4 @@
-import { blobToURL, getListing, getProfile, getSelfProf, hasListing, Listing, putListing } from "../api.js";
+import { blobToURL, deleteListing, getListing, getProfile, getSelfProf, hasListing, Listing, putListing } from "../api.js";
 import { loadNavbar } from "../navbar/navbar.js";
 import { sellItem, loadView } from "/index.js";
 
@@ -108,11 +108,13 @@ async function renderDescription(listing) {
     const descriptionTextarea = document.getElementById('description-textarea');
     /** @type { HTMLButtonElement } */
     const postButton = document.getElementById('post-button');
+    /** @type { HTMLButtonElement } */
+    const deleteButton = document.getElementById('delete-button');
 
     titleField.value = listing.title;
     titleField.addEventListener("change", () => listing.title = titleField.value);
 
-    if(listing.thumbnail){
+    if (listing.thumbnail) {
         thumbnailSelector.src = `./api/listings/${listing._id}/thumbnail`;
     }
     thumbnailSelector.addEventListener("click", () => {
@@ -194,7 +196,16 @@ async function renderDescription(listing) {
                     alert("Uploading listing to server failed");
             }
         }
-    })
+    });
+
+    deleteButton.addEventListener("click", async () => {
+        try{
+            await deleteListing(listing._id);
+            loadView("main");
+        } catch(e){
+            alert(e.message);
+        }
+    });
 }
 
 export async function onNavigate() {

@@ -62,7 +62,8 @@ export async function hasListing(id) {
  * @returns {Promise<boolean>}
  */
 export async function deleteListing(id) {
-  return await listingTable.deleteIndex(id);
+  const oldListing = await listingTable.get(id);
+  return await listingTable.remove(oldListing);
 }
 
 // TODO

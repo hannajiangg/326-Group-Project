@@ -105,6 +105,18 @@ export async function putListing(listing) {
   if(!response.ok) throw new Error(`PUT ./api/listings failed with error ${response.status}`);
 }
 
+/**
+ * Deletes a given listing id;
+ * @param {string} id 
+ */
+export async function deleteListing(id) {
+  const response = await fetch(`./api/listings/${id}`, {
+    method: 'DELETE'
+  });
+  if(response.status === 401) throw new Error(`You do not have permission to delete listing ${id}`);
+  if(!response.ok) throw new Error(`DELETE ./api/listings/${id} failed with error ${response.status}`);
+}
+
 export async function generateFakeData() {
   try {
     const imgPath = '/assets/dasweatervest.jpeg'
