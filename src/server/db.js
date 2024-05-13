@@ -56,6 +56,15 @@ export async function hasListing(id) {
   return await listingTable.get(id).then(() => true, () => false)
 }
 
+/**
+ * Deletes a given listing by ID.
+ * @param {string} id 
+ * @returns {Promise<boolean>}
+ */
+export async function deleteListing(id) {
+  return await listingTable.deleteIndex(id);
+}
+
 // TODO
 /**
  * Puts a listing into the database, overwriting an old version if it exists

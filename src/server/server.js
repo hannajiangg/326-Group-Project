@@ -10,7 +10,7 @@ import path from "node:path"
 // import { blobToURL, getListing, hasListing, Listing, putListing } from '../client/api.js'; 
 // Client and server code should be separate
 import { Listing, Profile } from "../client/schema.js";
-import { getListing, getListingCarousel, getListings, getListingThumbnail, getProfile, hasListing, hasProfile, putListing, putProfile } from './db.js';
+import { deleteListing, getListing, getListingCarousel, getListings, getListingThumbnail, getProfile, hasListing, hasProfile, putListing, putProfile } from './db.js';
 import multer from 'multer';
 
 
@@ -198,6 +198,21 @@ app.put('/api/listings', upload.any(), async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.delete('/api/listings/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const listing = await getListing(id);
+    if (listing.sellerId !== req.user.id) {
+      res.status(403).text(`requester id ${req.user.id} does not match seller id ${listing.sellerId}`);
+      return;
+    }
+    await deleteListing(id);
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Internal Server Error' })
   }
 });
 
