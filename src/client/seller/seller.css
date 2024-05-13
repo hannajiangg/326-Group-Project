@@ -60,17 +60,17 @@ body{
     justify-content: space-between;
     padding: 0 100px 0 100px;
     align-items: center;
-    transition: transform 0.3s ease; /* Smooth transition for scaling */
-}
-
-#carousel-controls:hover {
-    transform: scale(1.1); /* Scale up on hover */
 }
 
 #carousel-controls svg {
     height: 100px;
     fill: white;
     z-index: 2;
+    transition: transform 0.3s ease; /* Smooth transition for scaling */
+}
+
+#carousel-controls svg:hover {
+    transform: scale(1.1); /* Scale up on hover */
 }
 
 
