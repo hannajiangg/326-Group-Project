@@ -1,5 +1,5 @@
 import PouchDB from 'pouchdb';
-import { Listing, Profile } from '../common/schema.js';
+import { Listing, Profile } from '../client/schema.js';
 
 const listingTable = new PouchDB("listings");
 const profileTable = new PouchDB("profiles");
