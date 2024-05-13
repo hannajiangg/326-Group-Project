@@ -7,7 +7,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../assets/zoo_buy_logo.jpg');
+  /* background-image: url('../assets/zoo_buy_logo.jpg'); */
   background-size: cover;
   background-position: center;
 }
@@ -31,7 +31,9 @@
 .white-box:hover {
   border-color: #A52A2A;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translate(-50%, -50%) scale(1.05);
 }
+
 
 .logo-container {
   display: flex;

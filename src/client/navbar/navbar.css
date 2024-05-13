@@ -47,3 +47,26 @@
 #navigation-bar > input[type="text"]:focus {
   border-color: #800000;
 }
+
+#user-portal-container {
+  display: inline-block; /* Ensures the container fits around the icon */
+  border: 2px solid #800000; /* Outline color */
+  border-radius: 50%; /* To make it circular */
+  padding: 5px; /* Adjust as needed */
+  transition: border-color 0.3s ease; /* Smooth transition for outline change */
+}
+
+#user-portal {
+  font-size: 24px;
+  color: #800000;
+  transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+#user-portal-container:hover {
+  border-color: black; /* Change the outline color to black on hover */
+}
+
+#user-portal:hover {
+  color: black; /* Change the color to black on hover */
+}
+
