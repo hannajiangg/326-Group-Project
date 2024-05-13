@@ -118,7 +118,7 @@ async function renderDescription(listing) {
     thumbnailSelector.addEventListener("click", () => {
         const fakeInput = document.createElement('input');
         fakeInput.type = 'file';
-        fakeInput.addEventListener("change", e => {
+        fakeInput.addEventListener("change", async e => {
             const [newThumbnail] = e.target.files;
             console.log(newThumbnail.type);
             if (newThumbnail.type.split("/")[0] !== "image") {
@@ -126,9 +126,8 @@ async function renderDescription(listing) {
                 return;
             }
             listing.thumbnail = newThumbnail;
-            blobToURL(newThumbnail).then(url =>
-                thumbnailSelector.src = url
-            );
+            const url = await blobToURL(newThumbnail);
+            thumbnailSelector.src = url;
         });
         fakeInput.click();
     });
@@ -166,7 +165,7 @@ async function renderDescription(listing) {
         descriptionTextarea.style.height = "";
         descriptionTextarea.style.height = descriptionTextarea.scrollHeight + "px";
 
-        listing.description = descriptionTextarea.textContent;
+        listing.description = descriptionTextarea.value;
     });
 
     postButton.addEventListener("click", async () => {
@@ -216,7 +215,7 @@ export async function onNavigate() {
                 [],
                 0.00,
                 "",
-                "",
+                1,
                 selfId
             );
         } catch (e) {
