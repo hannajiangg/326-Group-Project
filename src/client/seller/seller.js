@@ -165,12 +165,20 @@ async function renderDescription(listing) {
 
     postButton.addEventListener("click", async () => {
         try {
-            if (!currencyPattern.test(priceInput.value)) throw new Error("price");
+            if (!listing.title) throw new Error("title");
+            if (!listing.thumbnail) throw new Error("thumbnail");
             if (!listing.quantity) throw new Error("quantity");
+            if (!currencyPattern.test(priceInput.value)) throw new Error("price");
             await putListing(listing);
             loadView("main");
         } catch (e) {
             switch (e.message) {
+                case "title":
+                    alert("Please enter a title");
+                    break;
+                case "thumbnail":
+                    alert("Please enter a valid thumbnail");
+                    break;
                 case "price":
                     alert("Please enter a valid price");
                     break;
@@ -178,7 +186,7 @@ async function renderDescription(listing) {
                     alert("Please enter a valid quantity");
                     break;
                 default:
-                    alert("Cannot upload listing!");
+                    alert("Uploading listing to server failed");
             }
         }
     })
