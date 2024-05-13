@@ -12,6 +12,7 @@
 }
 
 #contact-button {
+    text-decoration: none;
     padding: 10px 20px;
     background-color: #808080; /* Grey background color */
     color: white;

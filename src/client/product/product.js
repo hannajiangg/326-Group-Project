@@ -13,7 +13,8 @@ async function renderDescription(listing) {
     const priceTag = document.getElementById('price-tag');
     const sellerLabel = document.getElementById('seller-label');
     const sellerEmailLabel = document.getElementById('seller-email-label');
-    const descriptionSection = document.getElementById('descrip');
+    const descriptionSection = document.getElementById('description-section');
+    const contactButton = document.getElementById('contact-button');
 
     titleSpan.textContent = listing.title;
 
@@ -25,6 +26,8 @@ async function renderDescription(listing) {
     sellerEmailLabel.textContent = seller.email;
 
     descriptionSection.textContent = listing.description;
+
+    contactButton.setAttribute("href", `mailto:${seller.email}`);
 }
 
 export async function onNavigate() {
@@ -77,10 +80,10 @@ export async function onNavigate() {
     carouselLeftArrow.addEventListener("click", () => {
         currentImage = Math.max(0, currentImage - 1);
         jumpToImage(currentImage)
-    })
+    });
     carouselRightArrow.addEventListener("click", () => {
         currentImage = Math.min(carouselImageList.length - 1, currentImage + 1);
         jumpToImage(currentImage)
-    })
+    });
     renderDescription(currentListing);
 }
