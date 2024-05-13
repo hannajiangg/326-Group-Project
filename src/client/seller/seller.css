@@ -26,23 +26,33 @@ body{
     height: 500px;
 }
 
-#new-image-placeholder{
+#new-image-placeholder {
     height: 500px;
     width: 500px;
-    background-color: #800000;
+    background: linear-gradient(#800000 0%, red 50%, #800000 100%);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    font-family: Arial, sans-serif;
+    color: #fff;
 }
 
-#new-image-placeholder svg{
+#new-image-placeholder:hover svg {
+    transform: scale(1.1); /* Enlarge SVG on hover */
+}
+
+#new-image-placeholder svg {
     fill: white;
     width: 100px;
     height: 100px;
+    transition: transform 0.3s ease; /* Smooth transition for scaling */
 }
 
-#carousel-controls{
+
+#carousel-controls {
     position: absolute;
     inset: 0;
     background: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, rgba(0,0,0,0.5) 100%);
@@ -50,13 +60,19 @@ body{
     justify-content: space-between;
     padding: 0 100px 0 100px;
     align-items: center;
+    transition: transform 0.3s ease; /* Smooth transition for scaling */
 }
 
-#carousel-controls svg{
+#carousel-controls:hover {
+    transform: scale(1.1); /* Scale up on hover */
+}
+
+#carousel-controls svg {
     height: 100px;
     fill: white;
     z-index: 2;
 }
+
 
 #description input[type="text"]{
     background: none;
@@ -162,7 +178,7 @@ body{
     font-weight: bold;
     text-transform: uppercase;
     transition: background-color 0.3s ease;
-    margin-left: 20px; /* Left margin */
+    margin-left: 20px;
 }
 
 .post-button:hover {
