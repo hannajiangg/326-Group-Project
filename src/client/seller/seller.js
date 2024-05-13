@@ -109,8 +109,12 @@ async function renderDescription(listing) {
     /** @type { HTMLButtonElement } */
     const postButton = document.getElementById('post-button');
 
+    titleField.value = listing.title;
     titleField.addEventListener("change", () => listing.title = titleField.value);
 
+    if(listing.thumbnail){
+        thumbnailSelector.src = `./api/listings/${listing._id}/thumbnail`;
+    }
     thumbnailSelector.addEventListener("click", () => {
         const fakeInput = document.createElement('input');
         fakeInput.type = 'file';
@@ -141,6 +145,7 @@ async function renderDescription(listing) {
         quantityLabel.textContent = listing.quantity;
     });
 
+    priceInput.value = listing.cost.toFixed(2);
     const currencyPattern = /^\d+(\.\d{1,2})?$/;
     priceInput.addEventListener("change", () => {
         const newCost = Number(priceInput.value); // Number constructor used since it is strict
@@ -156,6 +161,7 @@ async function renderDescription(listing) {
     sellerLabel.textContent = sellerProfile.name;
     sellerEmailLabel.textContent = sellerProfile.email;
 
+    descriptionTextarea.value = listing.description;
     descriptionTextarea.addEventListener("input", async () => {
         descriptionTextarea.style.height = "";
         descriptionTextarea.style.height = descriptionTextarea.scrollHeight + "px";
