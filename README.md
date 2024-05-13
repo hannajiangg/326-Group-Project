@@ -29,6 +29,7 @@ To run the project:
 
 - **Sean:**
   - Profile management
+  - Search Bar
     
 
 
