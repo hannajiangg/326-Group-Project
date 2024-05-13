@@ -90,20 +90,8 @@ await loadView(initialView, initialSearch, false);
 export async function sellItem() {
   let newListingId = Math.random().toFixed(10).substring(2);
   while (await hasListing(newListingId)) {
-    console.log(await hasListing(newListingId));
+    console.log(`${newListingId} already exists, selecting new random ID`);
     newListingId = Math.random().toFixed(10).substring(2);
   }
-  await putListing(new Listing(
-    newListingId,
-    "",
-    new Blob(),
-    [],
-    0,
-    "",
-    "",
-    1,
-    "000"
-  ));
-  console.log(newListingId)
   loadView("seller", { id: newListingId });
 }
