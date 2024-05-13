@@ -15,7 +15,6 @@ body {
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: border-color 0.3s ease;
-    height: 80vh;
 }
 
 
@@ -109,14 +108,13 @@ body {
 }
 
 #items {
-    background-color: rgb(217, 217, 217);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background: none;
     border-radius: 5px;
     width: 100%;
-    padding-top: 0.1%;
-    padding-bottom: 2%;
-    padding-left: 12px;
-    padding-right: 12px;
-    margin-top: 20px;
+    padding: 0px;
+    margin: 0px;
 }
 
 #content input.two {

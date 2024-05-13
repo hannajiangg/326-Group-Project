@@ -10,7 +10,7 @@ import path from "node:path"
 // import { blobToURL, getListing, hasListing, Listing, putListing } from '../client/api.js'; 
 // Client and server code should be separate
 import { Listing, Profile } from "../client/schema.js";
-import { deleteListing, getListing, getListingCarousel, getListings, getListingThumbnail, getProfile, hasListing, hasProfile, putListing, putProfile } from './db.js';
+import { deleteListing, getListing, getListingCarousel, getListings, getListingThumbnail, getProfile, getProfileListings, hasListing, hasProfile, putListing, putProfile } from './db.js';
 import multer from 'multer';
 
 
@@ -238,6 +238,16 @@ app.get('/api/profiles/:id', async (req, res) => {
     } else {
       res.status(404).json({ error: 'Profile not found' });
     }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
+
+app.get('/api/profiles/:id/postedListings', async (req, res) => {
+  const { id } = req.params
+  try {
+    res.status(200).json(await getProfileListings(id));
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });

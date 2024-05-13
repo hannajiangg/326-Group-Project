@@ -1,6 +1,8 @@
 import PouchDB from 'pouchdb';
+import pouchdb_find from 'pouchdb-find'
 import { Listing, Profile } from '../client/schema.js';
 
+PouchDB.plugin(pouchdb_find);
 const listingTable = new PouchDB("listings");
 const profileTable = new PouchDB("profiles");
 
@@ -132,6 +134,26 @@ export async function getProfile(id) {
     profile.sold,
     profile.purchased
   );
+}
+
+listingTable.createIndex({
+  index: {
+    fields: ["sellerId"]
+  }
+})
+/**
+ * Returns a profile if it exists
+ * @param {string} id The profile's id
+ * @returns { Promise<string[]> } A list of all listings associated with the profile
+ */
+export async function getProfileListings(id) {
+  const response = await listingTable.find({
+    selector: {
+      sellerId: {$eq: id}
+    },
+    fields: ["_id"]
+  });
+  return response.docs.map(({_id}) => _id);
 }
 
 /**
