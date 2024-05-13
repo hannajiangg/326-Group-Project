@@ -37,11 +37,6 @@ export class Listing {
    */
   description;
   /**
-   * The category of the listing.
-   * @type { string }
-   */
-  category;
-  /**
    * The amount available for the listing.
    * @type { number }
    */
@@ -59,7 +54,6 @@ export class Listing {
     carousel,
     cost,
     description,
-    category,
     quantity,
     sellerId,
   ) {
@@ -70,7 +64,6 @@ export class Listing {
     this.carouselLength = carousel.length;
     this.cost = cost;
     this.description = description;
-    this.category = category;
     this.quantity = quantity;
     this.sellerId = sellerId;
   }

@@ -126,7 +126,6 @@ export async function generateFakeData() {
         carouselBlobs,
         49.99,
         "Men's Waterfowl Sweater, Size M",
-        "Clothing",
         1,
         "000"
       )
