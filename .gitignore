@@ -132,3 +132,6 @@ dist
 # databases
 listings
 profiles
+#database indexes
+listings-*
+profiles-*

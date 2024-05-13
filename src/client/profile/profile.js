@@ -1,4 +1,4 @@
-import { getProfile, putProfile, Profile, getSelfProf } from "../api.js";
+import { getProfile, putProfile, Profile, getSelfProf, getProfileListings } from "../api.js";
 import { loadNavbar } from "../navbar/navbar.js";
 import { sellItem, loadView } from "/index.js";
 
@@ -21,6 +21,8 @@ export async function onNavigate() {
   const searchParams = new URLSearchParams(window.location.search);
   const profileId = searchParams.get("id");
   const profile = await getProfile(profileId);
+
+  console.log(await getProfileListings(profileId));
 
   //Populate profile fields
   if (profile.name !== null && profile.email !== null) {

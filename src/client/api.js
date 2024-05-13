@@ -243,6 +243,14 @@ export async function getProfile(_id) {
   }
 }
 
+export async function getProfileListings(id) {
+  const response = await fetch(`./api/profiles/${id}/postedListings`);
+  if (response.ok) {
+    return response.json();
+  } else {
+    return [];
+  }
+}
 /**
  * 
  * @param {Profile} profile 
