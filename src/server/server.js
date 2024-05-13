@@ -173,11 +173,27 @@ app.put('/api/listings', upload.any(), async (req, res) => {
     return;
   }
 
+  if (!listingData._id) {
+    res.status(400).send("Listing must contain id");
+    return;
+  }
+
+  if (!listingData.title) {
+    res.status(400).send("Listing must have a title");
+    return;
+  }
+
+  if (!listingData.thumbnail) {
+    res.status(400).send("Listing must have a thumbnail");
+    return;
+  }
+
+  if (!listingData.sellerId) {
+    res.status(400).send("Listing must have an associated seller");
+    return;
+  }
+
   try {
-    if (!listingData._id) {
-      res.status(400).send("Listing must contain id");
-      return;
-    }
     await putListing(listingData);
     res.status(201).json({ message: 'Listing created/updated successfully' });
   } catch (error) {
