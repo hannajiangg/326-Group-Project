@@ -1,4 +1,4 @@
-import { blobToURL, getListing, getProfile, getSelfProf, hasListing, Listing, putListing } from "../api.js";
+import { blobToURL, deleteListing, getListing, getProfile, getSelfProf, hasListing, Listing, putListing } from "../api.js";
 import { loadNavbar } from "../navbar/navbar.js";
 import { sellItem, loadView } from "/index.js";
 
@@ -108,13 +108,19 @@ async function renderDescription(listing) {
     const descriptionTextarea = document.getElementById('description-textarea');
     /** @type { HTMLButtonElement } */
     const postButton = document.getElementById('post-button');
+    /** @type { HTMLButtonElement } */
+    const deleteButton = document.getElementById('delete-button');
 
+    titleField.value = listing.title;
     titleField.addEventListener("change", () => listing.title = titleField.value);
 
+    if (listing.thumbnail) {
+        thumbnailSelector.src = `./api/listings/${listing._id}/thumbnail`;
+    }
     thumbnailSelector.addEventListener("click", () => {
         const fakeInput = document.createElement('input');
         fakeInput.type = 'file';
-        fakeInput.addEventListener("change", e => {
+        fakeInput.addEventListener("change", async e => {
             const [newThumbnail] = e.target.files;
             console.log(newThumbnail.type);
             if (newThumbnail.type.split("/")[0] !== "image") {
@@ -122,9 +128,8 @@ async function renderDescription(listing) {
                 return;
             }
             listing.thumbnail = newThumbnail;
-            blobToURL(newThumbnail).then(url =>
-                thumbnailSelector.src = url
-            );
+            const url = await blobToURL(newThumbnail);
+            thumbnailSelector.src = url;
         });
         fakeInput.click();
     });
@@ -141,6 +146,7 @@ async function renderDescription(listing) {
         quantityLabel.textContent = listing.quantity;
     });
 
+    priceInput.value = listing.cost.toFixed(2);
     const currencyPattern = /^\d+(\.\d{1,2})?$/;
     priceInput.addEventListener("change", () => {
         const newCost = Number(priceInput.value); // Number constructor used since it is strict
@@ -156,11 +162,12 @@ async function renderDescription(listing) {
     sellerLabel.textContent = sellerProfile.name;
     sellerEmailLabel.textContent = sellerProfile.email;
 
+    descriptionTextarea.value = listing.description;
     descriptionTextarea.addEventListener("input", async () => {
         descriptionTextarea.style.height = "";
         descriptionTextarea.style.height = descriptionTextarea.scrollHeight + "px";
 
-        listing.description = descriptionTextarea.textContent;
+        listing.description = descriptionTextarea.value;
     });
 
     postButton.addEventListener("click", async () => {
@@ -189,7 +196,16 @@ async function renderDescription(listing) {
                     alert("Uploading listing to server failed");
             }
         }
-    })
+    });
+
+    deleteButton.addEventListener("click", async () => {
+        try{
+            await deleteListing(listing._id);
+            loadView("main");
+        } catch(e){
+            alert(e.message);
+        }
+    });
 }
 
 export async function onNavigate() {
@@ -210,12 +226,22 @@ export async function onNavigate() {
                 [],
                 0.00,
                 "",
-                "",
+                1,
                 selfId
             );
         } catch (e) {
             loadView("login");
             return;
+        }
+    } else {
+        // Load files from listing
+        const thumbnailResponse = await fetch(`./api/listings/${listing._id}/thumbnail`);
+        listing.thumbnail = await thumbnailResponse.blob();
+
+        listing.carousel = [];
+        for (let i = 0; i < listing.carouselLength; i++) {
+            const carouselResponse = await fetch(`./api/listings/${listing._id}/carousel/${i}`);
+            listing.carousel.push(await carouselResponse.blob());
         }
     }
 

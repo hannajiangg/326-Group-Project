@@ -9,6 +9,8 @@ export async function onNavigate() {
     const searchBar = document.getElementById("search-bar");
     const listings = [];
 
+    const currentUser = await getSelfProf();
+
     /**
      * @param {Listing} listing 
      */
@@ -34,7 +36,8 @@ export async function onNavigate() {
         const backgroundImageURL = `./api/listings/${listing._id}/thumbnail`;
         imageDivElement.style.backgroundImage = `url("${backgroundImageURL}")`
 
-        productBox.addEventListener("click", () => loadView("product", { id: listing._id }))
+        const isOwned = listing.sellerId === currentUser;
+        productBox.addEventListener("click", () => loadView(isOwned? "seller" : "product", { id: listing._id }))
 
         mainPageDisplay.appendChild(productBox);
         listings.push(productBox);
