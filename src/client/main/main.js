@@ -57,8 +57,8 @@ export async function onNavigate() {
         const terms = searchBar.value.toLowerCase().replaceAll(/[,']/g, "").split(" ");
         listings.forEach(listing => {
             const title = listing.querySelector("h3").innerText.toLowerCase().replaceAll(/[,']/g, "");
-            const category = listing.querySelector("p").innerText.toLowerCase().replaceAll(/[,']/g, "");
-            if (terms.every(term => title.includes(term) || category.includes(term))) {
+            //const category = listing.querySelector("p").innerText.toLowerCase().replaceAll(/[,']/g, "");
+            if (terms.every(term => title.includes(term))) {
                 listing.hidden = false;
             } else {
                 listing.hidden = true;
