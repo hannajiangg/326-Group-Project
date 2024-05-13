@@ -211,7 +211,6 @@ export async function onNavigate() {
                 0.00,
                 "",
                 "",
-                "",
                 selfId
             );
         } catch (e) {

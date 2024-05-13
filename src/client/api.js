@@ -297,19 +297,11 @@ export async function generateFakeProfile() {
       "richards@cs.umass.edu",
       ["Example 1", "Example 2"],
       [
-        { _id: "000", name: "Men's Waterfowl Sweater Vest", qt: 1 },
-        { name: "Men's Jeans", qt: 2 },
+        "000"
       ],
-      [
-        { _id: "000", name: "Men's Waterfowl Sweater Vest", qt: 2 },
-        { name: "Men's Jeans", qt: 3 },
-      ],
-      [
-        { name: "Used Bike", qt: 1 },
-        { name: "UMass T-Shirt", qt: 5 },
-      ]
+      []
     )
   await putProfile(fakeProfile);
 }
 
-//await generateFakeProfile();
+await generateFakeProfile();
