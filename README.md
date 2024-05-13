@@ -1,5 +1,7 @@
 ## 326 Group Project
 
+# Getting Started
+
 To run the project:
 
 1. Download or clone this repository to your local machine.
@@ -44,7 +46,7 @@ To access the main page, type `localhost/index.html#main` after the URL.
 - `seller`
 - `profile`
 
-### Getting Started
+# Using UBay
 
 ## User Base
 
