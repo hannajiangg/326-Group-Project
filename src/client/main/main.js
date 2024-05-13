@@ -29,7 +29,7 @@ export async function onNavigate() {
         const priceTagElement = productBox.querySelector(".price-tag");
         const imageDivElement = productBox.querySelector(".image-container");
 
-        titleElement.innerText = listing.description;
+        titleElement.innerText = listing.title;
 
         categoryLabelElement.innerText = listing.category;
 

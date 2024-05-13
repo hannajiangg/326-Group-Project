@@ -13,7 +13,7 @@ async function renderDescription(listing) {
     const priceTag = document.getElementById('price-tag');
     const sellerLabel = document.getElementById('seller-label');
     const sellerEmailLabel = document.getElementById('seller-email-label');
-    const descriptionSection = document.getElementById('description-section');
+    const descriptionSection = document.getElementById('descrip');
 
     titleSpan.textContent = listing.title;
 

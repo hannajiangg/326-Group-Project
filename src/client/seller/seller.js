@@ -135,7 +135,9 @@ async function renderDescription(listing) {
         quantityLabel.textContent = listing.quantity;
     });
     quantitySubtractButton.addEventListener("click", async () => {
-        listing.quantity--;
+        if (listing.quantity > 1) {
+            listing.quantity--;
+        }
         quantityLabel.textContent = listing.quantity;
     });
 
