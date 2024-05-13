@@ -108,7 +108,7 @@ export async function putListing(listing) {
 export async function generateFakeData() {
   try {
     const imgPath = '/assets/dasweatervest.jpeg'
-    const carouselImgPaths = ["/assets/000.png", "/assets/001.png", "/assets/002.png", "/assets/003.png"]
+    const carouselImgPaths = ["/assets/sweater1.jpeg", "/assets/sweater2.jpeg", "/assets/sweater3.jpeg", "/assets/sweater1.jpeg"]
 
     const imgBlob = await fetch(imgPath)
       .then(res => res.blob())
