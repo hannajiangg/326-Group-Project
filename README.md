@@ -67,18 +67,18 @@ The "Home" page is where listings from other students are posted in containers d
 
 The top of the page includes a navigation bar to the "Home" page, serach bar, "Sell" page, and "Profile" page.
 
-The "Product" page displays pertinent information about an item being sold that includes title, quantity, price, description, and a seller information. The intentino is to allow a user to learn more about an item before making a buying decision.
+The "Product" page displays pertinent information about an item being sold that includes title, quantity, price, description, and a seller information. At the bottom, there is a contact button that directly creates an email sent to the seller to inquire further. The intentino is to allow a user to learn more about an item before making a buying decision.
 
 ## Seller Page
 
 The top of the page includes a navigation bar to the "Home" page, serach bar, "Sell" page, and "Profile" page.
 
-The "Sell" page displays fill in boxes for a user to fill in to post an item they would like to sell that includes title, quantity, price, description, and a seller information. The intention is to allow a user to make postings for other student's to view.
+The "Sell" page displays fill in boxes for a user to fill in to post an item they would like to sell that includes title, quantity, price, description, and a seller information. At the bottom, user presses a "Post" button to put item on the home page/marketplace. The intention is to allow a user to make postings for other student's to view.
 
 ## Profile Page
 
 The top of the page includes a navigation bar to the "Home" page, serach bar, "Sell" page, and "Profile" page.
 
-The "Profile" allows the user to see their account details such as displayed name, profile picture, and email, which are automatically filled in by Google. The intention is to allow a user to see what others see in terms of account details when they make a post.
+The "Profile" allows the user to see their account details such as displayed name, profile picture, and email, which are automatically filled in by Google. Additionally, there is an items section that dynamically adds postings made by a user, wherein clicking a listing offers a delete button to remove an item from the home page/marketplace as appropriate. The intention is to allow a user to see what others see in terms of account details when they make a post.
 
 
