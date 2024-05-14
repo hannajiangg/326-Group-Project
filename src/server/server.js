@@ -10,7 +10,7 @@ import path from "node:path"
 // import { blobToURL, getListing, hasListing, Listing, putListing } from '../client/api.js'; 
 // Client and server code should be separate
 import { Listing, Profile } from "../client/schema.js";
-import { deleteListing, getListing, getListingCarousel, getListings, getListingThumbnail, getProfile, getProfileListings, hasListing, hasProfile, putListing, putProfile } from './db.js';
+import { deleteListing, getListing, getListingCarousel, getListings, getListingThumbnail, getProfile, getProfileListings, getProfiles, hasListing, hasProfile, putListing, putProfile } from './db.js';
 import multer from 'multer';
 
 
@@ -73,7 +73,6 @@ passport.deserializeUser((id, done) => {
 });
 
 app.get('/api/listings', async (req, res) => {
-  // console.log(req.user);
   try {
     const listings = await getListings();
     res.json(listings);
@@ -302,8 +301,8 @@ app.delete('/api/listings/:id', async (req, res) => {
 // UNSAFE endpoints for profiles (TESTING)
 app.get('/api/profiles', async (req, res) => {
   try {
-    const profiles = await getProfile()
-    res.join(profiles)
+    const profiles = await getProfiles();
+    res.status(200).json(profiles)
   }
   catch (error) {
     console.error(error)

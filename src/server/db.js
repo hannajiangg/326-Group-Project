@@ -115,6 +115,15 @@ export async function hasProfile(id) {
 }
 
 /**
+ * Returns a list of all profile IDs
+ * @returns { Promise<String[]> }
+ */
+export async function getProfiles() {
+  const profiles = await profileTable.allDocs();
+  return profiles.rows.map(x => x.id);
+}
+
+/**
  * Returns a profile if it exists
  * @param {string} id 
  * @returns { Promise<Profile | null> }
