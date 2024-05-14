@@ -12,7 +12,7 @@
 
 - **Hanna:**
   - Main page, seller, product page design and development
-  - Profile managemnet and creation
+  - Profile management and creation
   - Navigation Bar
 
 - **Max:**
@@ -39,9 +39,9 @@
 
       /server: Javascript files relating to backend and API endpoints
 
-    gitignore: Git iugnores
+    gitignore: Git ignores
 
-    .htmlvalidate.json: HTML validate file
+    .htmlvalidate.json: HTML validation configs
 
     README.md: Readme file
 
@@ -88,25 +88,25 @@ When first opening the web application, the user is prompted to create an accoun
 
 ## Main Page
 
-The top of the page includes a navigation bar to the "Home" page, serach bar, "Sell" page, and "Profile" page.
+The top of the page includes a navigation bar to the "Home" page, search bar, "Sell" page, and "Profile" page.
 
 The "Home" page is where listings from other students are posted in containers detailing product picture, product title, and price representing individual listings that can be clicked on to see full details. The intention is for the page to serve as a hub for postings made.
 
 ## Product Page
 
-The top of the page includes a navigation bar to the "Home" page, serach bar, "Sell" page, and "Profile" page.
+The top of the page includes a navigation bar to the "Home" page, search bar, "Sell" page, and "Profile" page.
 
-The "Product" page displays pertinent information about an item being sold that includes title, quantity, price, description, and a seller information. At the bottom, there is a contact button that directly creates an email sent to the seller to inquire further. The intentino is to allow a user to learn more about an item before making a buying decision.
+The "Product" page displays pertinent information about an item being sold that includes title, quantity, price, description, and a seller information. At the bottom, there is a contact button that directly creates an email sent to the seller to inquire further. The intention is to allow a user to learn more about an item before making a buying decision.
 
 ## Seller Page
 
-The top of the page includes a navigation bar to the "Home" page, serach bar, "Sell" page, and "Profile" page.
+The top of the page includes a navigation bar to the "Home" page, search bar, "Sell" page, and "Profile" page.
 
 The "Sell" page displays fill in boxes for a user to fill in to post an item they would like to sell that includes title, quantity, price, description, and a seller information. At the bottom, user presses a "Post" button to put item on the home page/marketplace. The intention is to allow a user to make postings for other student's to view.
 
 ## Profile Page
 
-The top of the page includes a navigation bar to the "Home" page, serach bar, "Sell" page, and "Profile" page.
+The top of the page includes a navigation bar to the "Home" page, search bar, "Sell" page, and "Profile" page.
 
 The "Profile" allows the user to see their account details such as displayed name, profile picture, and email, which are automatically filled in by Google. Additionally, there is an items section that dynamically adds postings made by a user, wherein clicking a listing offers a delete button to remove an item from the home page/marketplace as appropriate. The intention is to allow a user to see what others see in terms of account details when they make a post.
 
