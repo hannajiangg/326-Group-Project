@@ -8,7 +8,7 @@
 4. Run `npm install` to install dependencies.
 5. After the installation is complete, run `npm run dev`.
 
-### Project Responsibilities:
+# Project Responsibilities:
 
 - **Hanna:**
   - Main page, seller, product page design and development
@@ -55,20 +55,6 @@
 ### DELETE Endpoints
 
 - `/api/listings/:id`: Delete a listing
-
-
-### View Pages: Currently, our buttons do not work. 
-
-To access a page, navigate to localhost/index.html#view
-To access the main page, type `localhost/index.html#main` after the URL.
-
-#### Available Pages
-
-- `login`
-- `main`
-- `product`
-- `seller`
-- `profile`
 
 # Using UBay
 
