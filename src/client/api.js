@@ -16,9 +16,9 @@ export async function getListings() {
  * @returns { Promise<Partial<Listing> | null>}
  */
 export async function getListing(_id) {
-  const response = await fetch(`./api/listings/${_id}`)
-  if (response.ok) {
-    return response.json();
+  if (await hasListing(_id)) {
+    const response = await fetch(`./api/listings/${_id}`);
+    return response.ok ? response.json() : null;
   } else {
     return null;
   }

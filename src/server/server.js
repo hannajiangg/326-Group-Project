@@ -72,6 +72,75 @@ passport.deserializeUser((id, done) => {
   done(null, user);
 });
 
+/**
+ * Parses a listing out of a request.
+ * @param {Express.Request} req 
+ * @returns {Listing}
+ */
+function parseListing(req) {
+  /** @type {Listing} */
+  const listingData = JSON.parse(req.body.listing);
+  const files = Object.fromEntries(req.files.map(fileResponse => {
+    const name = fileResponse.fieldname;
+    const mimeType = fileResponse.mimetype;
+    /** @type {Buffer} */
+    const buffer = fileResponse.buffer;
+    const fileBlob = new Blob([buffer], { type: mimeType });
+    return [name, fileBlob];
+  }));
+
+  if (!files.thumbnail) throw new Error("Listing must contain thumbnail!");
+  listingData.thumbnail = files.thumbnail;
+
+  listingData.carousel = [];
+  let carouselIndex = 0;
+  while (`carousel-${carouselIndex}` in files) {
+    listingData.carousel[carouselIndex] = files[`carousel-${carouselIndex}`];
+    carouselIndex++;
+  }
+  listingData.carouselLength = listingData.carousel.length;
+
+  if (!listingData._id) {
+    throw new Error("Listing must contain id");
+  }
+
+  if (!listingData.title) {
+    throw new Error("Listing must have a title");
+  }
+
+  if (!listingData.thumbnail) {
+    throw new Error("Listing must have a thumbnail");
+  }
+
+  if (!listingData.sellerId) {
+    throw new Error("Listing must have an associated seller");
+  }
+
+  return listingData;
+}
+
+app.post('/api/listings', upload.any(), async (req, res) => {
+  let listingData;
+  try {
+    listingData = parseListing(req);
+  } catch (e) {
+    res.status(400).send("Failed to parse listing");
+    return;
+  }
+
+  try {
+    if (await hasListing(listingData._id)) {
+      res.status(409).json({ message: 'Listing already exists!' });
+      return;
+    }
+    await putListing(listingData);
+    res.status(201).json({ message: 'Listing created/updated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 app.get('/api/listings', async (req, res) => {
   try {
     const listings = await getListings();
@@ -100,7 +169,7 @@ app.get('/api/listings/:id', async (req, res) => {
 app.get('/api/listings/:id/exists', async (req, res) => {
   const { id } = req.params;
   try {
-    res.status(200).json({exists: await hasListing(id)});
+    res.status(200).json({ exists: await hasListing(id) });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -142,134 +211,12 @@ app.get('/api/listings/:id/carousel/:index', async (req, res) => {
   }
 });
 
-app.post('/api/listings', upload.any(), async (req, res) => {
-  /**
-   * Parses a listing out of a request.
-   * @param {Express.Request} req 
-   * @returns {Listing}
-   */
-  function parseListing(req) {
-    /** @type {Listing} */
-    const listingData = JSON.parse(req.body.listing);
-    const files = Object.fromEntries(req.files.map(fileResponse => {
-      const name = fileResponse.fieldname;
-      const mimeType = fileResponse.mimetype;
-      /** @type {Buffer} */
-      const buffer = fileResponse.buffer;
-      const fileBlob = new Blob([buffer], { type: mimeType });
-      return [name, fileBlob];
-    }));
-
-    if (!files.thumbnail) throw new Error("Listing must contain thumbnail!");
-    listingData.thumbnail = files.thumbnail;
-
-    listingData.carousel = [];
-    let carouselIndex = 0;
-    while (`carousel-${carouselIndex}` in files) {
-      listingData.carousel[carouselIndex] = files[`carousel-${carouselIndex}`];
-      carouselIndex++;
-    }
-    listingData.carouselLength = listingData.carousel.length;
-    return listingData;
-  }
-
-  let listingData;
-  try {
-    listingData = parseListing(req);
-  } catch (e) {
-    res.status(400).send("Failed to parse listing");
-    return;
-  }
-
-  if (!listingData._id) {
-    res.status(400).send("Listing must contain id");
-    return;
-  }
-
-  if (!listingData.title) {
-    res.status(400).send("Listing must have a title");
-    return;
-  }
-
-  if (!listingData.thumbnail) {
-    res.status(400).send("Listing must have a thumbnail");
-    return;
-  }
-
-  if (!listingData.sellerId) {
-    res.status(400).send("Listing must have an associated seller");
-    return;
-  }
-
-  try {
-    if (await hasListing(listingData._id)) {
-      res.status(400).json({ message: 'Listing already exists!' });
-      return;
-    }
-    await putListing(listingData);
-    res.status(201).json({ message: 'Listing created/updated successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
 app.put('/api/listings', upload.any(), async (req, res) => {
-  /**
-   * Parses a listing out of a request.
-   * @param {Express.Request} req 
-   * @returns {Listing}
-   */
-  function parseListing(req) {
-    /** @type {Listing} */
-    const listingData = JSON.parse(req.body.listing);
-    const files = Object.fromEntries(req.files.map(fileResponse => {
-      const name = fileResponse.fieldname;
-      const mimeType = fileResponse.mimetype;
-      /** @type {Buffer} */
-      const buffer = fileResponse.buffer;
-      const fileBlob = new Blob([buffer], { type: mimeType });
-      return [name, fileBlob];
-    }));
-
-    if (!files.thumbnail) throw new Error("Listing must contain thumbnail!");
-    listingData.thumbnail = files.thumbnail;
-
-    listingData.carousel = [];
-    let carouselIndex = 0;
-    while (`carousel-${carouselIndex}` in files) {
-      listingData.carousel[carouselIndex] = files[`carousel-${carouselIndex}`];
-      carouselIndex++;
-    }
-    listingData.carouselLength = listingData.carousel.length;
-    return listingData;
-  }
-
   let listingData;
   try {
     listingData = parseListing(req);
   } catch (e) {
-    res.status(400).send("Failed to parse listing");
-    return;
-  }
-
-  if (!listingData._id) {
-    res.status(400).send("Listing must contain id");
-    return;
-  }
-
-  if (!listingData.title) {
-    res.status(400).send("Listing must have a title");
-    return;
-  }
-
-  if (!listingData.thumbnail) {
-    res.status(400).send("Listing must have a thumbnail");
-    return;
-  }
-
-  if (!listingData.sellerId) {
-    res.status(400).send("Listing must have an associated seller");
+    res.status(400).send(e.message);
     return;
   }
 
@@ -299,6 +246,27 @@ app.delete('/api/listings/:id', async (req, res) => {
 });
 
 // UNSAFE endpoints for profiles (TESTING)
+app.post('/api/profiles', async (req, res) => {
+  const profileData = req.body
+  try {
+    if (!req.user) {
+      res.status(401).json({ message: 'Failed to create profile' })
+      return
+    }
+    if(await hasProfile()){
+      res.status(409).json({ message: 'Profile already exists' })
+      return;
+    }
+
+    await putProfile(profileData)
+    res.status(201).json({ message: 'Profile created successfully' })
+  }
+  catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
 app.get('/api/profiles', async (req, res) => {
   try {
     const profiles = await getProfiles();
@@ -328,7 +296,7 @@ app.get('/api/profiles/:id', async (req, res) => {
 app.get('/api/profiles/:id/exists', async (req, res) => {
   const { id } = req.params
   try {
-    res.status(200).json({exists: await hasProfile(id)});
+    res.status(200).json({ exists: await hasProfile(id) });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -349,13 +317,12 @@ app.put('/api/profiles', async (req, res) => {
   const profileData = req.body
   try {
     if (!req.user) {
-      res.status(401).json({ message: 'Profile created/updated successfully' })
+      res.status(401).json({ message: 'Failed to update profile' })
       return
     }
-    // profileData._id = req.user._id
 
     await putProfile(profileData)
-    res.status(201).json({ message: 'Profile created/updates successfully' })
+    res.status(201).json({ message: 'Created/Updated profile successfully' })
   }
   catch (error) {
     console.error(error)
