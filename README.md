@@ -81,4 +81,6 @@ The top of the page includes a navigation bar to the "Home" page, serach bar, "S
 
 The "Profile" allows the user to see their account details such as displayed name, profile picture, and email, which are automatically filled in by Google. Additionally, there is an items section that dynamically adds postings made by a user, wherein clicking a listing offers a delete button to remove an item from the home page/marketplace as appropriate. The intention is to allow a user to see what others see in terms of account details when they make a post.
 
+#### GitHub Link
 
+https://github.com/hannajiangg/326-Group-Project
