@@ -133,6 +133,20 @@ app.get('/api/listings/:id/carousel/:index', async (req, res) => {
   }
 });
 
+app.post('/api/profiles', async (req, res) => {
+  try {
+    if (!req) {
+      res.status(401).json({ message: 'Profile created/updated successfully' })
+      return
+    }
+    res.status(201).json({ message: 'Profile created/updates successfully' })
+  }
+  catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
 app.put('/api/listings', upload.any(), async (req, res) => {
   /**
    * Parses a listing out of a request.
