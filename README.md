@@ -33,6 +33,8 @@
 
     /src: Coding files
 
+      *note: `client/schema.js` is used by server and client, since it contains shared information*
+
       /client: HTML, CSS, and javascript files related to the frontend of the application
 
       /docs: Folder with milestone-1 document
