@@ -57,9 +57,12 @@
 
 - `/api/listings`: Retrieve all listings
 - `/api/listings/:id`: Retrieve a specific listing
+- `/api/listings/:id/exists`: Returns a JSON object that represents whether the given ID corresponds to a listing in the database. Formatted as `{exists: ...}`
 - `/api/listings/:id/thumbnail`: Retrieve thumbnail of a listing
 - `/api/listings/:id/carousel/:index`: Retrieve carousel image of a listing
 - `/api/profiles`: Retrieve all profiles
+- `/api/profiles/:id`: Retrieve a specific profile
+- `/api/profiles/:id/exists`: Returns a JSON object that represents whether the given ID corresponds to a profile in the database. Formatted as `{exists: ...}`
 - `/api/profiles/:id/postedListings`: Retrieve listings posted by a specific profile
 - `/api/self/profile`: Retrieve logged-in user's profile
 - `/api/login/callback`: Endpoint for login callback

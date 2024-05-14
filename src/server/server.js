@@ -98,6 +98,16 @@ app.get('/api/listings/:id', async (req, res) => {
   }
 });
 
+app.get('/api/listings/:id/exists', async (req, res) => {
+  const { id } = req.params;
+  try {
+    res.status(200).json({exists: await hasListing(id)});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 app.get('/api/listings/:id/thumbnail', async (req, res) => {
   const { id } = req.params;
   try {
@@ -193,7 +203,7 @@ app.post('/api/listings', upload.any(), async (req, res) => {
   }
 
   try {
-    if(await hasListing(listingData._id)){
+    if (await hasListing(listingData._id)) {
       res.status(400).json({ message: 'Listing already exists!' });
       return;
     }
@@ -310,6 +320,16 @@ app.get('/api/profiles/:id', async (req, res) => {
     } else {
       res.status(404).json({ error: 'Profile not found' });
     }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
+
+app.get('/api/profiles/:id/exists', async (req, res) => {
+  const { id } = req.params
+  try {
+    res.status(200).json({exists: await hasProfile(id)});
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
