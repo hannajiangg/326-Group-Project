@@ -2,8 +2,6 @@
 
 # Getting Started
 
-To run the project:
-
 1. Download or clone this repository to your local machine.
 2. Open your terminal.
 3. Navigate to the project directory.
@@ -33,34 +31,31 @@ To run the project:
     
 ## API Routes
 
-### GET
+### GET Endpoints
 
-In server.js, there are app.get instances that handle loading user profile, getting listings, and getting listing information.
+- `/api/listings`: Retrieve all listings
+- `/api/listings/:id`: Retrieve a specific listing
+- `/api/listings/:id/thumbnail`: Retrieve thumbnail of a listing
+- `/api/listings/:id/carousel/:index`: Retrieve carousel image of a listing
+- `/api/profiles`: Retrieve all profiles
+- `/api/profiles/:id/postedListings`: Retrieve listings posted by a specific profile
+- `/api/self/profile`: Retrieve logged-in user's profile
+- `/api/login/callback`: Endpoint for login callback
+- `/api/login`: Login endpoint
 
-'/api/listings'
-'/api/listings/:id'
-'/api/listings/:id/thumbnail'
-'/api/listings/:id/carousel/:index'
-'/api/profiles'
-'/api/profiles/:id/postedListings'
-"/api/self/profile"
-"/api/login/callback"
-'/api/login'
+### POST Endpoints
 
-### POST
+- `/api/profiles`: Create a new profile
 
-### PUT
+### PUT Endpoints
 
-In server.js, there are app.put instances that handle putting the profiles and listings onto the front end.
+- `/api/listings`: Update a listing
+- `/api/profiles`: Update a profile
 
-'/api/listings'
-'/api/profiles'
+### DELETE Endpoints
 
-### DELETE
+- `/api/listings/:id`: Delete a listing
 
-In server.js, there is app.delete that handles the deletion of item listings from the database.
-
-'/api/listings/:id'
 
 ### View Pages: Currently, our buttons do not work. 
 
