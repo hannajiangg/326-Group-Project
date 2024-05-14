@@ -2,7 +2,7 @@ import { Listing, Profile } from "./schema.js";
 export { Listing, Profile }
 
 /**
- * Returns a list of all listings
+ * Returns a list of all listing IDs
  * @returns { Promise<String[]> }
  */
 export async function getListings() {
@@ -30,8 +30,12 @@ export async function getListing(_id) {
  * @returns {Promise<boolean>}
  */
 export async function hasListing(_id) {
-  const response = await fetch(`./api/listings/${_id}`);
-  return response.ok;
+  const response = await fetch(`./api/listings/${_id}/exists`);
+  if (response.ok) {
+    const { exists } = await response.json();
+    return exists;
+  }
+  return false;
 }
 
 /**
@@ -51,9 +55,9 @@ export async function putListing(listing) {
   for (let i = 0; i < listing.carousel.length; i++) {
     form.append(`carousel-${i}`, listing.carousel[i], `carousel-${i}.jpg`)
   }
-  
+
   let method = 'PUT';
-  if(!await hasListing(listing._id)){
+  if (!await hasListing(listing._id)) {
     method = 'POST';
   }
 
@@ -63,7 +67,7 @@ export async function putListing(listing) {
   }
 
   const response = await fetch('./api/listings', options);
-  if(!response.ok) throw new Error(`PUT ./api/listings failed with error ${response.status}`);
+  if (!response.ok) throw new Error(`${method} ./api/listings failed with error ${response.status}`);
 }
 
 /**
@@ -74,8 +78,8 @@ export async function deleteListing(id) {
   const response = await fetch(`./api/listings/${id}`, {
     method: 'DELETE'
   });
-  if(response.status === 401) throw new Error(`You do not have permission to delete listing ${id}`);
-  if(!response.ok) throw new Error(`DELETE ./api/listings/${id} failed with error ${response.status}`);
+  if (response.status === 401) throw new Error(`You do not have permission to delete listing ${id}`);
+  if (!response.ok) throw new Error(`DELETE ./api/listings/${id} failed with error ${response.status}`);
 }
 
 /**
@@ -95,8 +99,12 @@ export async function getSelfProf() {
  * @returns {Promise<boolean>}
  */
 export async function hasProfile(_id) {
-  const response = await fetch(`./api/profiles/${_id}`);
-  return response.ok;
+  const response = await fetch(`./api/profiles/${_id}/exists`);
+  if (response.ok) {
+    const { exists } = await response.json();
+    return exists;
+  }
+  return false;
 }
 
 /**
