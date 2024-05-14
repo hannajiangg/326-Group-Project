@@ -28,6 +28,26 @@
 - **Sean:**
   - Profile management
   - Search Bar
+ 
+## File Structure
+
+    /src: Coding files
+
+      /client: HTML, CSS, and javascript files related to the frontend of the application
+
+      /docs: Folder with milestone-1 document
+
+      /server: Javascript files relating to backend and API endpoints
+
+    gitignore: Git iugnores
+
+    .htmlvalidate.json: HTML validate file
+
+    README.md: Readme file
+
+    package-lock.json: JSON lock file
+
+    package.json: JSON packages
     
 ## API Routes
 
