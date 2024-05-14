@@ -1,4 +1,4 @@
-## 326 Group Project
+# 326 Group Project
 
 # Getting Started
 
