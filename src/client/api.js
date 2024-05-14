@@ -80,7 +80,7 @@ export async function hasListing(_id) {
 
 /**
  * Adds a listing to the database
- * @param {Promise<Listing>} listing 
+ * @param {Listing} listing 
  */
 export async function putListing(listing) {
   // use a form
@@ -95,9 +95,14 @@ export async function putListing(listing) {
   for (let i = 0; i < listing.carousel.length; i++) {
     form.append(`carousel-${i}`, listing.carousel[i], `carousel-${i}.jpg`)
   }
+  
+  let method = 'PUT';
+  if(!await hasListing(listing._id)){
+    method = 'POST';
+  }
 
   const options = {
-    method: 'PUT',
+    method,
     body: form
   }
 
