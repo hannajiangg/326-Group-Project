@@ -120,11 +120,17 @@ function parseListing(req) {
 }
 
 app.post('/api/listings', upload.any(), async (req, res) => {
+  /** @type {Listing} */
   let listingData;
   try {
     listingData = parseListing(req);
   } catch (e) {
     res.status(400).send("Failed to parse listing");
+    return;
+  }
+  
+  if(!req.user || !req.user.id !== listingData.sellerId){
+    res.status(401).json({ message: 'sellerId must match user ID' });
     return;
   }
 
@@ -212,11 +218,17 @@ app.get('/api/listings/:id/carousel/:index', async (req, res) => {
 });
 
 app.put('/api/listings', upload.any(), async (req, res) => {
+  /** @type {Listing} */
   let listingData;
   try {
     listingData = parseListing(req);
   } catch (e) {
     res.status(400).send(e.message);
+    return;
+  }
+  
+  if(!req.user || !req.user.id !== listingData.sellerId){
+    res.status(401).json({ message: 'sellerId must match user ID' });
     return;
   }
 
@@ -245,16 +257,17 @@ app.delete('/api/listings/:id', async (req, res) => {
   }
 });
 
-// UNSAFE endpoints for profiles (TESTING)
 app.post('/api/profiles', async (req, res) => {
+  /** @type {Profile} */
   const profileData = req.body
   try {
-    if (!req.user) {
-      res.status(401).json({ message: 'Failed to create profile' })
-      return
-    }
     if(await hasProfile()){
       res.status(409).json({ message: 'Profile already exists' })
+      return;
+    }
+  
+    if(!req.user || !req.user.id !== profileData._id){
+      res.status(401).json({ message: 'profile id must match user ID' });
       return;
     }
 
@@ -314,11 +327,12 @@ app.get('/api/profiles/:id/postedListings', async (req, res) => {
 })
 
 app.put('/api/profiles', async (req, res) => {
+  /** @type {Profile} */
   const profileData = req.body
   try {
-    if (!req.user) {
-      res.status(401).json({ message: 'Failed to update profile' })
-      return
+    if(!req.user || !req.user.id !== profileData._id){
+      res.status(401).json({ message: 'profile id must match user ID' });
+      return;
     }
 
     await putProfile(profileData)
