@@ -12,7 +12,7 @@ const profileTable = new PouchDB("profiles");
  */
 export async function getListings() {
   const listings = await listingTable.allDocs();
-  return listings.rows.map(x => x.id);
+  return listings.rows.map(x => x.id).filter(id => !id.includes("_design"));
 }
 
 /**
