@@ -31,13 +31,41 @@ To run the project:
   - Profile management
   - Search Bar
     
+## API Routes
 
+### GET
+
+In server.js, there are app.get instances that handle loading user profile, getting listings, and getting listing information.
+
+'/api/listings'
+'/api/listings/:id'
+'/api/listings/:id/thumbnail'
+'/api/listings/:id/carousel/:index'
+'/api/profiles'
+'/api/profiles/:id/postedListings'
+"/api/self/profile"
+"/api/login/callback"
+'/api/login'
+
+### POST
+
+### PUT
+
+In server.js, there are app.put instances that handle putting the profiles and listings onto the front end.
+
+'/api/listings'
+'/api/profiles'
+
+### DELETE
+
+In server.js, there is app.delete that handles the deletion of item listings from the database.
+
+'/api/listings/:id'
 
 ### View Pages: Currently, our buttons do not work. 
 
 To access a page, navigate to localhost/index.html#view
 To access the main page, type `localhost/index.html#main` after the URL.
-
 
 #### Available Pages
 
