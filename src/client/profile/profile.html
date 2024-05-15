@@ -2,26 +2,27 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login Page</title>
-  <link rel="stylesheet" href="/common.css" />
+  <link rel="stylesheet" href="/common.css">
   <!-- Link to CSS file for this specific page -->
-  <link rel="stylesheet" href="/profile/profile.css" />
-  <link rel="stylesheet" href="/listingBox.css" />
+  <link rel="stylesheet" href="/profile/profile.css">
+  <link rel="stylesheet" href="/listingBox.css">
+</head>
 
 <body>
   <div id="content">
     <h1 id="title">About Me</h1>
     <div id="profile">
-      <img alt="Profile Picture" id="pfp" src="" />
+      <img alt="Profile Picture" id="pfp" src="./assets/thumbnail-placeholder.png">
       <div id="info">
         <div id="name-section">
           <div id="name-block">
             <label for="name">Name</label>
-            <input class="one" id="name" disabled />
+            <input class="one" id="name" type="text" disabled>
           </div>
-          <button class="edit" id="edit-name">Edit</button>
+          <button class="edit" id="edit-name" type="button">Edit</button>
           <button class="edit" id="save-name" type="submit" hidden>
             Save
           </button>
@@ -32,7 +33,7 @@
             <input class="one" id="email" type="email" disabled>
           </div>
           <button class="edit" id="edit-email" type="button">Edit</button>
-          <button class="edit" id="save-email" type="button" hidden>Save</button>
+          <button class="edit" id="save-email" type="submit" hidden>Save</button>
         </div>
       </div>
     </div>
