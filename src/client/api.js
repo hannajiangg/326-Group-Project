@@ -140,29 +140,24 @@ export async function getProfileListings(id) {
  * @param {Promise<void>} profile 
  */
 export async function putProfile(profile) {
-  try {
-    const hasProfResponse = await fetch(`./api/profiles/${profile._id}`)
-    // temp variable to store rev
-    let rev = null
-    if (hasProfResponse.ok) {
-      const prof = await hasProfResponse.json()
-      rev = prof._rev
-    }
-    let entry = { ...profile, _rev: rev }
-    const putProfRes = await fetch(`./api/profiles`, {
-      method: 'PUT',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(entry)
-    })
-
-    if (!putProfRes.ok) {
-      throw new Error(`Request to put profile failed with error ${putProfRes.status}`)
-    }
+  const hasProfResponse = await fetch(`./api/profiles/${profile._id}`)
+  // temp variable to store rev
+  let rev = null
+  if (hasProfResponse.ok) {
+    const prof = await hasProfResponse.json()
+    rev = prof._rev
   }
-  catch (error) {
-    console.log('Error putting profile', error)
+  let entry = { ...profile, _rev: rev }
+  const putProfRes = await fetch(`./api/profiles`, {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify(entry)
+  })
+
+  if (!putProfRes.ok) {
+    throw new Error(`Request to put profile failed with error ${putProfRes.status}`)
   }
 }
 
