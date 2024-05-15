@@ -42,7 +42,7 @@
 
       /server: Javascript files relating to backend and API endpoints
 
-    gitignore: Git ignores
+    .gitignore: Git ignores
 
     .htmlvalidate.json: HTML validation configs
 
