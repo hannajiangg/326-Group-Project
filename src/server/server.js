@@ -129,7 +129,7 @@ app.post('/api/listings', upload.any(), async (req, res) => {
     return;
   }
   
-  if(!req.user || !req.user.id !== listingData.sellerId){
+  if (!req.user || (req.user.id !== listingData.sellerId)) {
     res.status(401).json({ message: 'sellerId must match user ID' });
     return;
   }
@@ -227,7 +227,7 @@ app.put('/api/listings', upload.any(), async (req, res) => {
     return;
   }
   
-  if(!req.user || !req.user.id !== listingData.sellerId){
+  if (!req.user || (req.user.id !== listingData.sellerId)) {
     res.status(401).json({ message: 'sellerId must match user ID' });
     return;
   }
@@ -244,6 +244,11 @@ app.put('/api/listings', upload.any(), async (req, res) => {
 app.delete('/api/listings/:id', async (req, res) => {
   const { id } = req.params;
   try {
+    const listingData = await getListing(id);
+    if (!req.user || (req.user.id !== listingData.sellerId)) {
+      res.status(401).json({ message: 'sellerId must match user ID' });
+      return;
+    }
     const listing = await getListing(id);
     if (!req.user || listing.sellerId !== req.user.id) {
       res.status(401).send(`requester id ${req.user?.id} does not match seller id ${listing.sellerId}`);
@@ -266,7 +271,7 @@ app.post('/api/profiles', async (req, res) => {
       return;
     }
   
-    if(!req.user || !req.user.id !== profileData._id){
+    if (!req.user || (req.user.id !== profileData._id)) {
       res.status(401).json({ message: 'profile id must match user ID' });
       return;
     }
@@ -330,7 +335,7 @@ app.put('/api/profiles', async (req, res) => {
   /** @type {Profile} */
   const profileData = req.body
   try {
-    if(!req.user || !req.user.id !== profileData._id){
+    if (!req.user || (req.user.id !== profileData._id)) {
       res.status(401).json({ message: 'profile id must match user ID' });
       return;
     }
