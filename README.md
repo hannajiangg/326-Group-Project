@@ -65,22 +65,23 @@
 
 ### GET Endpoints
 
-- `/api/listings`: Retrieve all listings
-- `/api/listings/:id`: Retrieve a specific listing
+- `/api/listings`: Retrieve all listing IDs as a list of strings
+- `/api/listings/:id`: Retrieve the JSON data of a listing
 - `/api/listings/:id/exists`: Returns a JSON object that represents whether the given ID corresponds to a listing in the database. Formatted as `{exists: ...}`
-- `/api/listings/:id/thumbnail`: Retrieve thumbnail of a listing
-- `/api/listings/:id/carousel/:index`: Retrieve carousel image of a listing
-- `/api/profiles`: Retrieve all profiles
+- `/api/listings/:id/thumbnail`: Retrieve the thumbnail of a listing
+- `/api/listings/:id/carousel/:index`: Retrieve a carousel image of a listing
+- `/api/profiles`: Retrieve all profile IDs as a list of strings
 - `/api/profiles/:id`: Retrieve a specific profile
 - `/api/profiles/:id/exists`: Returns a JSON object that represents whether the given ID corresponds to a profile in the database. Formatted as `{exists: ...}`
-- `/api/profiles/:id/postedListings`: Retrieve listings posted by a specific profile
-- `/api/self/profile`: Retrieve logged-in user's profile
+- `/api/profiles/:id/postedListings`: Retrieve listing IDs posted by a specific profile
+- `/api/self/profile`: Retrieve logged-in user's ID
 - `/api/login/callback`: Endpoint for login callback
 - `/api/login`: Login endpoint
 
 ### POST Endpoints
 
 - `/api/profiles`: Create a new profile
+- `/api/listings`: Create a new listing
 
 ### PUT Endpoints
 
