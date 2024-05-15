@@ -68,7 +68,6 @@ export async function deleteListing(id) {
   return await listingTable.remove(oldListing);
 }
 
-// TODO
 /**
  * Puts a listing into the database, overwriting an old version if it exists
  * @param {Listing} listing 

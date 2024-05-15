@@ -12,6 +12,7 @@ import path from "node:path"
 import { Listing, Profile } from "../client/schema.js";
 import { deleteListing, getListing, getListingCarousel, getListings, getListingThumbnail, getProfile, getProfileListings, getProfiles, hasListing, hasProfile, putListing, putProfile } from './db.js';
 import multer from 'multer';
+import { readFile } from 'node:fs/promises';
 
 
 const app = express()
@@ -128,7 +129,7 @@ app.post('/api/listings', upload.any(), async (req, res) => {
     res.status(400).send("Failed to parse listing");
     return;
   }
-  
+
   if (!req.user || (req.user.id !== listingData.sellerId)) {
     res.status(401).json({ message: 'sellerId must match user ID' });
     return;
@@ -226,7 +227,7 @@ app.put('/api/listings', upload.any(), async (req, res) => {
     res.status(400).send(e.message);
     return;
   }
-  
+
   if (!req.user || (req.user.id !== listingData.sellerId)) {
     res.status(401).json({ message: 'sellerId must match user ID' });
     return;
@@ -266,11 +267,11 @@ app.post('/api/profiles', async (req, res) => {
   /** @type {Profile} */
   const profileData = req.body
   try {
-    if(await hasProfile()){
+    if (await hasProfile()) {
       res.status(409).json({ message: 'Profile already exists' })
       return;
     }
-  
+
     if (!req.user || (req.user.id !== profileData._id)) {
       res.status(401).json({ message: 'profile id must match user ID' });
       return;
@@ -372,3 +373,65 @@ app.get(
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+/**
+ * Generates fake data
+ */
+export async function generateFakeListings() {
+  try {
+  }
+  catch (error) {
+    console.log('Error generating data: ', error)
+  }
+}
+
+async function uriToJPEGBlob(uri) {
+  const data = await readFile(uri);
+  return new Blob([data.buffer], {type: "image/jpeg"});
+}
+
+async function createMockData() {
+  // Generate fake listing data
+  const __dirname = import.meta.dirname;
+  const imgPath = `${__dirname}/fakeAssets/dasweatervest.jpeg`
+  const carouselImgPaths = [
+    `${__dirname}/fakeAssets/sweater1.jpeg`,
+    `${__dirname}/fakeAssets/sweater2.jpeg`,
+    `${__dirname}/fakeAssets/sweater3.jpeg`,
+    `${__dirname}/fakeAssets/sweater1.jpeg`
+  ]
+
+  const imgBlob = await uriToJPEGBlob(imgPath);
+
+  const carouselBlobs = await Promise.all(carouselImgPaths.map(uriToJPEGBlob));
+
+  const fakeListings = [
+    new Listing(
+      "000",
+      "Cool Sweater",
+      imgBlob,
+      carouselBlobs,
+      49.99,
+      "Men's Waterfowl Sweater, Size M",
+      1,
+      "000"
+    )
+  ]
+  fakeListings.forEach(putListing);
+  // Generate fake profile
+  const fakeProfile =
+    new Profile(
+      "000",
+      "./assets/zoo_buy_logo.jpg",
+      "Tim Richards",
+      "richards@cs.umass.edu",
+      ["Example 1", "Example 2"],
+      [
+        "000"
+      ],
+      []
+    )
+  await putProfile(fakeProfile);
+}
+
+createMockData();
