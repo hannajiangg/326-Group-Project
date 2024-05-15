@@ -9,7 +9,7 @@ export async function onNavigate() {
     const searchBar = document.getElementById("search-bar");
     const listings = [];
 
-    const currentUser = await getSelfProf();
+    const currentUser = await getSelfProf().catch(() => "");
 
     /**
      * @param {Listing} listing 

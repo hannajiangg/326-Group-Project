@@ -110,19 +110,25 @@ export async function onNavigate() {
 
   saveName.addEventListener("click", () => {
     profile.name = nameField.value;
-    putProfile(profile);
-    nameField.disabled = true;
-    editName.hidden = false;
-    saveName.hidden = true;
+    putProfile(profile).then(() => {
+      nameField.disabled = true;
+      editName.hidden = false;
+      saveName.hidden = true;
+    }, e => {
+      alert(e.message);
+    });
   });
 
   nameField.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
       profile.name = nameField.value;
-      putProfile(profile);
-      nameField.disabled = true;
-      editName.hidden = false;
-      saveName.hidden = true;
+      putProfile(profile).then(() => {
+        nameField.disabled = true;
+        editName.hidden = false;
+        saveName.hidden = true;
+      }, a => {
+        alert(e.message);
+      });
     }
   });
 
@@ -135,19 +141,25 @@ export async function onNavigate() {
 
   saveEmail.addEventListener("click", () => {
     profile.email = emailField.value;
-    putProfile(profile);
-    emailField.disabled = true;
-    editEmail.hidden = false;
-    saveEmail.hidden = true;
+    putProfile(profile).then(() => {
+      emailField.disabled = true;
+      editEmail.hidden = false;
+      saveEmail.hidden = true;
+    }, e => {
+      alert(e.message);
+    });
   });
 
   emailField.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
       profile.email = emailField.value;
-      putProfile(profile);
-      emailField.disabled = true;
-      editEmail.hidden = false;
-      saveEmail.hidden = true;
+      putProfile(profile).then(() => {
+        emailField.disabled = true;
+        editEmail.hidden = false;
+        saveEmail.hidden = true;
+      }, e => {
+        alert(e.message);
+      });
     }
   });
 }

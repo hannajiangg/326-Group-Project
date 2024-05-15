@@ -68,7 +68,6 @@ export async function deleteListing(id) {
   return await listingTable.remove(oldListing);
 }
 
-// TODO
 /**
  * Puts a listing into the database, overwriting an old version if it exists
  * @param {Listing} listing 
@@ -112,6 +111,15 @@ export async function putListing(listing) {
  */
 export async function hasProfile(id) {
   return profileTable.get(id).then(() => true, () => false)
+}
+
+/**
+ * Returns a list of all profile IDs
+ * @returns { Promise<String[]> }
+ */
+export async function getProfiles() {
+  const profiles = await profileTable.allDocs();
+  return profiles.rows.map(x => x.id);
 }
 
 /**
