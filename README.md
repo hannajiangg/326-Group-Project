@@ -3,6 +3,7 @@
 # Getting Started
 
 1. Download or clone this repository to your local machine.
+2. Ensure that `.env` is present. If not, email one of the team members for access.
 2. Open your terminal.
 3. Navigate to the project directory.
 4. Run `npm install` to install dependencies.
@@ -45,12 +46,21 @@
 
     .htmlvalidate.json: HTML validation configs
 
+    .env: Configs for running application. Also contains sensitive information such as google API keys.
+
     README.md: Readme file
 
     package-lock.json: JSON lock file
 
     package.json: JSON packages
     
+## .env Parameters
+- `GOOGLE_CLIENT_ID`: Public Google API key
+- `GOOGLE_CLIENT_SECRET`: Private Google API key
+- `HOST_URI`: IP and location where the application will be hosted. ex. `http://localhost:8080`
+- `SESSION_SECRET_KEY`: Key used to encode sessions
+- `DEV`: Set to truthy string in order to have the server generate fake data
+
 ## API Routes
 
 ### GET Endpoints
@@ -81,7 +91,7 @@
 
 - `/api/listings/:id`: Delete a listing
 
-# Using UBay
+# Using ZooBuy
 
 ## User Base
 

@@ -434,4 +434,6 @@ async function createMockData() {
   await putProfile(fakeProfile);
 }
 
-createMockData();
+if(process.env.DEV){
+  createMockData();
+}
